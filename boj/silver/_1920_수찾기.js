@@ -1,14 +1,16 @@
 function solution(input){
     const [N, arr, M, findList] = [...input];
-    arr.sort();
+    arr.sort((a,b) => a-b);
+    let result = '';
     findList.forEach(num =>
         {
             if(find(arr, num))
-                console.log(1);
+                result += '1\n';
             else
-                console.log(0); 
+                result += '0\n';
         }
     );
+    console.log(result);
 }
 
 function find(arr, num){
@@ -30,9 +32,9 @@ function input() {
     const stdin = (process.platform === 'linux'
         ? fs.readFileSync('/dev/stdin').toString()
         : `5
-4 -9 5 2 3
+-9 -1 -5 -2 -3
 5
-1 3 7 -9 5`
+-1 -3 -7 -9 -5`
     ).split("\n");
     let cnt = 1;
     return stdin.map(
