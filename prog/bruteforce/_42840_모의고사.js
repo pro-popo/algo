@@ -61,7 +61,7 @@ function getWinnerStudents(rank) {
     const [highestScore] = rank[0];
     return rank
         .filter(([score, _]) => score == highestScore)
-        .map(([score, student]) => student);
+        .map(([_, student]) => student);
 }
 
 console.log(solution([1, 2, 3, 4, 5]));
