@@ -12,27 +12,41 @@
  *
  * @param {*} tickets :항공권 정보가 담긴 2차원 배열
  * @returns :방문하는 공항 경로 배열
+ *
+ * ### 리뷰
+ * - 풀이 과정은 다음과 같다.
+ *   DFS로, tickets를 순회하면서 이동 가능한 항공권 추가 및 탐색 반복한다.
+ *   모든 티켓을 사용했을 경우, 순회를 종료하고 최적의 경로인지 확인한다.
+ *
+ * - 오랜 시간을 투자한 이유.
+ *   조건 중 "주어진 항공권 모두 사용"을 오해했다.
+ *   사용한 티켓을 처리해야 하는데, 방문한 공항을 필터링했다...
+ *
+ * - 다른 사람의 풀이 중,
+ *   경로를 문자열로 배열에 저장한 후, 정렬하는 방법도 있었다.
+ *   => "문자열"이라는 아이디어를 보고,
+ *      for문으로 순회하여 하나씩 원소를 비교하는 것이 아닌,
+ *      join 함수를 사용하여 비교하도록 수정하였다.
  */
 
 let answer = [];
+
 function solution(tickets) {
     const START_AIRPORT = 'ICN';
-    const visited = Array(tickets.length).fill(false);
 
     answer = [];
     goTravel(
         tickets,
         START_AIRPORT,
-        visited,
+        (visited = Array(tickets.length).fill(false)),
         (route = [START_AIRPORT]),
-        (usedTicketCount = 0),
     );
 
     return answer;
 }
 
-function goTravel(tickets, currentAirport, visited, route, usedTicketCount) {
-    if (isUesdAllTickets(tickets.length, usedTicketCount)) {
+function goTravel(tickets, currentAirport, visited, route) {
+    if (isUesdAllTickets(visited)) {
         if (isChangeRoute(answer, route)) answer = [...route];
         return;
     }
@@ -41,13 +55,13 @@ function goTravel(tickets, currentAirport, visited, route, usedTicketCount) {
         if (isUsableTicket(visited[index], currentAirport, start)) return;
 
         visited[index] = true;
-        goTravel(tickets, end, visited, route.concat(end), usedTicketCount + 1);
+        goTravel(tickets, end, visited, route.concat(end));
         visited[index] = false;
     });
 }
 
-function isUesdAllTickets(tickectCount, usedTicketCount) {
-    return tickectCount === usedTicketCount;
+function isUesdAllTickets(visited) {
+    return visited.filter((ticket) => ticket).length === visited.length;
 }
 
 function isUsableTicket(isVisited, currentAirport, startAirport) {
@@ -57,12 +71,7 @@ function isUsableTicket(isVisited, currentAirport, startAirport) {
 function isChangeRoute(oldRoute, newRoute) {
     if (oldRoute.length === 0) return true;
 
-    for (let i = 0, len = oldRoute.length; i < len; i++) {
-        if (oldRoute[i] === newRoute[i]) continue;
-        if (oldRoute[i] < newRoute[i]) return false;
-        return true;
-    }
-    return false;
+    return oldRoute.join('') > newRoute.join('');
 }
 
 console.log(
