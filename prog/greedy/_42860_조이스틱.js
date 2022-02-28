@@ -10,12 +10,12 @@
  * @returns
  */
 function solution(name) {
-    const conversion = minConversion(name);
-    const move = minMove(name);
-    return conversion + move;
+    const conversions = startConvert(name);
+    const moves = startMove(name);
+    return conversions + moves;
 }
 
-function minConversion(name) {
+function startConvert(name) {
     return [...name].reduce((sum, target) => {
         const upConversion = target.charCodeAt() - 'A'.charCodeAt();
         const downConversion = 'Z'.charCodeAt() - target.charCodeAt() + 1;
@@ -23,44 +23,28 @@ function minConversion(name) {
     }, 0);
 }
 
-function minMove(name) {
-    const { start, end } = findMaxSkipLocation(name);
-    if (start === -1) return name.length - 1;
+function startMove(name) {
+    let min = name.length - 1;
+    for (let i = 1, length = name.length; i < length; i++) {
+        if (name[i] !== 'A') continue;
 
-    const [left, right] = [name.length - 1 - end, start - 1];
-    return countingMove(Math.min(left, right), Math.max(left, right));
-}
+        let start = i;
+        while (i < length && name[i] === 'A') i++;
+        let end = i - 1;
 
-function findMaxSkipLocation(name) {
-    let current = { start: -1, skip: 0 };
-    let max = { ...current, end: 0 };
-
-    [...name].forEach((alphabet, index) => {
-        if (index === 0) return;
-        if (alphabet === 'A') {
-            current.skip++;
-            if (current.start === -1) current.start = index;
-            return;
-        }
-
-        if (
-            current.skip > max.skip ||
-            (current.skip === max.skip && max.start !== 1)
-        ) {
-            max = { ...current, end: index - 1 };
-        }
-        current = { start: -1, skip: 0 };
-    });
-
-    if (current.skip >= max.skip) {
-        max = { ...current, end: name.length - 1 };
+        const [left, right] = [length - end - 1, start - 1];
+        min = Math.min(
+            min,
+            countingMoves(left, right),
+            countingMoves(right, left),
+        );
     }
-    return max;
+    return min;
 }
 
-function countingMove(first, second) {
-    const turn = second > 0 ? 2 : 1;
-    return first * turn + second;
+function countingMoves(firstDirection, secondDirection) {
+    const turn = secondDirection >= 0 ? 2 : 1;
+    return firstDirection * turn + secondDirection;
 }
 
 console.log(solution('AAA')); // 0
