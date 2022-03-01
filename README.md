@@ -35,7 +35,7 @@
 
 #### Day 1. THU
 
-> 🟣 [[Level 2] 큰 수 만들기 - 그리디](https://programmers.co.kr/learn/courses/30/lessons/42860) ([#42883](prog/greedy/_42883_큰수만들기.js))
+> 🟣 [[Level 2] 큰 수 만들기 - 그리디](https://programmers.co.kr/learn/courses/30/lessons/42860) ([#42883](prog/greedy/_42883_큰수만들기.js))     
 > 🟣 [[Level 2] 구명보트 - 그리디](https://programmers.co.kr/learn/courses/30/lessons/42885) ([#42885](prog/greedy/_42885_구명보트.js))
 
 ### 📅 2022.02
