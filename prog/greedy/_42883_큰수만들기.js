@@ -4,40 +4,41 @@
  * @param {*} number 숫자
  * @param {*} k 제거할 수의 개수
  * @returns 만들 수 있는 가장 큰 수
+ *
  */
-
 function solution(number, k) {
     let numbers = [...number];
-    while (k-- > 0) {
-        let removeIndex = findSmallThenNextNumber(numbers);
-        if (isNotFindIndexForRemoval(removeIndex))
-            removeIndex = findSameNextNumber(numbers);
-        if (isNotFindIndexForRemoval(removeIndex))
-            removeIndex = getLastIndexOfNumbers(numbers);
-        numbers = removeNumber(numbers, removeIndex);
-    }
-    return numbers.join('');
+    numbers.forEach((number, index) => {
+        if (
+            !isRemainRemoveChance(k) ||
+            isNotRemovalNumber(number, numbers[index + 1])
+        )
+            return;
+
+        let preIndex = index + 1;
+        let nextNumber = numbers[index + 1];
+        while (isRemainRemoveChance(k) && --preIndex >= 0) {
+            if (!isRemainNumber(numbers[preIndex])) continue;
+            if (isNotRemovalNumber(numbers[preIndex], nextNumber)) return;
+
+            numbers[preIndex] = REMOVED;
+            k--;
+        }
+    });
+    numbers = numbers.filter(isRemainNumber).join('');
+    return usingRemainRemoveChances(numbers, k);
 }
 
-function isNotFindIndexForRemoval(index) {
-    return index === -1;
-}
+const REMOVED = -1;
 
-function findSmallThenNextNumber(array) {
-    return array.findIndex((number, index) => number < array[index + 1]);
-}
+const isRemainRemoveChance = (removeChane) => removeChane > 0;
 
-function findSameNextNumber(array) {
-    return array.findIndex((number, index) => number === array[index + 1]);
-}
+const isNotRemovalNumber = (preNumber, nextNumber) => preNumber >= nextNumber;
 
-function getLastIndexOfNumbers(array) {
-    return array.length - 1;
-}
+const isRemainNumber = (number) => number !== REMOVED;
 
-function removeNumber(array, removeIndex) {
-    return array.filter((_, index) => index != removeIndex);
-}
+const usingRemainRemoveChances = (numbers, removeChances) =>
+    numbers.slice(0, numbers.length - removeChances);
 
 console.log(solution('1924', 2));
 console.log(solution('1231234', 3));
