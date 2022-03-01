@@ -7,24 +7,27 @@
 💻 1일 1알고 (주 5회 이상)
 
 ⏰ 매일 3시간
+
 -   2시간 : 알고 문제 1개 풀기 (쉬운 문제는 2문제 목표)
+
     -   분류별(재귀, 완탐) or 수준별(티어, 레벨)로 문제 선별
- 
+
 -   1시간 : 코드 리뷰
     -   어떤 방식으로 접근했는지, 어떤 부분이 어려웠는지, 고민했던 부분 정리
     -   코드 리팩터링
     -   다른 풀이 참고
 
 🌐 참고 사이트
+
 -   [프로그래머스](https://programmers.co.kr/)
 -   [백준](https://www.acmicpc.net/)
 
-
 ## 💬 Language
+
 ![javascript](https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
 
-
 ## 📌 TimeLine
+
 ![PROGRAMMERS](https://img.shields.io/badge/PROGRAMMERS-7E4DD2.svg?&style=for-the-badge)
 ![BAEKJOON](https://img.shields.io/badge/BAEKJOON-0ABF53.svg?&style=for-the-badge)
 
@@ -33,6 +36,7 @@
 #### Day 1. THU
 
 > 🟣 [[Level 2] 큰 수 만들기 - 그리디](https://programmers.co.kr/learn/courses/30/lessons/42860) ([#42883](prog/greedy/_42883_큰수만들기.js))
+> 🟣 [[Level 2] 구명보트 - 그리디](https://programmers.co.kr/learn/courses/30/lessons/42885) ([#42885](prog/greedy/_42885_구명보트.js))
 
 ### 📅 2022.02
 
@@ -43,7 +47,7 @@
 #### Day 27. SUN
 
 > 🟣 [[Level 1] 체육복 - 그리디](https://programmers.co.kr/learn/courses/30/lessons/42862) ([#42862](prog/greedy/_42862_체육복.js))  
-> 🟣 [[Level 4] 징검다리 - 이분탐색](https://programmers.co.kr/learn/courses/30/lessons/43236) ([#43236](prog/binary-search/_43236_징검다리.js)) 
+> 🟣 [[Level 4] 징검다리 - 이분탐색](https://programmers.co.kr/learn/courses/30/lessons/43236) ([#43236](prog/binary-search/_43236_징검다리.js))
 
 #### Day 26. SAT
 
