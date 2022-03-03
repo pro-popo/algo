@@ -33,11 +33,15 @@
 
 ### 📅 2022.03
 
+#### Day 3. THU
+
+> 🟣 [[Level 3] 단속카메라 - 그리디](https://programmers.co.kr/learn/courses/30/lessons/42884) ([#42884](prog/greedy/_42884_단속카메라.js))
+
 #### Day 2. WED
 
 > 🟣 [[Level 3] 섬 연결하기 - 그리디, MST](https://programmers.co.kr/learn/courses/30/lessons/42861) ([#42861](prog/greedy/_42861_섬연결하기.js))
 
-#### Day 1. THU
+#### Day 1. TUE
 
 > 🟣 [[Level 2] 큰 수 만들기 - 그리디](https://programmers.co.kr/learn/courses/30/lessons/42883) ([#42883](prog/greedy/_42883_큰수만들기.js))  
 > 🟣 [[Level 2] 구명보트 - 그리디](https://programmers.co.kr/learn/courses/30/lessons/42885) ([#42885](prog/greedy/_42885_구명보트.js))
