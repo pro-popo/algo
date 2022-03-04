@@ -33,11 +33,15 @@
 
 ### 📅 2022.03
 
+#### Day 4. FRI
+
+> 🟣 [[Level 3] N으로 표현 - 동적계획법](https://programmers.co.kr/learn/courses/30/lessons/42895) ([#42895](prog/dynamic-programming/_42895_N으로표현.js))
+
 #### Day 3. THU
 
-> 🟣 [[Level 1] 완주하지 못한 선수 - 해시](https://programmers.co.kr/learn/courses/30/lessons/42576) ([#42576](prog/hash/_42576_완주하지_못한_선수.js))     
-> 🟣 [[Level 2] 가장 큰 수 - 정렬](https://programmers.co.kr/learn/courses/30/lessons/42746) ([#42746](prog/sort/_42746_가장_큰_수.js))     
-> 🟣 [[Level 3] 단속카메라 - 그리디](https://programmers.co.kr/learn/courses/30/lessons/42884) ([#42884](prog/greedy/_42884_단속카메라.js))     
+> 🟣 [[Level 1] 완주하지 못한 선수 - 해시](https://programmers.co.kr/learn/courses/30/lessons/42576) ([#42576](prog/hash/_42576_완주하지_못한_선수.js))  
+> 🟣 [[Level 2] 가장 큰 수 - 정렬](https://programmers.co.kr/learn/courses/30/lessons/42746) ([#42746](prog/sort/_42746_가장_큰_수.js))  
+> 🟣 [[Level 3] 단속카메라 - 그리디](https://programmers.co.kr/learn/courses/30/lessons/42884) ([#42884](prog/greedy/_42884_단속카메라.js))
 
 #### Day 2. WED
 
