@@ -10,28 +10,43 @@
  */
 
 function solution(n, results) {
-    const score = Array.from(Array(n), () => Array(n).fill(false));
+    const winners = createWinnersInfo(n, results);
 
-    results.forEach(([winner, loser]) => (score[winner - 1][loser - 1] = true));
+    floydWarshall(winners);
 
-    for (let k = 0; k < n; k++) {
-        for (let i = 0; i < n; i++) {
-            for (let j = 0; j < n; j++) {
-                if (score[i][k] && score[k][j]) score[i][j] = true;
+    return winners.filter((_, player) => isAllRanked(player, winners)).length;
+}
+
+function createWinnersInfo(n, results) {
+    const winners = Array.from(Array(n), () => Array(n).fill(false));
+
+    results.forEach(
+        ([winner, loser]) => (winners[winner - 1][loser - 1] = true),
+    );
+
+    return winners;
+}
+
+function floydWarshall(winners) {
+    const numberOfPlayers = winners.length;
+    for (let k = 0; k < numberOfPlayers; k++) {
+        for (let i = 0; i < numberOfPlayers; i++) {
+            for (let j = 0; j < numberOfPlayers; j++) {
+                if (winners[i][k] && winners[k][j]) winners[i][j] = true;
             }
         }
     }
-
-    return score.filter((result, player) =>
-        result.every(
-            (_, other) =>
-                player === other ||
-                score[player][other] ||
-                score[other][player],
-        ),
-    ).length;
 }
 
+const isAllRanked = (player, winners) =>
+    winners[player].every(
+        (_, other) => player === other || hasAnyoneWon(winners, player, other),
+    );
+
+const hasAnyoneWon = (winners, player, other) =>
+    winners[player][other] || winners[other][player];
+
+/****** TEST CASE *******/
 console.log(
     solution(5, [
         [4, 3],
@@ -41,16 +56,17 @@ console.log(
         [2, 5],
     ]),
 );
-// console.log(
-//     solution(7, [
-//         [6, 1],
-//         [6, 3],
-//         [1, 2],
-//         [4, 2],
-//         [3, 2],
-//         [2, 5],
-//         [5, 7],
-//         [1, 3],
-//         [3, 4],
-//     ]),
-// );
+
+console.log(
+    solution(7, [
+        [6, 1],
+        [6, 3],
+        [1, 2],
+        [4, 2],
+        [3, 2],
+        [2, 5],
+        [5, 7],
+        [1, 3],
+        [3, 4],
+    ]),
+);
