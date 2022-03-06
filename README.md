@@ -40,12 +40,18 @@
 #### ✏ 코드 수정 (README, 오타 수정)
     [update] 파일명 
 
+
 ## 📌 TimeLine
 
 ![PROGRAMMERS](https://img.shields.io/badge/PROGRAMMERS-7E4DD2.svg?&style=for-the-badge)
 ![BAEKJOON](https://img.shields.io/badge/BAEKJOON-0ABF53.svg?&style=for-the-badge)
 
+
 ### 📅 2022.03
+
+#### Day 6. SUN
+
+> 🟣 [[Level 3] 순위 - 그래프](https://programmers.co.kr/learn/courses/30/lessons/49191) ([#49191](prog/graph/_49191_순위.js))
 
 #### Day 5. SAT
 
@@ -69,6 +75,7 @@
 
 > 🟣 [[Level 2] 큰 수 만들기 - 그리디](https://programmers.co.kr/learn/courses/30/lessons/42883) ([#42883](prog/greedy/_42883_큰수만들기.js))  
 > 🟣 [[Level 2] 구명보트 - 그리디](https://programmers.co.kr/learn/courses/30/lessons/42885) ([#42885](prog/greedy/_42885_구명보트.js))
+
 
 ### 📅 2022.02
 
