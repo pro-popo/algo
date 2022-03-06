@@ -26,6 +26,20 @@
 
 ![javascript](https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
 
+
+## 🚥 Commit Message Convention
+#### 📥 파일 업로드
+    [upload] 파일명
+
+#### 📝 코드 리뷰
+    [review] 파일명
+
+#### 🛠 코드 리팩터링
+    [refactor] 파일명 - 간략한 설명
+
+#### ✏ 코드 수정 (README, 오타 수정)
+    [update] 파일명 
+
 ## 📌 TimeLine
 
 ![PROGRAMMERS](https://img.shields.io/badge/PROGRAMMERS-7E4DD2.svg?&style=for-the-badge)
