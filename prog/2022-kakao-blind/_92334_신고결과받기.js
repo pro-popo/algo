@@ -15,25 +15,43 @@
  */
 
 function solution(id_list, report, k) {
-    const store = {};
+    const reportedIDs = preceedToReport(report);
+    const suspendedIDs = findSuspensionIDs(reportedIDs, k);
+    const mails = countSendMailToReporter(suspendedIDs);
 
-    report.forEach((discription) => {
+    return mailsToReporters(id_list, mails);
+}
+
+function preceedToReport(report) {
+    return report.reduce((reportedIDs, discription) => {
         const [reporter, reportedID] = discription.split(' ');
-        store[reportedID] = store[reportedID] || new Set();
-        store[reportedID].add(reporter);
-    });
 
-    const mails = Object.values(store)
-        .filter((reporters) => reporters.size >= k)
-        .flatMap((reporters) => Array.from(reporters))
-        .reduce((mails, reporter) => {
-            mails[reporter] = mails[reporter] + 1 || 1;
-            return mails;
-        }, {});
+        reportedIDs[reportedID] = reportedIDs[reportedID] || new Set();
+        reportedIDs[reportedID].add(reporter);
 
+        return reportedIDs;
+    }, {});
+}
+
+function findSuspensionIDs(reportedIDs, k) {
+    return Object.values(reportedIDs).filter(
+        (reporters) => reporters.size >= k,
+    );
+}
+
+function countSendMailToReporter(suspendedIDs) {
+    const reporters = suspendedIDs.flatMap((reporters) => [...reporters]);
+    return reporters.reduce((mails, reporter) => {
+        mails[reporter] = mails[reporter] + 1 || 1;
+        return mails;
+    }, {});
+}
+
+function mailsToReporters(id_list, mails) {
     return id_list.map((ID) => mails[ID] || 0);
 }
 
+/****** TEST CASE *******/
 console.log(
     solution(
         ['muzi', 'frodo', 'apeach', 'neo'],
