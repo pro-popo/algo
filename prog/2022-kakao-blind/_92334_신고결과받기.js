@@ -23,35 +23,39 @@
  *   신고한 유저들에게 각각 몇 개의 메일을 보내야 하는지 계산한다.
  *
  * - 시나리오에 따라 진행하면 쉽게 답을 구할 수 있는 문제다!
+ *
+ * - 다른 풀이에서,
+ *   먼저 report를 Set으로 중복 제거한 다음에 풀이를 진행하는 것을 보았다.
+ *   이를 코드에 적용해 보니까, 불필요한 변환(Set -> Array)를 제거할 수 있어서 좋았다!
  */
 
 function solution(id_list, report, k) {
-    const reportedIDs = preceedToReport(report);
+    const reportedIDs = preceedToReport([...new Set(report)]);
     const suspendedIDs = findSuspensionIDs(reportedIDs, k);
     const mails = countSendMailToReporter(suspendedIDs);
 
     return mailsToReporters(id_list, mails);
 }
 
-function preceedToReport(report) {
-    return report.reduce((reportedIDs, discription) => {
+function preceedToReport(reports) {
+    return reports.reduce((reportedIDs, discription) => {
         const [reporter, reportedID] = discription.split(' ');
 
-        reportedIDs[reportedID] = reportedIDs[reportedID] || new Set();
-        reportedIDs[reportedID].add(reporter);
+        reportedIDs[reportedID] = reportedIDs[reportedID] || [];
+        reportedIDs[reportedID].push(reporter);
 
         return reportedIDs;
     }, {});
 }
 
 function findSuspensionIDs(reportedIDs, k) {
-    return Object.values(reportedIDs).filter(
-        (reporters) => reporters.size >= k,
+    return Object.entries(reportedIDs).filter(
+        ([_, reporters]) => reporters.length >= k,
     );
 }
 
 function countSendMailToReporter(suspendedIDs) {
-    const reporters = suspendedIDs.flatMap((reporters) => [...reporters]);
+    const reporters = suspendedIDs.flatMap(([_, reporters]) => reporters);
     return reporters.reduce((mails, reporter) => {
         mails[reporter] = mails[reporter] + 1 || 1;
         return mails;
