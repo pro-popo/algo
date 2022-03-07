@@ -49,6 +49,10 @@
 
 ### 📅 2022.03
 
+#### Day 7. MON
+
+> 🟣 [[Level 1] 신고 결과 받기 - 해시](https://programmers.co.kr/learn/courses/30/lessons/92334) ([#92334](prog/2022-kakao-blind/_92334_신고결과받기.js))
+
 #### Day 6. SUN
 
 > 🟣 [[Level 3] 순위 - 그래프](https://programmers.co.kr/learn/courses/30/lessons/49191) ([#49191](prog/graph/_49191_순위.js))
