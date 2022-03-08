@@ -26,28 +26,34 @@
 
 ![javascript](https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
 
-
 ## 🚥 Commit Message Convention
+
 #### 📥 파일 업로드
+
     [upload] 파일명
 
 #### 📝 코드 리뷰
+
     [review] 파일명
 
 #### 🛠 코드 리팩터링
+
     [refactor] 파일명 - 간략한 설명
 
 #### ✏ 코드 수정 (README, 오타 수정)
-    [update] 파일명 
 
+    [update] 파일명
 
 ## 📌 TimeLine
 
 ![PROGRAMMERS](https://img.shields.io/badge/PROGRAMMERS-7E4DD2.svg?&style=for-the-badge)
 ![BAEKJOON](https://img.shields.io/badge/BAEKJOON-0ABF53.svg?&style=for-the-badge)
 
-
 ### 📅 2022.03
+
+#### Day 8. TUE
+
+> 🟣 [[Level 2] K진수에서 소수 개수 구하기](https://programmers.co.kr/learn/courses/30/lessons/92335) ([#92335](prog/2022-kakao-blind/_92335_k진수에서소수개수구하기.js))
 
 #### Day 7. MON
 
@@ -79,7 +85,6 @@
 
 > 🟣 [[Level 2] 큰 수 만들기 - 그리디](https://programmers.co.kr/learn/courses/30/lessons/42883) ([#42883](prog/greedy/_42883_큰수만들기.js))  
 > 🟣 [[Level 2] 구명보트 - 그리디](https://programmers.co.kr/learn/courses/30/lessons/42885) ([#42885](prog/greedy/_42885_구명보트.js))
-
 
 ### 📅 2022.02
 
