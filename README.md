@@ -53,7 +53,8 @@
 
 #### Day 8. TUE
 
-> 🟣 [[Level 2] K진수에서 소수 개수 구하기](https://programmers.co.kr/learn/courses/30/lessons/92335) ([#92335](prog/2022-kakao-blind/_92335_k진수에서소수개수구하기.js))
+> 🟣 [[Level 2] K진수에서 소수 개수 구하기](https://programmers.co.kr/learn/courses/30/lessons/92335) ([#92335](prog/2022-kakao-blind/_92335_k진수에서소수개수구하기.js))        
+> 🟣 [[Level 2] 주차 요금 계산](https://programmers.co.kr/learn/courses/30/lessons/92341) ([#92341](prog/2022-kakao-blind/_92341_주차요금계산.js))
 
 #### Day 7. MON
 
