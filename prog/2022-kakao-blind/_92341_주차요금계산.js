@@ -11,7 +11,7 @@
 
 function solution(fees, records) {
     const parkingLot = new Map();
-    const totalUsedTime = {};
+    const parkingTimes = {};
 
     records.forEach((record) => {
         const [time, car, type] = record.split(' ');
@@ -23,14 +23,14 @@ function solution(fees, records) {
                 break;
             case 'OUT':
                 const usedTime = minute - parkingLot.get(car);
-                totalUsedTime[car] = (totalUsedTime[car] || 0) + usedTime;
+                parkingTimes[car] = (parkingTimes[car] || 0) + usedTime;
                 parkingLot.delete(car);
         }
     });
 
-    clearCarInParkingLot(parkingLot, totalUsedTime);
+    clearCarInParkingLot(parkingLot, parkingTimes);
 
-    return Object.entries(totalUsedTime)
+    return Object.entries(parkingTimes)
         .sort(ASC_CAR)
         .map(([_, usedTime]) => calculateFee(fees, usedTime));
 }
@@ -40,11 +40,11 @@ function convertToMinute(time) {
     return hour * 60 + minute;
 }
 
-function clearCarInParkingLot(parkingLot, totalUsedTime) {
+function clearCarInParkingLot(parkingLot, parkingTimes) {
     const LAST_TIME = 23 * 60 + 59;
     for (const [car, enteredTime] of parkingLot) {
         usedTime = LAST_TIME - enteredTime;
-        totalUsedTime[car] = (totalUsedTime[car] || 0) + usedTime;
+        parkingTimes[car] = (parkingTimes[car] || 0) + usedTime;
     }
 }
 
