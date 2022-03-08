@@ -12,21 +12,8 @@
  */
 
 function solution(n, k) {
-    const numbers = n.toString(k) * 10;
-
-    let stack = [];
-    const answer = [];
-    [...String(numbers)].forEach((number) => {
-        if (number != 0) {
-            stack.push(number);
-            return;
-        }
-
-        answer.push(stack.join(''));
-        stack = [];
-    });
-
-    return answer.map(Number).filter(isPrime).length;
+    const numbers = n.toString(k).split('0');
+    return numbers.map(Number).filter(isPrime).length;
 }
 
 function isPrime(number) {
