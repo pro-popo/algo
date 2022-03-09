@@ -52,7 +52,7 @@
 ### 📅 2022.03
 
 
-#### Day 8. TUE
+#### Day 9. WED
 
 > 🟣 [[Level 2] 양궁대회 - 완전탐색](https://programmers.co.kr/learn/courses/30/lessons/92342) ([#92342](prog/2022-kakao-blind/_92342_양궁대회.js))        
 
