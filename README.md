@@ -51,6 +51,11 @@
 
 ### 📅 2022.03
 
+
+#### Day 8. TUE
+
+> 🟣 [[Level 2] 양궁대회 - 완전탐색](https://programmers.co.kr/learn/courses/30/lessons/92342) ([#92342](prog/2022-kakao-blind/_92342_양궁대회.js))        
+
 #### Day 8. TUE
 
 > 🟣 [[Level 2] K진수에서 소수 개수 구하기](https://programmers.co.kr/learn/courses/30/lessons/92335) ([#92335](prog/2022-kakao-blind/_92335_k진수에서소수개수구하기.js))        
