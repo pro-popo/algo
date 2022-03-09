@@ -27,7 +27,7 @@
 class Archery {
     constructor(info, score, remainAllows) {
         this.info = info;
-        this.score = score;
+        this.score = score || calculationScore();
         this.remainAllows = remainAllows;
     }
 
@@ -45,16 +45,26 @@ class Archery {
         if (!this.info[round]) return this;
         return new Archery(this.info, this.score - (10 - round));
     }
+
+    calculationScore() {
+        return this.info.reduce(
+            (score, arrows, index) => score + (arrows && 10 - index),
+            0,
+        );
+    }
+
+    isHitMoreSmallRound(info) {
+        for (let i = 10; i >= 0; i--) {
+            if (this.info[i] === info[i]) continue;
+            if (this.info[i] > info[i]) return true;
+            break;
+        }
+        return false;
+    }
 }
 
 function solution(n, info) {
-    const apeach = new Archery(
-        info,
-        info.reduce(
-            (score, arrows, index) => score + (arrows && 10 - index),
-            0,
-        ),
-    );
+    const apeach = new Archery(info);
     const ryan = new Archery(Array(11).fill(0), 0, n);
     const wonGameByRyan = {
         info: Array(11).fill(0),
@@ -75,7 +85,7 @@ function findWinningGameByRyan(ryan, apeach, round, wonGameByRyan) {
         if (
             ryan.diffScore > wonGameByRyan.diffScore ||
             (ryan.diffScore === wonGameByRyan.diffScore &&
-                isGetMoreSmallRound(ryan, wonGameByRyan))
+                ryan.isHitMoreSmallRound(wonGameByRyan.info))
         ) {
             wonGameByRyan.info = [...ryan.info];
             wonGameByRyan.info[10] += ryan.remainAllows;
@@ -92,18 +102,8 @@ function findWinningGameByRyan(ryan, apeach, round, wonGameByRyan) {
     findWinningGameByRyan(ryan, apeach, round + 1, wonGameByRyan);
 }
 
-const isGetMoreSmallRound = (ryan, wonGameByRyan) => {
-    for (let i = 10; i >= 0; i--) {
-        if (ryan.info[i] === wonGameByRyan.info[i]) continue;
-        if (ryan.info[i] > wonGameByRyan.info[i]) return true;
-        break;
-    }
-    return false;
-};
-
+/****** TEST CASE *******/
+console.log(solution(1, [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]));
+console.log(solution(9, [0, 0, 1, 2, 0, 1, 1, 1, 1, 1, 1]));
+console.log(solution(10, [0, 0, 0, 0, 0, 0, 0, 0, 3, 4, 3]));
 console.log(solution(10, [2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0]));
-console.log(solution(10, [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 9]));
-
-// console.log(solution(1, [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]));
-// console.log(solution(9, [0, 0, 1, 2, 0, 1, 1, 1, 1, 1, 1]));
-// console.log(solution(10, [0, 0, 0, 0, 0, 0, 0, 0, 3, 4, 3]));
