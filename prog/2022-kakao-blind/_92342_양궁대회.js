@@ -56,26 +56,30 @@ function solution(n, info) {
         ),
     );
     const ryan = new Archery(Array(11).fill(0), 0, n);
-    const wonGameByRyan = new Archery(Array(11).fill(0), 0);
+    const wonGameByRyan = {
+        info: Array(11).fill(0),
+        diffScore: 0,
+    };
 
     findWinningGameByRyan(ryan, apeach, (round = 0), wonGameByRyan);
 
-    return wonGameByRyan.score ? wonGameByRyan.info : [-1];
+    return wonGameByRyan.diffScore ? wonGameByRyan.info : [-1];
 }
 
 function findWinningGameByRyan(ryan, apeach, round, wonGameByRyan) {
     if (round > 10 || ryan.remainAllows < 0) return;
 
     if (ryan.score > apeach.score) {
+        ryan.diffScore = ryan.score - apeach.score;
+
         if (
-            ryan.score > wonGameByRyan.score ||
-            (ryan.score === wonGameByRyan.score &&
+            ryan.diffScore > wonGameByRyan.diffScore ||
+            (ryan.diffScore === wonGameByRyan.diffScore &&
                 isGetMoreSmallRound(ryan, wonGameByRyan))
         ) {
             wonGameByRyan.info = [...ryan.info];
             wonGameByRyan.info[10] += ryan.remainAllows;
-
-            wonGameByRyan.score = ryan.score;
+            wonGameByRyan.diffScore = ryan.score - apeach.score;
         }
     }
 
@@ -96,6 +100,7 @@ const isGetMoreSmallRound = (ryan, wonGameByRyan) => {
     }
     return false;
 };
+
 console.log(solution(10, [2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0]));
 console.log(solution(10, [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 9]));
 
