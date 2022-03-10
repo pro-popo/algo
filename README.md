@@ -52,6 +52,11 @@
 ### 📅 2022.03
 
 
+#### Day 10. THU
+
+> 🟣 [[Level 3] 양과 늑대 - 이진트리, 완전탐색](https://programmers.co.kr/learn/courses/30/lessons/92343) ([#92343](prog/2022-kakao-blind/_92343_양과늑대.js))  
+
+
 #### Day 9. WED
 
 > 🟣 [[Level 2] 양궁대회 - 완전탐색](https://programmers.co.kr/learn/courses/30/lessons/92342) ([#92342](prog/2022-kakao-blind/_92342_양궁대회.js))        
