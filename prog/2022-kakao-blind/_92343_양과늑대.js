@@ -11,39 +11,55 @@
  * @returns 모을 수 있는 양이 최대 몇 마리인지
  */
 
+let answer = 1;
 function solution(info, edges) {
-    const graph = Array.from(Array(info.length), () => []);
-    edges.forEach(([parent, child]) => {
-        graph[parent].push(child);
-    });
+    const graph = createGraph(edges, info);
 
-    let answer = 1;
-    DFS(graph, 1, (memo = new Set()));
+    answer = 1;
+    DFS(graph, 1, (paths = new Set()));
     return answer;
-
-    function DFS(graph, visitedNodes, memo) {
-        if (memo.has(visitedNodes)) return;
-        memo.add(visitedNodes);
-
-        let [wolves, sheep] = [0, 0];
-        graph.forEach((_, node) => {
-            if (!(visitedNodes & (1 << node))) return;
-            if (info[node] === 1) wolves++;
-            else sheep++;
-        });
-
-        if (wolves >= sheep) return;
-        answer = Math.max(answer, sheep);
-
-        graph.forEach((_, parent) => {
-            if (!(visitedNodes & (1 << parent))) return;
-            graph[parent].forEach((child) => {
-                DFS(graph, visitedNodes | (1 << child), memo);
-            });
-        });
-    }
 }
 
+function createGraph(edges, info) {
+    const graph = Array.from(Array(info.length), () => []);
+    edges.forEach(([parent, child]) => graph[parent].push(child));
+    graph.info = info;
+    return graph;
+}
+
+const [SHEEP, WOLF] = [0, 1];
+function DFS(graph, visitedNodes, paths) {
+    if (isChekedPaths(paths, visitedNodes)) return;
+    paths.add(visitedNodes);
+
+    let [wolf, sheep] = countNodesTypes(graph, visitedNodes);
+    if (wolf >= sheep) return;
+    answer = Math.max(answer, sheep);
+
+    graph.forEach((_, parent) => {
+        if (isUnvisitedNode(visitedNodes, parent)) return;
+
+        graph[parent].forEach((child) => {
+            DFS(graph, visitedNodes | (1 << child), paths);
+        });
+    });
+}
+
+const isChekedPaths = (paths, visitedNodes) => paths.has(visitedNodes);
+
+function countNodesTypes(graph, visitedNodes) {
+    let [wolf, sheep] = [0, 0];
+    graph.forEach((_, node) => {
+        if (isUnvisitedNode(visitedNodes, node)) return;
+        if (graph.info[node] === WOLF) wolf++;
+        if (graph.info[node] === SHEEP) sheep++;
+    });
+    return [wolf, sheep];
+}
+
+const isUnvisitedNode = (visitedNodes, node) => !(visitedNodes & (1 << node));
+
+/****** TEST CASE *******/
 console.log(
     solution(
         [0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1],
@@ -62,6 +78,7 @@ console.log(
         ],
     ),
 );
+
 console.log(
     solution(
         [0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0],
@@ -80,23 +97,23 @@ console.log(
     ),
 );
 
-// console.log(
-//     solution(
-//         [0, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0],
-//         [
-//             [0, 1],
-//             [0, 2],
-//             [1, 3],
-//             [1, 4],
-//             [3, 7],
-//             [4, 8],
-//             [2, 5],
-//             [2, 6],
-//             [5, 9],
-//             [9, 11],
-//             [6, 10],
-//             [10, 12],
-//             [12, 13],
-//         ],
-//     ),
-// ); // 반례: 8
+console.log(
+    solution(
+        [0, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0],
+        [
+            [0, 1],
+            [0, 2],
+            [1, 3],
+            [1, 4],
+            [3, 7],
+            [4, 8],
+            [2, 5],
+            [2, 6],
+            [5, 9],
+            [9, 11],
+            [6, 10],
+            [10, 12],
+            [12, 13],
+        ],
+    ),
+); // 반례: 8
