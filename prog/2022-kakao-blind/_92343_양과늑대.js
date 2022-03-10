@@ -10,105 +10,93 @@
  * @param {*} edges 2진 트리의 각 노드들의 연결 관계를 담은 2차원 배열
  * @returns 모을 수 있는 양이 최대 몇 마리인지
  */
-class Node {
-    constructor(node, type) {
-        this.node = node;
-        this.type = type;
-    }
-}
 
 function solution(info, edges) {
     const graph = Array.from(Array(info.length), () => []);
     edges.forEach(([parent, child]) => {
-        graph[parent].push(new Node(child, info[child]));
+        graph[parent].push(child);
     });
 
-    const [SHEEP, WOLF] = [0, 1];
-    let wolvesOfSheep = [];
-    const queue = [[new Node(0, 0), []]];
+    let answer = 1;
+    DFS(graph, 1, (memo = new Set()));
+    return answer;
 
-    while (queue.length) {
-        const [parent, wolves] = queue.shift();
+    function DFS(graph, visitedNodes, memo) {
+        if (memo.has(visitedNodes)) return;
+        memo.add(visitedNodes);
 
-        for (const child of graph[parent.node]) {
-            const childWolves = [...wolves];
-            if (child.type === WOLF) childWolves.push(child.node);
-            if (child.type === SHEEP) wolvesOfSheep.push(childWolves);
-            queue.push([child, childWolves]);
-        }
-    }
-
-    let sheep = 1;
-    let metWolves = new Set([]);
-    while (wolvesOfSheep.length) {
-        let isMetSheep = false;
-        wolvesOfSheep = wolvesOfSheep.filter((meetWolves) => {
-            const wolves = new Set([...metWolves, ...meetWolves]);
-            if (wolves.size >= sheep) return true;
-
-            metWolves = wolves;
-            sheep++;
-            isMetSheep = true;
-            return false;
+        let [wolves, sheep] = [0, 0];
+        graph.forEach((_, node) => {
+            if (!(visitedNodes & (1 << node))) return;
+            if (info[node] === 1) wolves++;
+            else sheep++;
         });
-        if (!isMetSheep) break;
-    }
-    return sheep;
-}
 
-// console.log(
-//     solution(
-//         [0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1],
-//         [
-//             [0, 1],
-//             [1, 2],
-//             [1, 4],
-//             [0, 8],
-//             [8, 7],
-//             [9, 10],
-//             [9, 11],
-//             [4, 3],
-//             [6, 5],
-//             [4, 6],
-//             [8, 9],
-//         ],
-//     ),
-// );
-// console.log(
-//     solution(
-//         [0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0],
-//         [
-//             [0, 1],
-//             [0, 2],
-//             [1, 3],
-//             [1, 4],
-//             [2, 5],
-//             [2, 6],
-//             [3, 7],
-//             [4, 8],
-//             [6, 9],
-//             [9, 10],
-//         ],
-//     ),
-// );
+        if (wolves >= sheep) return;
+        answer = Math.max(answer, sheep);
+
+        graph.forEach((_, parent) => {
+            if (!(visitedNodes & (1 << parent))) return;
+            graph[parent].forEach((child) => {
+                DFS(graph, visitedNodes | (1 << child), memo);
+            });
+        });
+    }
+}
 
 console.log(
     solution(
-        [0, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0],
+        [0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1],
+        [
+            [0, 1],
+            [1, 2],
+            [1, 4],
+            [0, 8],
+            [8, 7],
+            [9, 10],
+            [9, 11],
+            [4, 3],
+            [6, 5],
+            [4, 6],
+            [8, 9],
+        ],
+    ),
+);
+console.log(
+    solution(
+        [0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0],
         [
             [0, 1],
             [0, 2],
             [1, 3],
             [1, 4],
-            [3, 7],
-            [4, 8],
             [2, 5],
             [2, 6],
-            [5, 9],
-            [9, 11],
-            [6, 10],
-            [10, 12],
-            [12, 13],
+            [3, 7],
+            [4, 8],
+            [6, 9],
+            [9, 10],
         ],
     ),
-); // 반례: 8
+);
+
+// console.log(
+//     solution(
+//         [0, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0],
+//         [
+//             [0, 1],
+//             [0, 2],
+//             [1, 3],
+//             [1, 4],
+//             [3, 7],
+//             [4, 8],
+//             [2, 5],
+//             [2, 6],
+//             [5, 9],
+//             [9, 11],
+//             [6, 10],
+//             [10, 12],
+//             [12, 13],
+//         ],
+//     ),
+// ); // 반례: 8
