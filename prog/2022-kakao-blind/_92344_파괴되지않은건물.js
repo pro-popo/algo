@@ -15,27 +15,38 @@
 
 function solution(board, skill) {
     const [ROW, COLUWN] = [board.length, board[0].length];
-    const effects = Array.from(Array(ROW), () => Array(COLUWN).fill(0));
+    let effects = Array.from(Array(ROW + 1), () => Array(COLUWN + 1).fill(0));
 
     skill.forEach(([type, r1, c1, r2, c2, degree]) => {
         type === 1 && (degree = -degree);
-        for (let i = r1; i <= r2; i++) {
-            effects[i][c1] += degree;
-            if (c2 + 1 < COLUWN) effects[i][c2 + 1] += -degree;
-        }
+        effects[r1][c1] += degree;
+        effects[r1][c2 + 1] += -degree;
+        effects[r2 + 1][c1] += -degree;
+        effects[r2 + 1][c2 + 1] += degree;
     });
+
+    for (let i = 0; i <= ROW; i++) {
+        for (let j = 0; j <= COLUWN; j++) {
+            effects[i][j] += effects[i][j - 1] || 0;
+        }
+    }
+
+    for (let j = 0; j <= COLUWN; j++) {
+        for (let i = 0; i <= ROW; i++) {
+            if (i - 1 >= 0) effects[i][j] += effects[i - 1][j];
+        }
+    }
+
     let answer = 0;
     board.forEach((_, r) => {
-        let effect = 0;
         board[r].forEach((_, c) => {
-            effect += effects[r][c];
-            if (board[r][c] + effect > 0) answer++;
+            if (board[r][c] + effects[r][c] > 0) answer++;
         });
     });
     return answer;
 }
 
-console.table(
+console.log(
     solution(
         [
             [5, 5, 5, 5, 5],
