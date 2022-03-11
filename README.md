@@ -51,6 +51,9 @@
 
 ### 📅 2022.03
 
+#### Day 11. FRI
+
+> 🟣 [[Level 3] 파괴되지 않은 건물 - 누적합](https://programmers.co.kr/learn/courses/30/lessons/92344) ([#92344](prog/2022-kakao-blind/_92344_파괴되지않은건물.js))  
 
 #### Day 10. THU
 
