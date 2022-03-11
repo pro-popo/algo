@@ -14,36 +14,62 @@
  */
 
 function solution(board, skill) {
-    const [ROW, COLUWN] = [board.length, board[0].length];
-    let effects = Array.from(Array(ROW + 1), () => Array(COLUWN + 1).fill(0));
+    const skills = combineSkillsRanges(skill);
+    prefixSum(skills);
+
+    usingSkills(board, skills);
+    return countUndestroyedBuilding(board);
+}
+
+const [ROW, COLUWN] = [1000, 1000];
+function combineSkillsRanges(skill) {
+    const skills = Array.from(Array(ROW + 1), () => Array(COLUWN + 1).fill(0));
 
     skill.forEach(([type, r1, c1, r2, c2, degree]) => {
         type === 1 && (degree = -degree);
-        effects[r1][c1] += degree;
-        effects[r1][c2 + 1] += -degree;
-        effects[r2 + 1][c1] += -degree;
-        effects[r2 + 1][c2 + 1] += degree;
+        skills[r1][c1] += degree;
+        skills[r1][c2 + 1] += -degree;
+        skills[r2 + 1][c1] += -degree;
+        skills[r2 + 1][c2 + 1] += degree;
     });
+    return skills;
+}
 
+function prefixSum(skills) {
+    leftToRight(skills);
+    topToBottom(skills);
+}
+
+function leftToRight(skills) {
     for (let i = 0; i <= ROW; i++) {
         for (let j = 0; j <= COLUWN; j++) {
-            effects[i][j] += effects[i][j - 1] || 0;
+            skills[i][j] += skills[i][j - 1] || 0;
         }
     }
+}
 
+function topToBottom(skills) {
     for (let j = 0; j <= COLUWN; j++) {
         for (let i = 0; i <= ROW; i++) {
-            if (i - 1 >= 0) effects[i][j] += effects[i - 1][j];
+            if (i - 1 >= 0) skills[i][j] += skills[i - 1][j];
         }
     }
+}
 
-    let answer = 0;
+function usingSkills(board, skills) {
     board.forEach((_, r) => {
         board[r].forEach((_, c) => {
-            if (board[r][c] + effects[r][c] > 0) answer++;
+            board[r][c] += skills[r][c];
         });
     });
-    return answer;
+}
+
+function countUndestroyedBuilding(board) {
+    return board.reduce(
+        (totalBuilding, _, r) =>
+            totalBuilding + board[r].filter((_, c) => board[r][c] > 0).length,
+        0,
+    );
 }
 
 console.log(
