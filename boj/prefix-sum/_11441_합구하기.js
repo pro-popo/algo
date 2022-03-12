@@ -4,19 +4,22 @@
  *
  * @param {*} ([numbers, ranges]) [수들의 배열, 구간(i, j)]
  * @returns i번째 수부터 j번째 수까지의 합
+ *
  */
 function solution([numbers, ranges]) {
-    prefixSum(numbers);
-
+    const cumulativeSum = calculateCumulativeSum(numbers);
     return ranges
-        .map(([start, end]) => numbers[end] - numbers[start - 1])
+        .map(([start, end]) => cumulativeSum[end] - cumulativeSum[start - 1])
         .join('\n');
 }
 
-function prefixSum(numbers) {
-    for (let i = 1; i < numbers.length; i++) {
-        numbers[i] += numbers[i - 1];
-    }
+function calculateCumulativeSum(numbers) {
+    const cumulativeSum = Array(numbers.length + 1).fill(0);
+    return cumulativeSum.map((_, i) =>
+        i === 0
+            ? 0
+            : (cumulativeSum[i] = numbers[i - 1] + cumulativeSum[i - 1]),
+    );
 }
 
 function input(test) {
@@ -31,7 +34,7 @@ function input(test) {
     numbers = numbers.split(' ').map(Number);
     ranges = ranges.map((range) => range.split(' ').map(Number));
 
-    return [[0, ...numbers], ranges];
+    return [numbers, ranges];
 }
 
 const TEST1 = `5
@@ -53,4 +56,4 @@ const TEST2 = `3
 2 3
 1 3`;
 
-console.log(solution(input()));
+console.log(solution(input(TEST1)));
