@@ -96,16 +96,16 @@ function prefixSum(skills) {
 
 function leftToRight(skills) {
     for (let i = 0; i <= ROW; i++) {
-        for (let j = 0; j <= COLUWN; j++) {
-            skills[i][j] += skills[i][j - 1] || 0;
+        for (let j = 1; j <= COLUWN; j++) {
+            skills[i][j] += skills[i][j - 1];
         }
     }
 }
 
 function topToBottom(skills) {
     for (let j = 0; j <= COLUWN; j++) {
-        for (let i = 0; i <= ROW; i++) {
-            if (i - 1 >= 0) skills[i][j] += skills[i - 1][j];
+        for (let i = 1; i <= ROW; i++) {
+            skills[i][j] += skills[i - 1][j];
         }
     }
 }
