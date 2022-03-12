@@ -14,14 +14,16 @@
  *   누적합[j] - 누적합[i-1]을 계산하면 i ~ j까지의 합을 구할 수 있다.
  *   0~j가지의 합에서 0~(i-1)까지의 누적합을 빼면, i~j에 대한 누적합이 나오기 때문이다.
  *
- * - 단순히 숫자를 하나씩 더하게 되면 O(N*M)으로,
+ * - M개의 구간을 단순히 숫자를 하나씩 더하게 되면 O(N*M)으로,
  *   최악의 경우 10_000_000_000 이다.
  *
- *   하지만 먼저 구간합을 구하고 => O(N)
+ *   하지만 먼저 구간합을 구하게 되면,
  *   (i,j)의 합을 구할 때 O(1)로 구할 수 있다. => O(N+M)
  *
+ * - [i, j]에 대한 구간합을 구할 때마다
+ *   console.log로 바로 출력하면 시간초과가 발생한다.
+ *   이 경우, 구간합을 구해서 하나의 문자열로 이은 다음에 출력하면 시간을 단축할 수 있다.
  *
- * - [i, j]에 대한 구간합을 구할 때마다 console.log로 바로 출력하면 시간초과가 발생한다.
  */
 function solution([numbers, ranges]) {
     const cumulativeSum = calculateCumulativeSum(numbers);
@@ -31,12 +33,11 @@ function solution([numbers, ranges]) {
 }
 
 function calculateCumulativeSum(numbers) {
-    const cumulativeSum = Array(numbers.length + 1).fill(0);
-    return cumulativeSum.map((_, i) =>
-        i === 0
-            ? 0
-            : (cumulativeSum[i] = numbers[i - 1] + cumulativeSum[i - 1]),
-    );
+    const cumulativeSum = [0, ...numbers];
+    for (let i = 1; i < cumulativeSum.length; i++) {
+        cumulativeSum[i] += cumulativeSum[i - 1];
+    }
+    return cumulativeSum;
 }
 
 function input(test) {
