@@ -51,6 +51,11 @@
 
 ### 📅 2022.03
 
+#### Day 14. MON
+
+> 🟣 [[Level 1] 신규 아이디 추천 - 정규식](https://programmers.co.kr/learn/courses/30/lessons/72410) ([#72410](prog/2021-kakao-blind/_72410_신규아이디추천.js))
+
+
 #### Day 13. SUN
 
 > 🟢 [[Silver Ⅰ] 구간 합 구하기 5 - 누적합](https://www.acmicpc.net/problem/11660) ([#11660](boj/prefix-sum/_11660_구간합구하기5.js))
