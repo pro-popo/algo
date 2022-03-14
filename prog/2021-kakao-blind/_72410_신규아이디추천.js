@@ -23,15 +23,27 @@
  */
 
 function solution(new_id) {
-    new_id = new_id
+    return new_id
         .toLowerCase()
-        .replace(/[^a-z0-9-_.]/g, '')
-        .replace(/\.{2,}/g, '.')
-        .replace(/^\.|\.$/g, '');
-
-    new_id = !new_id ? 'a' : new_id.slice(0, 15).replace(/\.$/, '');
-
-    return new_id.padEnd(3, new_id[new_id.length - 1]);
+        .replace(impossibleCharacters, '')
+        .replace(consecutivePeriods, '.')
+        .replace(startOrEndPeriod, '')
+        .replace(emptyString, 'a')
+        .slice(0, 15)
+        .replace(endPeriod, '')
+        .replace(oneCharacter, '$1$1$1')
+        .replace(twoCharacters, '$1$2$2');
 }
 
-console.log(solution('"...!@BaT#*..y.abcdefghijklm"'));
+const impossibleCharacters = /[^a-z0-9-_.]/g;
+const consecutivePeriods = /\.{2,}/g;
+const startOrEndPeriod = /^\.|\.$/g;
+const emptyString = /^$/;
+const endPeriod = /\.$/;
+const oneCharacter = /^(.)$/;
+const twoCharacters = /^(.)(.)$/;
+
+/****** TEST CASE *******/
+console.log(solution('...!@BaT#*..y.abcdefghijklm'));
+console.log(solution('z-+.^.'));
+console.log(solution('=.='));
