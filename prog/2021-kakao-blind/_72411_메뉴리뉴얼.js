@@ -17,8 +17,6 @@
  *
  *   그 다음, 메뉴가 등장하는 횟수가 2이상인 경우와 course의 조건에 속하는 메뉴만 걸러낸다.
  *   또한, course별로 가장 주문 횟수가 큰 메뉴만 걸러낸다.
- *   이를 위해 먼저 단품 메뉴들의 개수의 오름차순으로 메뉴를 정렬한다.
- *   만약 개수가 동일할 경우, 주문 횟수의 내림차순으로 정렬한다.
  *
  *   마지막으로, 메뉴를 사전 순으로 오름차순하여 반환한다.
  *
@@ -37,40 +35,40 @@
 function solution(orders, course) {
     const menus = createMenus(orders);
 
-    const numberOfOrders = new Array(11).fill(0);
-    return Array.from(menus.entries())
-        .filter(([word, count]) => course.includes(word.length) && count >= 2)
-        .sort(([a, countA], [b, countB]) => {
-            if (a.length === b.length) return countB - countA;
-            return a.length - b.length;
-        })
-        .filter(([word, count]) => {
-            numberOfOrders[word.length] = Math.max(
-                numberOfOrders[word.length],
-                count,
-            );
-            return numberOfOrders[word.length] === count;
-        })
-        .map(([word]) => word)
-        .sort(lexicographicalOrder);
-}
+    const maxOrders = maxOrdersPerCourse(menus);
 
-const lexicographicalOrder = (a, b) => a.localeCompare(b);
+    return menus
+        .filter(
+            ([menu, orderCount]) =>
+                orderCount >= 2 &&
+                course.includes(menu.length) &&
+                maxOrders[menu.length] === orderCount,
+        )
+        .map(([menu]) => menu)
+        .sort();
+}
 
 function createMenus(orders) {
     const menus = new Map();
     orders
-        .map((order) => [...order].sort(lexicographicalOrder))
+        .map((order) => [...order].sort())
         .forEach((order) => combination('', 0, order));
-    return menus;
+    return Array.from(menus.entries());
 
-    function combination(word, index, alphabets) {
-        menus.set(word, (menus.get(word) || 0) + 1);
+    function combination(menu, index, order) {
+        menus.set(menu, (menus.get(menu) || 0) + 1);
 
-        for (let i = index; i < alphabets.length; i++) {
-            combination(word + alphabets[i], i + 1, alphabets);
+        for (let i = index; i < order.length; i++) {
+            combination(menu + order[i], i + 1, order);
         }
     }
+}
+
+function maxOrdersPerCourse(menus) {
+    return menus.reduce((maxOrders, [menu, orderCount]) => {
+        maxOrders[menu.length] = Math.max(maxOrders[menu.length], orderCount);
+        return maxOrders;
+    }, Array(11).fill(0));
 }
 
 console.log(
