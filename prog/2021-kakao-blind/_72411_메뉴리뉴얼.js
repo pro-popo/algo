@@ -9,33 +9,42 @@
  * @param {*} course 추가하고 싶어하는 코스요리를 구성하는 단품메뉴들의 갯수가 담긴 배열
  *                   (1~10)
  * @returns 새로 추가하게 될 코스요리의 메뉴 구성 => 오름차순
+ *
  */
 
 function solution(orders, course) {
-    const menus = new Map();
-    orders
-        .map((order) => [...order].sort((a, b) => a.localeCompare(b)))
-        .forEach((order) => combination('', 0, order));
+    const menus = createMenus(orders);
 
-    const numberOfWords = new Array(11).fill(0);
+    const numberOfOrders = new Array(11).fill(0);
     return Array.from(menus.entries())
+        .filter(([word, count]) => course.includes(word.length) && count >= 2)
         .sort(([a, countA], [b, countB]) => {
             if (a.length === b.length) return countB - countA;
             return a.length - b.length;
         })
         .filter(([word, count]) => {
-            numberOfWords[word.length] = Math.max(
-                numberOfWords[word.length],
+            numberOfOrders[word.length] = Math.max(
+                numberOfOrders[word.length],
                 count,
             );
-            return count >= 2 && numberOfWords[word.length] === count;
+            return numberOfOrders[word.length] === count;
         })
-        .map(([word]) => word);
+        .map(([word]) => word)
+        .sort(lexicographicalOrder);
+}
+
+const lexicographicalOrder = (a, b) => a.localeCompare(b);
+
+function createMenus(orders) {
+    const menus = new Map();
+    orders
+        .map((order) => [...order].sort(lexicographicalOrder))
+        .forEach((order) => combination('', 0, order));
+    return menus;
 
     function combination(word, index, alphabets) {
-        if (course.includes(word.length)) {
-            menus.set(word, (menus.get(word) || 0) + 1);
-        }
+        menus.set(word, (menus.get(word) || 0) + 1);
+
         for (let i = index; i < alphabets.length; i++) {
             combination(word + alphabets[i], i + 1, alphabets);
         }
