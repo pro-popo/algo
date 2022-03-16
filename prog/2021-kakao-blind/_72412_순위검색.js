@@ -11,53 +11,60 @@
  */
 
 function solution(info, query) {
-    const conditions = createConditions(info);
+    const scoresByCondition = classifyScoresByCondition(info);
+    sortScoresInDESC(scoresByCondition);
 
-    for (const scores of conditions.values()) {
-        scores.sort((a, b) => b - a);
-    }
+    return query.map((query) => {
+        query = query.replace(/ and /g, ' ').split(' ');
+        const [minScore, condition] = [+query.pop(), query.join('')];
+        const scores = scoresByCondition.get(condition) || [];
 
-    return query
-        .map((query) => query.replace(/ and /g, ' ').split(' '))
-        .map((query) => {
-            const minScore = +query.pop();
-            const condition = query.join('');
-            const scores = conditions.get(condition) || [];
-
-            let [min, max] = [0, scores.length - 1];
-            let answer = -1;
-            while (min <= max) {
-                let mid = Math.floor((min + max) / 2);
-
-                if (scores[mid] < minScore) {
-                    max = mid - 1;
-                    continue;
-                }
-                answer = mid;
-                min = mid + 1;
-            }
-            return answer + 1;
-        });
+        return countScoresMoreThenMinScore(minScore, scores);
+    });
 }
 
-function createConditions(info) {
-    return info.reduce((conditions, application) => {
+function classifyScoresByCondition(info) {
+    return info.reduce((scoresByCondition, application) => {
         const [language, job, career, soulFood, score] = application.split(' ');
         [language, '-'].forEach((language) => {
             [job, '-'].forEach((job) => {
                 [career, '-'].forEach((career) => {
                     [soulFood, '-'].forEach((soulFood) => {
                         const condition = language + job + career + soulFood;
-                        const scores = conditions.get(condition) || [];
+                        const scores = scoresByCondition.get(condition) || [];
                         scores.push(+score);
-                        conditions.set(condition, scores);
+                        scoresByCondition.set(condition, scores);
                     });
                 });
             });
         });
-        return conditions;
+        return scoresByCondition;
     }, new Map());
 }
+
+function sortScoresInDESC(scoresByCondition) {
+    for (const scores of scoresByCondition.values()) {
+        scores.sort((a, b) => b - a);
+    }
+}
+
+function countScoresMoreThenMinScore(minScore, scores) {
+    let [min, max] = [0, scores.length - 1];
+    let answer = -1;
+    while (min <= max) {
+        let mid = Math.floor((min + max) / 2);
+
+        if (scores[mid] < minScore) {
+            max = mid - 1;
+            continue;
+        }
+        answer = mid;
+        min = mid + 1;
+    }
+    return answer + 1;
+}
+
+/****** TEST CASE *******/
 
 console.log(
     solution(
