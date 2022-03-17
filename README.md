@@ -51,6 +51,10 @@
 
 ### 📅 2022.03
 
+#### Day 17. THU
+
+> 🟣 [[Level 2] 피로도 - 완전탐색](https://programmers.co.kr/learn/courses/30/lessons/87946) ([#87946](prog/challenges/_87946_피로도.js))
+
 #### Day 16. WED
 
 > 🟣 [[Level 2] 순위 검색 - 해시, 이분탐색](https://programmers.co.kr/learn/courses/30/lessons/72412) ([#72412](prog/2021-kakao-blind/_72412_순위검색.js))
@@ -146,9 +150,9 @@
 
 #### Day 23. WED
 
-> 🟣 [[Level 2] 타겟 넘버 - DFS/DFS](https://programmers.co.kr/learn/courses/30/lessons/43165) ([#43165](prog/dfs-bfs/_43165_타겟넘버.js))  
-> 🟣 [[Level 3] 네트워크 - DFS/DFS](https://programmers.co.kr/learn/courses/30/lessons/43162) ([#43162](prog/dfs-bfs/_43162_네트워크.js))  
-> 🟣 [[Level 3] 단어 변환 - DFS/DFS](https://programmers.co.kr/learn/courses/30/lessons/43163) ([#43163](prog/dfs-bfs/_43163_단어변환.js))
+> 🟣 [[Level 2] 타겟 넘버 - DFS/BFS](https://programmers.co.kr/learn/courses/30/lessons/43165) ([#43165](prog/dfs-bfs/_43165_타겟넘버.js))  
+> 🟣 [[Level 3] 네트워크 - DFS/BFS](https://programmers.co.kr/learn/courses/30/lessons/43162) ([#43162](prog/dfs-bfs/_43162_네트워크.js))  
+> 🟣 [[Level 3] 단어 변환 - DFS/BFS](https://programmers.co.kr/learn/courses/30/lessons/43163) ([#43163](prog/dfs-bfs/_43163_단어변환.js))
 
 #### Day 22. TUE
 
