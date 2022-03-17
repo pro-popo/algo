@@ -14,22 +14,18 @@
 
 function solution(k, dungeons) {
     let answer = 0;
-    permutation(k, 0, new Set());
+    DFS(k, 0, new Set());
 
-    function permutation(k, count, visitedDungeon) {
-        if (visitedDungeon.size === dungeons.length) {
-            answer = Math.max(answer, count);
-            return;
-        }
-        for (let i = 0, len = dungeons.length; i < len; i++) {
-            if (visitedDungeon.has(i)) continue;
+    function DFS(k, count, visitedDungeon) {
+        answer = Math.max(answer, count);
 
-            const [need, used] = dungeons[i];
+        dungeons.forEach(([need, used], i) => {
+            if (k < need || visitedDungeon.has(i)) return;
+
             visitedDungeon.add(i);
-            if (k < need) permutation(k, count, visitedDungeon);
-            else permutation(k - used, count + 1, visitedDungeon);
+            DFS(k - used, count + 1, visitedDungeon);
             visitedDungeon.delete(i);
-        }
+        });
     }
     return answer;
 }
