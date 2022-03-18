@@ -9,34 +9,40 @@
  * 즉, 동영상을 시청한 시청자들의 누적 재생시간이 가장 큰 구간이 최적의 구간이 된다.
  *
  *
- * @param {*} play_time
- * @param {*} adv_time
+ * @param {*} playTime
+ * @param {*} advTime
  * @param {*} logs
  * @returns
  */
 
-function solution(play_time, adv_time, logs) {
-    [play_time, adv_time] = [play_time, adv_time].map((time) =>
-        convertToSeconds(time),
-    );
-    logs = logs.map((log) =>
-        log.split('-').map((time) => convertToSeconds(time)),
-    );
-    const prefixSumOfViewers = calculatePrefixSumOfViewers(logs, play_time);
+function solution(playTime, advTime, logs) {
+    [playTime, advTime, logs] = convertInputsToSeconds(playTime, advTime, logs);
+    const prefixSumOfViewers = calculatePrefixSumOfViewers(logs, playTime);
 
-    let [start, end] = [0, adv_time - 1];
-    let maxViewers = -1;
-    let answer = -1;
-    while (end < prefixSumOfViewers.length) {
+    let [start, end] = [0, advTime - 1];
+    let [maxViewers, answer] = [-1, -1];
+    while (end <= playTime) {
         const viewers =
             prefixSumOfViewers[end] - (prefixSumOfViewers[start - 1] || 0);
+
         if (viewers > maxViewers) {
             maxViewers = viewers;
             answer = start;
         }
         start++, end++;
     }
+
     return convertToTime(answer);
+}
+
+function convertInputsToSeconds(playTime, advTime, logs) {
+    [playTime, advTime] = [playTime, advTime].map((time) =>
+        convertToSeconds(time),
+    );
+    logs = logs.map((log) =>
+        log.split('-').map((time) => convertToSeconds(time)),
+    );
+    return [playTime, advTime, logs];
 }
 
 function convertToSeconds(time) {
@@ -50,20 +56,20 @@ function convertToTime(second) {
         Math.floor(second / 60) % 60,
         second % 60,
     ]
-        .map((number) => (String(number).length === 1 ? `0${number}` : number))
+        .map((number) => (number / 10 < 1 ? `0${number}` : number))
         .join(':');
 }
 
-function calculatePrefixSumOfViewers(logs, play_time) {
+function calculatePrefixSumOfViewers(logs, playTime) {
     const prefixSum = logs.reduce((prefixSum, [start, end]) => {
         prefixSum[start]++;
         prefixSum[end]--;
         return prefixSum;
-    }, Array(play_time + 1).fill(0));
+    }, Array(playTime + 1).fill(0));
 
     let turn = 2;
     while (turn-- > 0) {
-        for (let i = 1; i < prefixSum.length; i++) {
+        for (let i = 1; i <= playTime; i++) {
             prefixSum[i] += prefixSum[i - 1];
         }
     }
