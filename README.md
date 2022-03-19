@@ -51,6 +51,11 @@
 
 ### 📅 2022.03
 
+#### Day 19. SAT
+
+> 🟣 [[Level 1] 최소직사각형](https://programmers.co.kr/learn/courses/30/lessons/86491) ([#86491](prog/challenges/_86491_최소직사각형.js))          
+> 🟣 [[Level 1] 부족한 금액 계산하기](https://programmers.co.kr/learn/courses/30/lessons/82612) ([#82612](prog/challenges/_82612_부족한금액계산하기.js))
+
 #### Day 18. FRI
 
 > 🟣 [[Level 3] 광고 삽입 - 누적합](https://programmers.co.kr/learn/courses/30/lessons/72414) ([#72414](prog/2021-kakao-blind/_72414_광고삽입.js))
