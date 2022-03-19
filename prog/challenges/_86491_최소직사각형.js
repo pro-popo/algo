@@ -14,15 +14,15 @@
  */
 
 function solution(sizes) {
-    let answer = { width: 0, height: 0 };
-    sizes.forEach(([width, height]) => {
-        answer = {
-            width: Math.max(answer.width, Math.max(width, height)),
-            height: Math.max(answer.height, Math.min(width, height)),
-        };
-    });
+    const [maxWidth, maxHeight] = sizes.reduce(
+        ([maxWidth, maxHeight], size) => {
+            const [width, height] = size.sort((a, b) => a - b);
+            return [Math.max(maxWidth, width), Math.max(maxHeight, height)];
+        },
+        [0, 0],
+    );
 
-    return answer.width * answer.height;
+    return maxWidth * maxHeight;
 }
 
 /****** TEST CASE *******/
