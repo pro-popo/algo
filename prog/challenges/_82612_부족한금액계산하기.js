@@ -10,13 +10,25 @@
  * @param {*} money 가지고 있는 금액 (1~1_000_000_000)
  * @param {*} count 놀이기구의 이용 횟수 (1~2_500)
  * @returns 부족한 금액 반환, 부족하지 않다면 0 반환
+ *
+ *
  */
 
 function solution(price, money, count) {
     do {
-        money -= price * count;
-    } while (count-- > 0);
-    return money >= 0 ? money : -money;
+        money -= calculatePrice(price, count);
+    } while (isRemainCount(count) && count--);
+
+    return isRemainMoney(money) ? 0 : -money;
 }
 
-console.log(solution(3, 1_000_000_000, 4));
+function calculatePrice(price, count) {
+    return price * count;
+}
+
+const isRemainCount = (count) => count > 0;
+const isRemainMoney = (money) => money >= 0;
+
+/****** TEST CASE *******/
+
+console.log(solution(3, 20, 4));
