@@ -51,6 +51,10 @@
 
 ### 📅 2022.03
 
+#### Day 18. FRI
+
+> 🟣 [[Level 3] 광고 삽입 - 누적합](https://programmers.co.kr/learn/courses/30/lessons/72414) ([#72414](prog/2021-kakao-blind/_72414_광고삽입.js))
+
 #### Day 17. THU
 
 > 🟣 [[Level 2] 피로도 - 완전탐색](https://programmers.co.kr/learn/courses/30/lessons/87946) ([#87946](prog/challenges/_87946_피로도.js))
@@ -146,7 +150,7 @@
 #### Day 24. THU
 
 > 🟣 [[Level 1] 모의고사 - 완전탐색](https://programmers.co.kr/learn/courses/30/lessons/42840) ([#42840](prog/bruteforce/_42840_모의고사.js))  
-> 🟣 [[Level 3] 여행경로 - DFS/DFS](https://programmers.co.kr/learn/courses/30/lessons/43164) ([#43164](prog/dfs-bfs/_43164_여행경로.js))
+> 🟣 [[Level 3] 여행경로 - DFS/BFS](https://programmers.co.kr/learn/courses/30/lessons/43164) ([#43164](prog/dfs-bfs/_43164_여행경로.js))
 
 #### Day 23. WED
 
