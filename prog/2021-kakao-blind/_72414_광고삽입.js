@@ -59,13 +59,9 @@ function solution(playTime, advTime, logs) {
     let [start, end] = [0, advTime - 1];
     let [maxViewers, answer] = [-1, -1];
     while (end <= playTime) {
-        const viewers =
-            prefixSumOfViewers[end] - (prefixSumOfViewers[start - 1] || 0);
+        const viewers = countViewersForSegment(prefixSumOfViewers, end, start);
 
-        if (viewers > maxViewers) {
-            maxViewers = viewers;
-            answer = start;
-        }
+        if (viewers > maxViewers) [maxViewers, answer] = [viewers, start];
         start++, end++;
     }
 
@@ -73,23 +69,20 @@ function solution(playTime, advTime, logs) {
 }
 
 function convertInputsToSeconds(playTime, advTime, logs) {
-    [playTime, advTime] = [playTime, advTime].map((time) =>
-        convertToSeconds(time),
-    );
-    logs = logs.map((log) =>
-        log.split('-').map((time) => convertToSeconds(time)),
-    );
-    return [playTime, advTime, logs];
+    return [
+        ...[playTime, advTime].map((time) => convertToSeconds(time)),
+        logs.map((log) => log.split('-').map((time) => convertToSeconds(time))),
+    ];
 }
 
 function convertToSeconds(time) {
     const [hour, minute, second] = time.split(':').map(Number);
-    return hour * 60 * 60 + minute * 60 + second;
+    return hour * 3600 + minute * 60 + second;
 }
 
 function convertToTime(second) {
     return [
-        Math.floor(second / 60 / 60),
+        Math.floor(second / 3600),
         Math.floor(second / 60) % 60,
         second % 60,
     ]
@@ -98,11 +91,11 @@ function convertToTime(second) {
 }
 
 function calculatePrefixSumOfViewers(logs, playTime) {
-    const prefixSum = logs.reduce((prefixSum, [start, end]) => {
+    const prefixSum = Array(playTime + 1).fill(0);
+    logs.forEach(([start, end]) => {
         prefixSum[start]++;
         prefixSum[end]--;
-        return prefixSum;
-    }, Array(playTime + 1).fill(0));
+    });
 
     let turn = 2;
     while (turn-- > 0) {
@@ -114,15 +107,21 @@ function calculatePrefixSumOfViewers(logs, playTime) {
     return prefixSum;
 }
 
-// console.log(
-//     solution('02:03:55', '00:14:15', [
-//         '01:20:15-01:45:14',
-//         '00:40:31-01:00:00',
-//         '00:25:50-00:48:29',
-//         '01:30:59-01:53:29',
-//         '01:37:44-02:02:30',
-//     ]),
-// );
+function countViewersForSegment(prefixSumOfViewers, end, start) {
+    return prefixSumOfViewers[end] - (prefixSumOfViewers[start - 1] || 0);
+}
+
+/****** TEST CASE *******/
+
+console.log(
+    solution('02:03:55', '00:14:15', [
+        '01:20:15-01:45:14',
+        '00:40:31-01:00:00',
+        '00:25:50-00:48:29',
+        '01:30:59-01:53:29',
+        '01:37:44-02:02:30',
+    ]),
+);
 
 console.log(
     solution('50:00:00', '50:00:00', [
