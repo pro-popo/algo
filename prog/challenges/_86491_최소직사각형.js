@@ -14,13 +14,10 @@
  */
 
 function solution(sizes) {
-    const [maxWidth, maxHeight] = sizes.reduce(
-        ([maxWidth, maxHeight], size) => {
-            const [width, height] = size.sort((a, b) => a - b);
-            return [Math.max(maxWidth, width), Math.max(maxHeight, height)];
-        },
-        [0, 0],
-    );
+    sizes = sizes.map((size) => size.sort((a, b) => a - b));
+
+    const maxWidth = Math.max(...sizes.map(([width]) => width));
+    const maxHeight = Math.max(...sizes.map(([_, height]) => height));
 
     return maxWidth * maxHeight;
 }
