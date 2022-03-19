@@ -25,19 +25,54 @@
  */
 
 function solution(price, money, count) {
+    const guest = new Guest(money, new Ride(price, 0));
+
     do {
-        money -= calculatePrice(price, count);
-    } while (isRemainCount(count) && count--);
+        guest.useRide();
+    } while (guest.getCount() < count);
 
-    return isRemainMoney(money) ? 0 : -money;
+    if (guest.isRemainMoney()) return 0;
+    return -guest.getMoney();
 }
 
-function calculatePrice(price, count) {
-    return price * count;
+class Ride {
+    constructor(price, count) {
+        this.price = price;
+        this.count = count;
+    }
+
+    useRide() {
+        this.count++;
+    }
+
+    calculatePrice() {
+        return this.price * this.count;
+    }
+
+    getCount() {
+        return this.count;
+    }
 }
 
-const isRemainCount = (count) => count > 0;
-const isRemainMoney = (money) => money >= 0;
+class Guest {
+    constructor(money, ride) {
+        this.money = money;
+        Object.setPrototypeOf(this.__proto__, ride);
+    }
+
+    useRide() {
+        super.useRide();
+        this.money -= super.calculatePrice();
+    }
+
+    isRemainMoney() {
+        return this.money >= 0;
+    }
+
+    getMoney() {
+        return this.money;
+    }
+}
 
 /****** TEST CASE *******/
 
