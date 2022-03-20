@@ -53,7 +53,7 @@
 
 #### Day 20. SUN
 
-> 🟣 [[Level 2] 모음사전](https://programmers.co.kr/learn/courses/30/lessons/84512) ([#84512](prog/challenges/_84512_모음사전.js)
+> 🟣 [[Level 2] 모음사전](https://programmers.co.kr/learn/courses/30/lessons/84512) ([#84512](prog/challenges/_84512_모음사전.js))
 
 #### Day 19. SAT
 
