@@ -9,17 +9,19 @@
  * @returns
  */
 
-function solution(searchWord) {
+function solution(word) {
     const alphabets = ['A', 'E', 'I', 'O', 'U'];
-    const dictionary = new Set();
-    let answer = 0;
-    combination('');
+    const dictionary = makeDictionary(alphabets);
 
+    return dictionary.findIndex(word) + 1;
+}
+
+function makeDictionary(alphabets) {
+    const dictionary = new Set();
+    dictionary.findIndex = findIndex;
+
+    combination('');
     function combination(word) {
-        if (word === searchWord) {
-            answer = dictionary.size;
-            return;
-        }
         if (word.length === 5) return;
 
         alphabets.forEach((alphabet) => {
@@ -29,7 +31,12 @@ function solution(searchWord) {
             combination(newWord);
         });
     }
-    return answer;
+
+    return dictionary;
+}
+
+function findIndex(word) {
+    return [...this].findIndex((w) => w === word);
 }
 
 console.log(solution('AAAAE'));
