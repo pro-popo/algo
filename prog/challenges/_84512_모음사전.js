@@ -6,7 +6,7 @@
  * 하나의 word가 주어질 때, 이 단어가 사전에 몇 번째 단어인가?
  *
  * @param {*} word (1~5)
- * @returns 주어진 단어가 사전에서 몇 번쨰 단어인지 반환
+ * @returns 주어진 단어가 사전에서 몇 번째 단어인지 반환
  *
  * ### 리뷰
  * - 풀이 방식은 다음과 같다.
@@ -24,32 +24,34 @@
 
 function solution(word) {
     const alphabets = ['A', 'E', 'I', 'O', 'U'];
-    const dictionary = makeDictionary(alphabets);
+    const MAX_LENGTH = 5;
+    const dictionary = makeDictionary(alphabets, MAX_LENGTH);
 
     return dictionary.findIndex(word) + 1;
 }
 
-function makeDictionary(alphabets) {
+function makeDictionary(alphabets, MAX_LENGTH) {
     const dictionary = new Set();
     dictionary.findIndex = findIndex;
 
     combination('');
+    return dictionary;
+
     function combination(word) {
-        if (word.length === 5) return;
+        if (word.length === MAX_LENGTH) return;
 
         alphabets.forEach((alphabet) => {
             const newWord = word + alphabet;
+
             if (dictionary.has(newWord)) return;
             dictionary.add(newWord);
             combination(newWord);
         });
     }
-
-    return dictionary;
 }
 
-function findIndex(word) {
-    return [...this].findIndex((w) => w === word);
+function findIndex(searchWord) {
+    return [...this].findIndex((word) => word === searchWord);
 }
 
 console.log(solution('AAAAE'));
