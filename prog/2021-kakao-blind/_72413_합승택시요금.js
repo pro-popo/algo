@@ -21,15 +21,15 @@ function solution(n, s, a, b, fares) {
 
     floydWarshall(N, taxiFares);
 
-    return findLowestTaixFare(taxiFares, s, a, b);
+    return findLowestFinalTaixFare(taxiFares, s, a, b);
 }
 
 function createGraph(N, edges) {
     const graph = Array.from(Array(N), () => Array(N).fill(Number.MAX_VALUE));
 
-    edges.forEach(([nodeA, nodeB, fare]) => {
-        graph[nodeA][nodeB] = graph[nodeB][nodeA] = fare;
-        graph[nodeA][nodeA] = graph[nodeB][nodeB] = 0;
+    edges.forEach(([start, end, fare]) => {
+        graph[start][end] = graph[end][start] = fare;
+        graph[start][start] = graph[end][end] = 0;
     });
     return graph;
 }
@@ -46,7 +46,7 @@ function floydWarshall(N, taxiFares) {
     }
 }
 
-function findLowestTaixFare(taxiFares, s, a, b) {
+function findLowestFinalTaixFare(taxiFares, s, a, b) {
     return Math.min(
         ...taxiFares.map(
             (_, i) => taxiFares[s][i] + taxiFares[i][a] + taxiFares[i][b],
