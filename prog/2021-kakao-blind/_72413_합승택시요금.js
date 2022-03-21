@@ -17,29 +17,44 @@
 
 function solution(n, s, a, b, fares) {
     const N = n + 1;
-    const dist = Array.from(Array(N), (_, i) =>
-        Array(N)
-            .fill(Number.MAX_VALUE)
-            .map((number, j) => (i === j ? 0 : number)),
-    );
+    const taxiFares = createGraph(N, fares);
 
-    fares.forEach(([nodeA, nodeB, fare]) => {
-        dist[nodeA][nodeB] = dist[nodeB][nodeA] = fare;
+    floydWarshall(N, taxiFares);
+
+    return findLowestTaixFare(taxiFares, s, a, b);
+}
+
+function createGraph(N, edges) {
+    const graph = Array.from(Array(N), () => Array(N).fill(Number.MAX_VALUE));
+
+    edges.forEach(([nodeA, nodeB, fare]) => {
+        graph[nodeA][nodeB] = graph[nodeB][nodeA] = fare;
+        graph[nodeA][nodeA] = graph[nodeB][nodeB] = 0;
     });
+    return graph;
+}
 
+function floydWarshall(N, taxiFares) {
     for (let k = 1; k < N; k++) {
         for (let i = 1; i < N; i++) {
             for (let j = 1; j < N; j++) {
-                if (dist[i][k] + dist[k][j] >= dist[i][j]) continue;
-                dist[i][j] = dist[i][k] + dist[k][j];
+                if (taxiFares[i][k] + taxiFares[k][j] >= taxiFares[i][j])
+                    continue;
+                taxiFares[i][j] = taxiFares[i][k] + taxiFares[k][j];
             }
         }
     }
+}
 
+function findLowestTaixFare(taxiFares, s, a, b) {
     return Math.min(
-        ...dist.map((_, i) => dist[s][i] + dist[i][a] + dist[i][b]),
+        ...taxiFares.map(
+            (_, i) => taxiFares[s][i] + taxiFares[i][a] + taxiFares[i][b],
+        ),
     );
 }
+
+/****** TEST CASE *******/
 
 console.log(
     solution(6, 4, 6, 2, [
