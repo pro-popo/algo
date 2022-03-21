@@ -51,6 +51,10 @@
 
 ### 📅 2022.03
 
+#### Day 21. MON
+
+> 🟣 [[Level 3] 합승 택시 요금 - 누적합](https://programmers.co.kr/learn/courses/30/lessons/72413) ([#72414](prog/2021-kakao-blind/_72413_합승택시요금.js))
+
 #### Day 20. SUN
 
 > 🟣 [[Level 2] 모음사전](https://programmers.co.kr/learn/courses/30/lessons/84512) ([#84512](prog/challenges/_84512_모음사전.js))
