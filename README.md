@@ -53,7 +53,7 @@
 
 #### Day 21. MON
 
-> 🟣 [[Level 3] 합승 택시 요금 - 누적합](https://programmers.co.kr/learn/courses/30/lessons/72413) ([#72414](prog/2021-kakao-blind/_72413_합승택시요금.js))
+> 🟣 [[Level 3] 합승 택시 요금 - 그래프](https://programmers.co.kr/learn/courses/30/lessons/72413) ([#72413](prog/2021-kakao-blind/_72413_합승택시요금.js))
 
 #### Day 20. SUN
 
