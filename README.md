@@ -51,6 +51,10 @@
 
 ### 📅 2022.03
 
+#### Day 22. TUE
+
+> 🟣 [[Level 3] 카드 짝 맞추기 - 완전탐색, 구현](https://programmers.co.kr/learn/courses/30/lessons/72415) ([#72415](prog/2021-kakao-blind/_72415_카드짝맞추기.js))
+
 #### Day 21. MON
 
 > 🟣 [[Level 3] 합승 택시 요금 - 그래프](https://programmers.co.kr/learn/courses/30/lessons/72413) ([#72413](prog/2021-kakao-blind/_72413_합승택시요금.js))
