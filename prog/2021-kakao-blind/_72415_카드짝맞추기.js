@@ -51,26 +51,26 @@ function solution(board, r, c) {
 
     return answer + pictureCards.length * 2;
 
-    function permutation(usedCard, cursor, moveCount) {
-        if (usedCard.size === pictureCards.length) {
+    function permutation(usedCards, cursor, moveCount) {
+        if (isNotRemainCard(usedCards, pictureCards)) {
             answer = Math.min(answer, moveCount);
             return;
         }
 
         pictureCards.forEach((cards, cardID) => {
-            if (usedCard.has(cardID)) return;
+            if (usedCards.has(cardID)) return;
 
-            const cursorMovements = calculateMinimumCursorMovement(
+            const cursorMovements = calculateMinimumCursorMovements(
                 board,
                 cursor,
             );
 
             const [firstCard, secondCard] = cards;
             const [firstCardMovements, secondCardMovements] = cards.map(
-                (card) => calculateMinimumCursorMovement(board, card),
+                (card) => calculateMinimumCursorMovements(board, card),
             );
 
-            usedCard.add(cardID);
+            usedCards.add(cardID);
             [firstCard, secondCard].forEach(
                 (point) => (board[point.r][point.c] = 0),
             );
@@ -84,10 +84,10 @@ function solution(board, r, c) {
                 secondCardMovements[firstCard.r][firstCard.c];
 
             if (movedFirstCard < movedSecondCard)
-                permutation(usedCard, secondCard, moveCount + movedFirstCard);
-            else permutation(usedCard, firstCard, moveCount + movedSecondCard);
+                permutation(usedCards, secondCard, moveCount + movedFirstCard);
+            else permutation(usedCards, firstCard, moveCount + movedSecondCard);
 
-            usedCard.delete(cardID);
+            usedCards.delete(cardID);
             [firstCard, secondCard].forEach(
                 (point) => (board[point.r][point.c] = cardID + 1),
             );
@@ -95,10 +95,13 @@ function solution(board, r, c) {
     }
 }
 
-function calculateMinimumCursorMovement(board, start) {
-    const cursorMovements = Array.from(Array(4), () =>
-        Array(4).fill(Number.MAX_VALUE),
-    );
+function isNotRemainCard(usedCards, pictureCards) {
+    return usedCards.size === pictureCards.length;
+}
+
+function calculateMinimumCursorMovements(board, start) {
+    const cursorMovements = initCursorMovements();
+
     const queue = [start];
     cursorMovements[start.r][start.c] = 0;
 
@@ -133,29 +136,40 @@ function calculateMinimumCursorMovement(board, start) {
                 isLocationBorderOfBoard(next, direction) ||
                 isPictureCard(board, next)
             ) {
-                if (getCursorMovements(start) + 1 < getCursorMovements(next)) {
-                    setCursorMovements(next, getCursorMovements(start) + 1);
+                if (
+                    cursorMovements.get(start) + 1 <
+                    cursorMovements.get(next)
+                ) {
+                    cursorMovements.set(next, cursorMovements.get(start) + 1);
 
                     queue.push(new Point(next.r, next.c));
                 }
                 break;
             }
 
-            if (getCursorMovements(current) + 1 >= getCursorMovements(next))
+            if (cursorMovements.get(current) + 1 >= cursorMovements.get(next))
                 continue;
 
-            setCursorMovements(next, getCursorMovements(current) + 1);
+            cursorMovements.set(next, cursorMovements.get(current) + 1);
             queue.push(new Point(next.r, next.c));
         }
     }
+}
 
-    function getCursorMovements(point) {
-        return cursorMovements[point.r][point.c];
-    }
+function initCursorMovements() {
+    const cursorMovements = Array.from(Array(4), () =>
+        Array(4).fill(Number.MAX_VALUE),
+    );
 
-    function setCursorMovements(point, movements) {
-        cursorMovements[point.r][point.c] = movements;
-    }
+    cursorMovements.get = function (point) {
+        return this[point.r][point.c];
+    };
+
+    cursorMovements.set = function (point, movements) {
+        this[point.r][point.c] = movements;
+    };
+
+    return cursorMovements;
 }
 
 function isOutOfRange(point) {
@@ -169,9 +183,17 @@ function isOutOfRange(point) {
 
 function isLocationBorderOfBoard(point, direction) {
     return (
-        (direction < 2 && (point.c === 0 || point.c === BOARD_LENGTH - 1)) ||
-        (direction > 1 && (point.r === 0 || point.r === BOARD_LENGTH - 1))
+        (isMovedLeftOrRigth() &&
+            (point.c === 0 || point.c === BOARD_LENGTH - 1)) ||
+        (isMovedUpOrDown() && (point.r === 0 || point.r === BOARD_LENGTH - 1))
     );
+
+    function isMovedLeftOrRigth() {
+        return direction < 2;
+    }
+    function isMovedUpOrDown() {
+        return direction > 1;
+    }
 }
 
 function isPictureCard(board, point) {
