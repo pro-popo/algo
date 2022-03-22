@@ -47,14 +47,15 @@ function solution(board, r, c) {
     const pictureCards = filterPictureCards(board);
     initBoard(board, pictureCards);
 
-    let answer = Number.MAX_VALUE;
+    let minCursorMovement = Number.MAX_VALUE;
     permutation(new Point(r, c), 0);
 
-    return answer + pictureCards.length * 2;
+    let numberOfCardFlips = pictureCards.length * 2;
+    return minCursorMovement + numberOfCardFlips;
 
     function permutation(cursor, moveCount) {
         if (!board.remainPictureCards.size) {
-            answer = Math.min(answer, moveCount);
+            minCursorMovement = Math.min(minCursorMovement, moveCount);
             return;
         }
 
@@ -67,17 +68,31 @@ function solution(board, r, c) {
             ] = countCursorMovement(board, cursor, cards);
 
             const [firstCard, secondCard] = cards;
-            const nextCursor =
+            const [nextCursor, totalMoveCount] =
                 moveCountWhenFirstFlipFirstCard <
                 moveCountWhenFirstFlipSecondCard
                     ? [secondCard, moveCount + moveCountWhenFirstFlipFirstCard]
                     : [firstCard, moveCount + moveCountWhenFirstFlipSecondCard];
 
             board.deleteCard(cardID);
-            permutation(...nextCursor);
+            permutation(nextCursor, totalMoveCount);
             board.addCard(cardID);
         });
     }
+}
+
+function filterPictureCards(board) {
+    const pictureCards = Array(9).fill(false);
+
+    for (let i = 0; i < BOARD_LENGTH; i++) {
+        for (let j = 0; j < BOARD_LENGTH; j++) {
+            if (!board[i][j]) continue;
+            pictureCards[board[i][j]] = pictureCards[board[i][j]] || [];
+            pictureCards[board[i][j]].push(new Point(i, j));
+        }
+    }
+
+    return pictureCards.filter((pictureCard) => pictureCard);
 }
 
 function initBoard(board, pictureCards) {
@@ -207,20 +222,6 @@ function isLocationBorderOfBoard(point, direction) {
 
 function isPictureCard(board, point) {
     return board.hasCard(board[point.r][point.c] - 1);
-}
-
-function filterPictureCards(board) {
-    const pictureCards = Array(9).fill(false);
-
-    for (let i = 0; i < BOARD_LENGTH; i++) {
-        for (let j = 0; j < BOARD_LENGTH; j++) {
-            if (!board[i][j]) continue;
-            pictureCards[board[i][j]] = pictureCards[board[i][j]] || [];
-            pictureCards[board[i][j]].push(new Point(i, j));
-        }
-    }
-
-    return pictureCards.filter((pictureCard) => pictureCard);
 }
 
 /****** TEST CASE *******/
