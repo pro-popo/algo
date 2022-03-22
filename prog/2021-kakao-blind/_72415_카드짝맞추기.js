@@ -59,33 +59,28 @@ function solution(board, r, c) {
 
         pictureCards.forEach((cards, cardID) => {
             if (usedCards.has(cardID)) return;
-
-            const cursorMovements = calculateMinimumCursorMovements(
-                board,
-                cursor,
-            );
-
             const [firstCard, secondCard] = cards;
-            const [firstCardMovements, secondCardMovements] = cards.map(
-                (card) => calculateMinimumCursorMovements(board, card),
-            );
+
+            const [moveCountWhenFlipFirstCard, moveCountWhenFlipSecondCard] =
+                countCursorMovement(board, [cursor, ...cards]);
 
             usedCards.add(cardID);
             [firstCard, secondCard].forEach(
                 (point) => (board[point.r][point.c] = 0),
             );
 
-            const movedFirstCard =
-                cursorMovements[firstCard.r][firstCard.c] +
-                firstCardMovements[secondCard.r][secondCard.c];
-
-            const movedSecondCard =
-                cursorMovements[secondCard.r][secondCard.c] +
-                secondCardMovements[firstCard.r][firstCard.c];
-
-            if (movedFirstCard < movedSecondCard)
-                permutation(usedCards, secondCard, moveCount + movedFirstCard);
-            else permutation(usedCards, firstCard, moveCount + movedSecondCard);
+            if (moveCountWhenFlipFirstCard < moveCountWhenFlipSecondCard)
+                permutation(
+                    usedCards,
+                    secondCard,
+                    moveCount + moveCountWhenFlipFirstCard,
+                );
+            else
+                permutation(
+                    usedCards,
+                    firstCard,
+                    moveCount + moveCountWhenFlipSecondCard,
+                );
 
             usedCards.delete(cardID);
             [firstCard, secondCard].forEach(
@@ -97,6 +92,21 @@ function solution(board, r, c) {
 
 function isNotRemainCard(usedCards, pictureCards) {
     return usedCards.size === pictureCards.length;
+}
+
+function countCursorMovement(board, cards) {
+    const [cursor, firstCard, secondCard] = cards;
+
+    const [cursorMovements, firstCardMovements, secondCardMovements] = [
+        cursor,
+        firstCard,
+        secondCard,
+    ].map((startPoint) => calculateMinimumCursorMovements(board, startPoint));
+
+    return [
+        cursorMovements.get(firstCard) + firstCardMovements.get(secondCard),
+        cursorMovements.get(secondCard) + secondCardMovements.get(firstCard),
+    ];
 }
 
 function calculateMinimumCursorMovements(board, start) {
@@ -116,13 +126,13 @@ function calculateMinimumCursorMovements(board, start) {
         for (let d = 0; d < 4; d++) {
             const next = new Point(current.r + dt[d][0], current.c + dt[d][1]);
             if (isOutOfRange(next)) continue;
-            moveCursorWithCtrl(current, d);
+            moveCursorWithCtrlAndKey(current, d);
         }
     }
 
     return cursorMovements;
 
-    function moveCursorWithCtrl(start, direction) {
+    function moveCursorWithCtrlAndKey(start, direction) {
         let next = new Point(start.r, start.c);
 
         while (true) {
