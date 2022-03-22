@@ -45,57 +45,56 @@ const BOARD_LENGTH = 4;
 
 function solution(board, r, c) {
     const pictureCards = filterPictureCards(board);
+    initBoard(board, pictureCards);
 
     let answer = Number.MAX_VALUE;
-    permutation(new Set(), new Point(r, c), 0);
+    permutation(new Point(r, c), 0);
 
     return answer + pictureCards.length * 2;
 
-    function permutation(usedCards, cursor, moveCount) {
-        if (isNotRemainCard(usedCards, pictureCards)) {
+    function permutation(cursor, moveCount) {
+        if (!board.remainPictureCards.size) {
             answer = Math.min(answer, moveCount);
             return;
         }
 
         pictureCards.forEach((cards, cardID) => {
-            if (usedCards.has(cardID)) return;
+            if (!board.hasCard(cardID)) return;
+
+            const [
+                moveCountWhenFirstFlipFirstCard,
+                moveCountWhenFirstFlipSecondCard,
+            ] = countCursorMovement(board, cursor, cards);
+
             const [firstCard, secondCard] = cards;
+            const nextCursor =
+                moveCountWhenFirstFlipFirstCard <
+                moveCountWhenFirstFlipSecondCard
+                    ? [secondCard, moveCount + moveCountWhenFirstFlipFirstCard]
+                    : [firstCard, moveCount + moveCountWhenFirstFlipSecondCard];
 
-            const [moveCountWhenFlipFirstCard, moveCountWhenFlipSecondCard] =
-                countCursorMovement(board, [cursor, ...cards]);
-
-            usedCards.add(cardID);
-            [firstCard, secondCard].forEach(
-                (point) => (board[point.r][point.c] = 0),
-            );
-
-            if (moveCountWhenFlipFirstCard < moveCountWhenFlipSecondCard)
-                permutation(
-                    usedCards,
-                    secondCard,
-                    moveCount + moveCountWhenFlipFirstCard,
-                );
-            else
-                permutation(
-                    usedCards,
-                    firstCard,
-                    moveCount + moveCountWhenFlipSecondCard,
-                );
-
-            usedCards.delete(cardID);
-            [firstCard, secondCard].forEach(
-                (point) => (board[point.r][point.c] = cardID + 1),
-            );
+            board.deleteCard(cardID);
+            permutation(...nextCursor);
+            board.addCard(cardID);
         });
     }
 }
 
-function isNotRemainCard(usedCards, pictureCards) {
-    return usedCards.size === pictureCards.length;
+function initBoard(board, pictureCards) {
+    board.remainPictureCards = new Set(pictureCards.map((_, cardID) => cardID));
+    board.hasCard = function (cardID) {
+        return this.remainPictureCards.has(cardID);
+    };
+    board.addCard = function (cardID) {
+        this.remainPictureCards.add(cardID);
+    };
+    board.deleteCard = function (cardID) {
+        this.remainPictureCards.delete(cardID);
+    };
 }
 
-function countCursorMovement(board, cards) {
-    const [cursor, firstCard, secondCard] = cards;
+function countCursorMovement(board, cursor, cards) {
+    const [firstCard, secondCard] = cards;
 
     const [cursorMovements, firstCardMovements, secondCardMovements] = [
         cursor,
@@ -125,6 +124,7 @@ function calculateMinimumCursorMovements(board, start) {
         const current = queue.shift();
         for (let d = 0; d < 4; d++) {
             const next = new Point(current.r + dt[d][0], current.c + dt[d][1]);
+
             if (isOutOfRange(next)) continue;
             moveCursorWithCtrlAndKey(current, d);
         }
@@ -146,19 +146,14 @@ function calculateMinimumCursorMovements(board, start) {
                 isLocationBorderOfBoard(next, direction) ||
                 isPictureCard(board, next)
             ) {
-                if (
-                    cursorMovements.get(start) + 1 <
-                    cursorMovements.get(next)
-                ) {
+                if (cursorMovements.isPossibleMoveLess(start, next)) {
                     cursorMovements.set(next, cursorMovements.get(start) + 1);
-
                     queue.push(new Point(next.r, next.c));
                 }
                 break;
             }
 
-            if (cursorMovements.get(current) + 1 >= cursorMovements.get(next))
-                continue;
+            if (!cursorMovements.isPossibleMoveLess(current, next)) continue;
 
             cursorMovements.set(next, cursorMovements.get(current) + 1);
             queue.push(new Point(next.r, next.c));
@@ -177,6 +172,10 @@ function initCursorMovements() {
 
     cursorMovements.set = function (point, movements) {
         this[point.r][point.c] = movements;
+    };
+
+    cursorMovements.isPossibleMoveLess = function (to, from) {
+        return this.get(to) + 1 < this.get(from);
     };
 
     return cursorMovements;
@@ -207,7 +206,7 @@ function isLocationBorderOfBoard(point, direction) {
 }
 
 function isPictureCard(board, point) {
-    return board[point.r][point.c] > 0;
+    return board.hasCard(board[point.r][point.c] - 1);
 }
 
 function filterPictureCards(board) {
@@ -223,6 +222,8 @@ function filterPictureCards(board) {
 
     return pictureCards.filter((pictureCard) => pictureCard);
 }
+
+/****** TEST CASE *******/
 
 console.log(
     solution(
