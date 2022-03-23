@@ -51,6 +51,10 @@
 
 ### 📅 2022.03
 
+#### Day 23. WED
+
+> 🟣 [[Level 4] 매출 하락 최소화 - 트리, DP](https://programmers.co.kr/learn/courses/30/lessons/72416) ([#72416](prog/2021-kakao-blind/_72416_매출하락최소화.js))
+
 #### Day 22. TUE
 
 > 🟣 [[Level 3] 카드 짝 맞추기 - 완전탐색, 구현](https://programmers.co.kr/learn/courses/30/lessons/72415) ([#72415](prog/2021-kakao-blind/_72415_카드짝맞추기.js))
