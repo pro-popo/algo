@@ -24,30 +24,65 @@
 
 function solution(sales, links) {
     const N = sales.length + 1;
-    const tree = Array.from(Array(N), () => []);
 
-    links.forEach(([parent, child]) => {
-        tree[parent].push(child);
-    });
-
+    const tree = createTree(N, links);
     const memo = Array.from(Array(N), () => Array(2).fill(0));
     DFS(1);
 
     return Math.min(...memo[1]);
 
     function DFS(parent) {
-        let sumSaleOfChilds = 0;
-        let minSale = Number.MAX_VALUE;
-        for (const child of tree[parent]) {
-            DFS(child);
-            sumSaleOfChilds += Math.min(...memo[child]);
-            minSale = Math.min(minSale, memo[child][1] - memo[child][0]);
-        }
-        memo[parent][1] = sumSaleOfChilds + sales[parent - 1];
-        memo[parent][0] =
-            sumSaleOfChilds +
-            (minSale != Number.MAX_VALUE && minSale >= 0 && minSale);
+        tree[parent].forEach((child) => DFS(child));
+
+        memo[parent] = [
+            sumSaleWhenSelectChild(parent),
+            sumSaleWhenSelectParent(parent),
+        ];
     }
+
+    function sumSaleWhenSelectParent(parent) {
+        return sales[parent - 1] + sumSaleOfChilds(parent);
+    }
+
+    function sumSaleWhenSelectChild(parent) {
+        const sumSale = sumSaleOfChilds(parent);
+
+        if (isNotExistChild(parent) || isExistSelectedChild(parent))
+            return sumSale;
+
+        return sumSale + selectChildWithMinSale(parent);
+    }
+
+    function isNotExistChild(parent) {
+        return tree[parent].length === 0;
+    }
+
+    function isExistSelectedChild(parent) {
+        return tree[parent].filter((child) => memo[child][0] > memo[child][1])
+            .length;
+    }
+
+    function sumSaleOfChilds(parent) {
+        return tree[parent]
+            .map((child) => Math.min(...memo[child]))
+            .reduce((sumSale, sale) => sumSale + sale, 0);
+    }
+
+    function selectChildWithMinSale(parent) {
+        return Math.min(
+            ...tree[parent].map((child) => memo[child][1] - memo[child][0]),
+        );
+    }
+}
+
+function createTree(N, links) {
+    return links.reduce(
+        (tree, [parent, child]) => {
+            tree[parent].push(child);
+            return tree;
+        },
+        Array.from(Array(N), () => []),
+    );
 }
 
 /****** TEST CASE *******/
