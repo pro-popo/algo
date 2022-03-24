@@ -36,45 +36,51 @@ class Compression {
     constructor(origin, unit) {
         this.origin = origin;
         this.unit = unit;
-        this.index = 0;
+        this.targetIndex = 0;
 
-        this.nextStandare();
-    }
-
-    nextTarget() {
-        return (this.index += this.unit);
+        this.nextStandard();
     }
 
     get target() {
-        return this.origin.slice(this.index, this.index + this.unit);
+        return this.origin.slice(
+            this.targetIndex,
+            this.targetIndex + this.unit,
+        );
     }
 
-    nextStandare() {
-        this.standare = this.target;
+    nextTarget() {
+        return (this.targetIndex += this.unit);
+    }
+
+    nextStandard() {
+        this.standardWord = this.target;
         this.repeatCount = 1;
     }
 
-    get compressString() {
-        return (this.repeatCount === 1 ? '' : this.repeatCount) + this.standare;
-    }
     startCompression() {
         const compressedWords = [];
         do {
             this.nextTarget();
-            if (this.standare === this.target) {
+            if (this.standardWord === this.target) {
                 this.repeatCount++;
                 continue;
             }
 
             compressedWords.push(this.compressString);
-            this.nextStandare();
+            this.nextStandard();
         } while (!this.isFinishCompression());
 
         return compressedWords.join('');
     }
 
+    get compressString() {
+        return (
+            (this.repeatCount === 1 ? '' : this.repeatCount) + this.standardWord
+        );
+    }
+
     isFinishCompression() {
-        return this.index >= this.origin.length;
+        return this.targetIndex >= this.origin.length;
     }
 }
 
