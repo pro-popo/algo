@@ -51,6 +51,10 @@
 
 ### 📅 2022.03
 
+#### Day 24. THU
+
+> 🟣 [[Level 2] 문자열 압축 - 완전탐색, 문자열](https://programmers.co.kr/learn/courses/30/lessons/60057) ([#60057](prog/2020-kakao-blind/_60057_문자열압축.js))
+
 #### Day 23. WED
 
 > 🟣 [[Level 4] 매출 하락 최소화 - 트리, DP](https://programmers.co.kr/learn/courses/30/lessons/72416) ([#72416](prog/2021-kakao-blind/_72416_매출하락최소화.js))
