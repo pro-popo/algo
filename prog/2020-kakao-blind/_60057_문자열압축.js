@@ -7,6 +7,19 @@
  *
  * @param {*} s 압축할 문자열 (1~1_000)
  * @returns 압축한 문자열 중 가장 짧은 것의 길이
+ *
+ * ### 리뷰
+ * - 풀이 방식은 다음과 같다.
+ *   1~s.length까지의 단위로 문자열 압축을 시작한다.
+ *   앞에서부터 순차적으로 해당 단위만큼 문자열을 잘라
+ *   기준이 되는 문자열과 동일한 문자열이 몇 개인지 센다.
+ *   만약 기준이 되는 문자열과 동일하지 않다면,
+ *   해당 문자열을 새로운 기준으로 저장한다.
+ *   위의 과정을 모든 문자를 순회할 때까지 반복한다.
+ *
+ * - 문자열의 길이가 길지 않아서 단위의 범위를 s.length로 잡아도 되지만,
+ *   s.length/2까지 비교해도 된다.
+ *   단위가 s.length/2 이상인 경우의 압축된 문자열의 길이는, s.length의 길이와 동일하기 때문이다.
  */
 
 function solution(s) {
@@ -44,7 +57,6 @@ class Compression {
     get compressString() {
         return (this.repeatCount === 1 ? '' : this.repeatCount) + this.standare;
     }
-
     startCompression() {
         const compressedWords = [];
         do {
@@ -66,7 +78,6 @@ class Compression {
     }
 }
 
-console.log(solution('aabbaccc'));
 console.log(solution('ababcdcdababcdcd'));
 console.log(solution('abcabcdede'));
 console.log(solution('abcabcabcabcdededededede'));
