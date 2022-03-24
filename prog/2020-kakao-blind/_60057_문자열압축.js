@@ -14,7 +14,7 @@ function solution(s) {
         Number.MAX_VALUE,
         ...[...s].map(
             (_, index) =>
-                new Compression(s, index + 1).startCompresstion().length,
+                new Compression(s, index + 1).startCompression().length,
         ),
     );
 }
@@ -29,34 +29,40 @@ class Compression {
     }
 
     nextTarget() {
+        return (this.index += this.unit);
+    }
+
+    get target() {
         return this.origin.slice(this.index, this.index + this.unit);
     }
 
     nextStandare() {
-        this.standare = this.nextTarget();
+        this.standare = this.target;
         this.repeatCount = 1;
     }
 
-    compressString() {
+    get compressString() {
         return (this.repeatCount === 1 ? '' : this.repeatCount) + this.standare;
     }
 
-    startCompresstion() {
+    startCompression() {
         const compressedWords = [];
-        this.index = this.unit;
         do {
-            const target = this.nextTarget();
-            if (this.standare === target) {
+            this.nextTarget();
+            if (this.standare === this.target) {
                 this.repeatCount++;
                 continue;
             }
 
-            compressedWords.push(this.compressString());
-
+            compressedWords.push(this.compressString);
             this.nextStandare();
-        } while (this.index < this.origin.length && (this.index += this.unit));
+        } while (!this.isFinishCompression());
 
         return compressedWords.join('');
+    }
+
+    isFinishCompression() {
+        return this.index >= this.origin.length;
     }
 }
 
