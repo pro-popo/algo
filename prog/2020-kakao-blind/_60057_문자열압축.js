@@ -12,30 +12,52 @@
 function solution(s) {
     return Math.min(
         Number.MAX_VALUE,
-        ...[...s].map((_, index) => compressString(s, index + 1).length),
+        ...[...s].map(
+            (_, index) =>
+                new Compression(s, index + 1).startCompresstion().length,
+        ),
     );
 }
 
-function compressString(origin, unit) {
-    const compressedWords = [];
-    let standare = origin.slice(0, unit);
-    let repeatCount = 1;
-    let index = unit;
-    do {
-        if (standare === origin.slice(index, index + unit)) {
-            repeatCount++;
-            continue;
-        }
+class Compression {
+    constructor(origin, unit) {
+        this.origin = origin;
+        this.unit = unit;
+        this.index = 0;
 
-        const compressedString =
-            (repeatCount === 1 ? '' : repeatCount) + standare;
-        compressedWords.push(compressedString);
+        this.nextStandare();
+    }
 
-        standare = origin.slice(index, index + unit);
-        repeatCount = 1;
-    } while (index < origin.length && (index += unit));
+    nextTarget() {
+        return this.origin.slice(this.index, this.index + this.unit);
+    }
 
-    return compressedWords.join('');
+    nextStandare() {
+        this.standare = this.nextTarget();
+        this.repeatCount = 1;
+    }
+
+    compressString() {
+        return (this.repeatCount === 1 ? '' : this.repeatCount) + this.standare;
+    }
+
+    startCompresstion() {
+        const compressedWords = [];
+        this.index = this.unit;
+        do {
+            const target = this.nextTarget();
+            if (this.standare === target) {
+                this.repeatCount++;
+                continue;
+            }
+
+            compressedWords.push(this.compressString());
+
+            this.nextStandare();
+        } while (this.index < this.origin.length && (this.index += this.unit));
+
+        return compressedWords.join('');
+    }
 }
 
 console.log(solution('aabbaccc'));
