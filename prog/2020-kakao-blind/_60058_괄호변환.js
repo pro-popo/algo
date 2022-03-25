@@ -50,22 +50,25 @@ class Bracket {
     }
 
     splitByBalancedBrackets() {
-        const balance = [0, 0];
-        let balanceIndex = 0;
-        for (const [i, bracket] of Object.entries(this.brackets)) {
-            if (bracket === '(') balance[0]++;
-            else balance[1]++;
+        let [start, end] = this.findBalancedBrackets();
+        return [this.brackets.slice(start, end), this.brackets.slice(end)].map(
+            (brackets) => new Bracket(brackets),
+        );
+    }
 
-            if (balance[0] && balance[0] === balance[1]) {
-                balanceIndex = +i;
+    findBalancedBrackets() {
+        const pairOfBracket = {
+            '(': 0,
+            ')': 0,
+        };
+        for (const bracket of this.brackets) {
+            pairOfBracket[bracket]++;
+
+            if (pairOfBracket['('] && pairOfBracket['('] === pairOfBracket[')'])
                 break;
-            }
         }
 
-        return [
-            this.brackets.slice(0, balanceIndex + 1),
-            this.brackets.slice(balanceIndex + 1),
-        ].map((brackets) => new Bracket(brackets));
+        return [0, pairOfBracket['('] + pairOfBracket[')']];
     }
 
     isCorrect() {
