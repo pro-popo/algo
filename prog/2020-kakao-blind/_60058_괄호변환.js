@@ -77,8 +77,7 @@ class Bracket {
         for (const bracket of this.brackets) {
             pairOfBracket[bracket]++;
 
-            if (pairOfBracket['('] && pairOfBracket['('] === pairOfBracket[')'])
-                break;
+            if (pairOfBracket['('] === pairOfBracket[')']) break;
         }
 
         return [0, pairOfBracket['('] + pairOfBracket[')']];
