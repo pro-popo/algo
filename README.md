@@ -51,6 +51,10 @@
 
 ### 📅 2022.03
 
+#### Day 25. FRI
+
+> 🟣 [[Level 2] 괄호 변환 - 구현](https://programmers.co.kr/learn/courses/30/lessons/60058) ([#60058](prog/2020-kakao-blind/_60058_괄호변환.js))
+
 #### Day 24. THU
 
 > 🟣 [[Level 2] 문자열 압축 - 완전탐색, 문자열](https://programmers.co.kr/learn/courses/30/lessons/60057) ([#60057](prog/2020-kakao-blind/_60057_문자열압축.js))
