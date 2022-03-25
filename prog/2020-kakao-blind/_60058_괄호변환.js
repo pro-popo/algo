@@ -24,48 +24,69 @@
  */
 
 function solution(p) {
-    return convertBrackets(p);
+    return new Bracket(p).convertCorrectBrackets();
 }
 
-function convertBrackets(p) {
-    if (!p) return '';
+class Bracket {
+    constructor(brackets) {
+        this.brackets = brackets;
+    }
 
-    let [u, v] = splitByBalancedBrackets(p);
+    toString() {
+        return this.brackets;
+    }
 
-    if (isCorrectBrackets(u)) return u + convertBrackets(v);
+    convertCorrectBrackets() {
+        if (!this.brackets) return '';
 
-    return (
-        `(${convertBrackets(v)})` + reverseBrackets(u.slice(1, u.length - 1))
-    );
-}
+        let [u, v] = this.splitByBalancedBrackets();
 
-function splitByBalancedBrackets(p) {
-    const balance = [0, 0];
-    let balanceIndex = 0;
-    for (const [i, bracket] of Object.entries(p)) {
-        if (bracket === '(') balance[0]++;
-        else balance[1]++;
+        if (u.isCorrect()) return u + v.convertCorrectBrackets();
 
-        if (balance[0] && balance[0] === balance[1]) {
-            balanceIndex = +i;
-            break;
+        return (
+            `(${v.convertCorrectBrackets()})` +
+            u.removeBracketAtBothEnds().reverse()
+        );
+    }
+
+    splitByBalancedBrackets() {
+        const balance = [0, 0];
+        let balanceIndex = 0;
+        for (const [i, bracket] of Object.entries(this.brackets)) {
+            if (bracket === '(') balance[0]++;
+            else balance[1]++;
+
+            if (balance[0] && balance[0] === balance[1]) {
+                balanceIndex = +i;
+                break;
+            }
         }
+
+        return [
+            this.brackets.slice(0, balanceIndex + 1),
+            this.brackets.slice(balanceIndex + 1),
+        ].map((brackets) => new Bracket(brackets));
     }
 
-    return [p.slice(0, balanceIndex + 1), p.slice(balanceIndex + 1)];
-}
-
-function isCorrectBrackets(u) {
-    const stack = [];
-    for (const bracket of u) {
-        if (bracket === '(') stack.push(bracket);
-        if (bracket === ')' && !stack.pop()) return false;
+    isCorrect() {
+        const stack = [];
+        for (const bracket of this.brackets) {
+            if (bracket === '(') stack.push(bracket);
+            if (bracket === ')' && !stack.pop()) return false;
+        }
+        return true;
     }
-    return true;
-}
 
-function reverseBrackets(p) {
-    return [...p].map((bracket) => (bracket === '(' ? ')' : '(')).join('');
+    removeBracketAtBothEnds() {
+        this.brackets = this.brackets.slice(1, this.brackets.length - 1);
+        return this;
+    }
+
+    reverse() {
+        return [...this.brackets]
+            .map((bracket) => (bracket === '(' ? ')' : '('))
+            .join('');
+    }
 }
 
 console.log(solution('(()())()'));
