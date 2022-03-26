@@ -26,18 +26,20 @@
  * - key를 기준으로 lock과 비교를 하면,
  *   lock의 hole이 전부 채워졌는지 체크하는 로직이 필요하다.
  *   lock를 기준으로 하면 불필요한 계산을 줄일 수 있을 것 같다. 🤔
+ *
+ * - 처음에, key를 회전 시킬 때 위치 정보([row, column])로 저장했는데,
+ *   괜히 번거로운 계산 로직만 늘어나서 값으로 저장하는 방식으로 코드를 수정했다!
  */
 
 const HOLE = 0;
 
 function solution(key, lock) {
     const [N, M] = [lock.length, key.length];
-    let keyLocations = initializeLocations(key.length);
-    let rotation = 4;
 
+    let rotation = 4;
     do {
         if (tryUnlock()) return true;
-        keyLocations = rotateSquare(keyLocations);
+        key = rotateSquare(key);
     } while (--rotation);
 
     return false;
@@ -55,12 +57,11 @@ function solution(key, lock) {
 
     function isUnlockable(current) {
         let remainLockHoles = countHole(lock);
-        for (let r = 0; r < M; r++) {
-            for (let c = 0; c < M; c++) {
-                let [kr, kc] = keyLocations[r][c];
+        for (let kr = 0; kr < M; kr++) {
+            for (let kc = 0; kc < M; kc++) {
                 let [lr, lc] = [
-                    N + M - current.row + r,
-                    N + M - current.column + c,
+                    N + M - current.row + kr,
+                    N + M - current.column + kc,
                 ];
 
                 if (isOutOfRange(lr, lc)) continue;
@@ -79,20 +80,16 @@ function solution(key, lock) {
     }
 }
 
-function initializeLocations(length) {
-    return Array.from(Array(length), (_, i) =>
-        [...Array(length)].map((_, j) => [i, j]),
-    );
-}
-
 function rotateSquare(square) {
     const SQUARE_LENGTH = square.length;
-    const rotatedSquare = initializeLocations(SQUARE_LENGTH);
+    const rotatedSquare = Array.from(Array(SQUARE_LENGTH), () =>
+        Array(SQUARE_LENGTH).fill(0),
+    );
 
     square.forEach((rows, row) =>
         rows.forEach(
-            (location, column) =>
-                (rotatedSquare[column][SQUARE_LENGTH - 1 - row] = location),
+            (value, column) =>
+                (rotatedSquare[column][SQUARE_LENGTH - 1 - row] = value),
         ),
     );
 
