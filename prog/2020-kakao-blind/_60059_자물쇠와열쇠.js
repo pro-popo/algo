@@ -16,58 +16,54 @@
 const HOLE = 0;
 
 function solution(key, lock) {
+    const [N, M] = [lock.length, key.length];
     let keyLocations = initializeLocations(key.length);
     let rotation = 4;
 
     do {
-        if (isOpenLock()) return true;
+        if (tryUnlock()) return true;
         keyLocations = rotateSquare(keyLocations);
     } while (--rotation);
 
     return false;
 
-    function isOpenLock() {
-        let holesOfLock = countHole(lock);
-        const N = lock.length;
-        const M = key.length;
-
-        for (let R = N + M * 2; R >= 0; R--) {
-            for (let C = N + M * 2; C >= 0; C--) {
-                let remainHoles = holesOfLock;
-                let isOpening = true;
-                for (let i = 0; i < M; i++) {
-                    for (let j = 0; j < M; j++) {
-                        let [ki, kj] = keyLocations[i][j];
-                        let [li, lj] = [N + M - R + i, N + M - C + j];
-                        if (li < 0 || lj < 0 || li >= N || lj >= N) continue;
-
-                        if (key[ki][kj] === lock[li][lj]) {
-                            isOpening = false;
-                            break;
-                        }
-
-                        if (lock[li][lj] === HOLE) remainHoles--;
-                    }
-                }
-
-                if (isOpening && remainHoles === 0) return true;
+    function tryUnlock() {
+        const MAX_MOVE_RANGE = N + M * 2;
+        for (let row = MAX_MOVE_RANGE; row >= 0; row--) {
+            for (let column = MAX_MOVE_RANGE; column >= 0; column--) {
+                const currentLocation = { row, column };
+                if (isUnlockable(currentLocation)) return true;
             }
         }
         return false;
     }
-}
-function countHole(square) {
-    const LENGTH = square.length;
-    let numberOfHole = 0;
 
-    for (let i = 0; i < LENGTH; i++) {
-        for (let j = 0; j < LENGTH; j++) {
-            if (square[i][j] === HOLE) numberOfHole++;
+    function isUnlockable(current) {
+        let remainLockHoles = countHole(lock);
+        for (let r = 0; r < M; r++) {
+            for (let c = 0; c < M; c++) {
+                let [kr, kc] = keyLocations[r][c];
+                let [lr, lc] = [
+                    N + M - current.row + r,
+                    N + M - current.column + c,
+                ];
+
+                if (isOutOfRange(lr, lc)) continue;
+
+                if (key[kr][kc] === lock[lr][lc]) return false;
+
+                if (lock[lr][lc] === HOLE) remainLockHoles--;
+            }
         }
+
+        if (remainLockHoles === 0) return true;
     }
 
-    return numberOfHole;
+    function isOutOfRange(row, column) {
+        return row < 0 || column < 0 || row >= N || column >= N;
+    }
 }
+
 function initializeLocations(length) {
     return Array.from(Array(length), (_, i) =>
         [...Array(length)].map((_, j) => [i, j]),
@@ -87,6 +83,21 @@ function rotateSquare(square) {
 
     return rotatedSquare;
 }
+
+function countHole(square) {
+    const LENGTH = square.length;
+    let numberOfHole = 0;
+
+    for (let i = 0; i < LENGTH; i++) {
+        for (let j = 0; j < LENGTH; j++) {
+            if (square[i][j] === HOLE) numberOfHole++;
+        }
+    }
+
+    return numberOfHole;
+}
+
+/****** TEST CASE *******/
 
 console.log(
     solution(
