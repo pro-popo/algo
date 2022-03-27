@@ -9,12 +9,7 @@
  */
 
 function solution(n, wires) {
-    const tree = Array.from(Array(n + 1), () => []);
-
-    wires.forEach(([a, b]) => {
-        tree[a].push(b);
-        tree[b].push(a);
-    });
+    const graph = createGraph(n, wires);
 
     return Math.min(
         ...wires.map((wire) => {
@@ -23,29 +18,44 @@ function solution(n, wires) {
         }),
     );
 
-    function differenceTowers(towers) {
-        return Math.abs(towers[0] - towers[1]);
-    }
-
     function countTowers(removeWire) {
         const visited = new Set();
-        let countNode = 0;
+        let numberOfTower = 0;
 
         const queue = [1];
         while (queue.length) {
             const parent = queue.shift();
-            for (const child of tree[parent]) {
-                if (visited.has(child)) continue;
-                if (removeWire.has(parent) && removeWire.has(child)) continue;
+            for (const child of graph[parent]) {
+                if (isRemoveWire([parent, child]) || visited.has(child))
+                    continue;
                 queue.push(child);
             }
 
             visited.add(parent);
-            countNode++;
+            numberOfTower++;
         }
 
-        return [countNode, n - countNode];
+        return [numberOfTower, n - numberOfTower];
+
+        function isRemoveWire(towers) {
+            return towers.every((tower) => removeWire.has(tower));
+        }
     }
+
+    function differenceTowers(towers) {
+        return Math.abs(towers[0] - towers[1]);
+    }
+}
+
+function createGraph(n, edges) {
+    const graph = Array.from(Array(n + 1), () => []);
+
+    edges.forEach(([a, b]) => {
+        graph[a].push(b);
+        graph[b].push(a);
+    });
+
+    return graph;
 }
 
 console.log(
