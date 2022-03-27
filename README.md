@@ -51,6 +51,10 @@
 
 ### 📅 2022.03
 
+#### Day 27. SUN
+
+> 🟣 [[Level 2] 모음사전](https://programmers.co.kr/learn/courses/30/lessons/86971) ([#86971](prog/challenges/_86971_전력망을둘로나누기.js))
+
 #### Day 26. SAT
 
 > 🟣 [[Level 3] 자물쇠와 열쇠 - 구현](https://programmers.co.kr/learn/courses/30/lessons/60059) ([#60059](prog/2020-kakao-blind/_60059_자물쇠와열쇠.js))
