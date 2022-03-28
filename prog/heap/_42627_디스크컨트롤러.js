@@ -5,6 +5,10 @@
  *
  * @param {*} jobs [작업이 요청되는 시점, 작업의 소요시간]
  * @returns 작업의 요청부터 종료까지 걸린 시간의 평균을 가장 줄이는 방법으로 처리할 때의 평균
+ *
+ * ### 리뷰
+ * - 풀이 방식은 다음과 같다.
+ *
  */
 
 function solution(jobs) {
@@ -12,11 +16,11 @@ function solution(jobs) {
 }
 
 function averageProcessTime(sumTime, numberOfJob) {
-    const sumTime = sumProcessTimeOfAllJob(jobs);
+    const sumTime = sumProcessTime(jobs);
     return Math.floor(sumTime / numberOfJob);
 }
 
-function sumProcessTimeOfAllJob(jobs) {
+function sumProcessTime(jobs) {
     let remainJobs = [...jobs].sort(ASC_REQUEST_TIME);
 
     const queue = [];
