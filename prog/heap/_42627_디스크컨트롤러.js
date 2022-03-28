@@ -34,7 +34,7 @@ function sumProcessTime(jobs) {
 
     do {
         const [requestedJobs, notRequestedJobs] =
-            divideByRequestJobs(remainJobs);
+            divideByRequestedJobs(remainJobs);
 
         remainJobs = notRequestedJobs;
         queue.push(...requestedJobs);
@@ -47,7 +47,7 @@ function sumProcessTime(jobs) {
 
     return sumTime;
 
-    function divideByRequestJobs(jobs) {
+    function divideByRequestedJobs(jobs) {
         return [jobs.filter(isRequestedJob), jobs.filter(isNotRequestedJob)];
 
         function isRequestedJob([requestTime]) {
