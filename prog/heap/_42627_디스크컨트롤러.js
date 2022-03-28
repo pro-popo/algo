@@ -8,15 +8,13 @@
  *
  * ### 리뷰
  * - 풀이 방식은 다음과 같다.
- *   남아있는 jobs의 요청시간을 오름차순으로 정렬한다.
- *   이때, 해당 시점(time)에서 처리할 수 있는 jobs를 우선순위큐(queue)에 저장한다.
+ *   해당 시점(time)에서 처리할 수 있는 jobs를 우선순위큐(queue)에 저장한다.
  *   만약, 해당 시점에서 처리할 수 있는 jobs이 존재하지 않는 경우 시점을 늘린다. (time++)
  *   존재한다면, 우선순위큐에 존재하는 jobs를 작업 소요 시간을 오름차순으로 정렬한 뒤,
  *   첫 번째 작업을 꺼내 해당 작업을 처리한다.
  *   모든 jobs를 처리할 때까지 위의 과정을 반복한다.
  *
  * - 우선순위큐의 정렬 기준을 정했다면 쉽게 풀 수 있는 문제이다. 🤗
- *
  */
 
 function solution(jobs) {
@@ -29,7 +27,7 @@ function averageProcessTime(jobs) {
 }
 
 function sumProcessTime(jobs) {
-    let remainJobs = [...jobs].sort(ASC_REQUEST_TIME);
+    let remainJobs = [...jobs];
 
     const queue = [];
     let [time, sumTime] = [0, 0];
@@ -50,20 +48,13 @@ function sumProcessTime(jobs) {
     return sumTime;
 
     function divideByRequestJobs(jobs) {
-        let index = findNotRequestJob();
-        return [jobs.slice(0, index), jobs.slice(index)];
-    }
+        return [jobs.filter(isRequestedJob), jobs.filter(isNotRequestedJob)];
 
-    function findNotRequestJob() {
-        let index = remainJobs.findIndex(isNotRequestJob);
-        if (isRequestedAllJob()) index = remainJobs.length;
-        return index;
-
-        function isNotRequestJob([requestTime]) {
-            return requestTime > time;
+        function isRequestedJob([requestTime]) {
+            return requestTime <= time;
         }
-        function isRequestedAllJob() {
-            return index === -1;
+        function isNotRequestedJob([requestTime]) {
+            return requestTime > time;
         }
     }
 
@@ -80,7 +71,6 @@ function sumProcessTime(jobs) {
     }
 }
 
-const ASC_REQUEST_TIME = ([requestTime], [other]) => requestTime - other;
 const ASC_REQUIRED_TIME = ([, requiredTime], [, other]) => requiredTime - other;
 
 /****** TEST CASE *******/
