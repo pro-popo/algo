@@ -53,7 +53,7 @@
 
 #### Day 27. SUN
 
-> 🟣 [[Level 2] 전력망을 둘로 나누기](https://programmers.co.kr/learn/courses/30/lessons/86971) ([#86971](prog/challenges/_86971_전력망을둘로나누기.js))
+> 🟣 [[Level 2] 전력망을 둘로 나누기 - DFS/BFS](https://programmers.co.kr/learn/courses/30/lessons/86971) ([#86971](prog/challenges/_86971_전력망을둘로나누기.js))
 
 #### Day 26. SAT
 
