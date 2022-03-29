@@ -7,19 +7,43 @@
  * @param {*} operations 이중 우선순위 큐가 할 연산들
  * @returns 모든 연산 처리 후의 [최댓값, 최솟값], 큐가 비어있는 경우 [0, 0]
  */
+
 function solution(operations) {
-    const queue = [];
+    const queue = new DoublePriorityQueue();
+
     operations.forEach(operation => {
         const [command, number] = operation.split(' ');
-        if (command === 'I') {
-            queue.push(+number);
-            queue.sort((a, b) => a - b);
-            return;
-        }
-        if (number > 0) queue.pop();
-        else queue.shift();
+        if (command === 'I') queue.insert(+number);
+        if (command === 'D') queue.delete(number);
     });
-    return queue.length ? [queue[0], queue.pop()].reverse() : [0, 0];
+
+    return queue.isEmpty() ? [0, 0] : [queue.max, queue.min];
+}
+
+class DoublePriorityQueue {
+    queue = [];
+
+    insert(number) {
+        this.queue.push(number);
+        this.queue.sort((a, b) => a - b);
+    }
+
+    delete(type) {
+        if (type == 1) this.queue.pop();
+        if (type == -1) this.queue.shift();
+    }
+
+    isEmpty() {
+        return this.queue.length === 0;
+    }
+
+    get max() {
+        return this.queue[this.queue.length - 1];
+    }
+
+    get min() {
+        return this.queue[0];
+    }
 }
 
 console.log(solution(['I 16', 'D 1']));
