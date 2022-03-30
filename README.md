@@ -51,6 +51,10 @@
 
 ### 📅 2022.03
 
+#### Day 30. WED
+
+> 🟣 [[Level 1] 숫자 문자열과 영단어](https://programmers.co.kr/learn/courses/30/lessons/81301) ([#81301](prog/2021-kakao-internship/_81301_숫자문자열과영단어.js))
+
 #### Day 29. TUE
 
 > 🟣 [[Level 3] 이중 우선순위 큐 - Heap](https://programmers.co.kr/learn/courses/30/lessons/42628) ([#42628](prog/heap/_42628_이중우선순위큐.js))
