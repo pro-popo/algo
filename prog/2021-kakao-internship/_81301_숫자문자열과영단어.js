@@ -6,7 +6,19 @@
  *
  * @param {*} s 문자열 (1~50)
  * @returns 원래 숫자
+ *
+ * ### 리뷰
+ * - 풀이 방식은 다음과 같다.
+ *   사전을 순회하여,
+ *   해당 단어가 문자열에서 존재할 경우, 숫자로 바꿔준다.
+ *
+ * - 정규식을 알고 있다면, 쉽게 풀 수 있는 문제였다!
+ *
+ * - 다른 풀이 방식으로는,
+ *   해당 단어로 문자열을 자른 다음에, (split)
+ *   숫자로 이어붙이면 된다. (join)
  */
+
 function solution(s) {
     const dictionary = [
         'zero',
@@ -25,6 +37,7 @@ function solution(s) {
         const regexp = new RegExp(word, 'g');
         s = s.replace(regexp, number);
     });
+
     return +s;
 }
 
