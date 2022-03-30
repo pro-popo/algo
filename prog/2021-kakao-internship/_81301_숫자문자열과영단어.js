@@ -1,6 +1,6 @@
 /**
  * 네오와 프로도가 숫자 놀이를 하고 있다.
- * 플레이어가 숫자를 건널 때 일부 자릿수를 영단어로 바꾼 카드를 건네주면,
+ * 플레이어가 숫자를 건낼 때 일부 자릿수를 영단어로 바꾼 카드를 건네주면,
  * 상대편은 원래 숫자를 찾는 게임이다.
  * [EX] 1478 → "one4seveneight"
  *
@@ -20,7 +20,13 @@
  */
 
 function solution(s) {
-    const dictionary = [
+    const game = new Game(s);
+    game.changeOriginNumber();
+    return +game.card;
+}
+
+class Game {
+    dictionary = [
         'zero',
         'one',
         'two',
@@ -33,12 +39,26 @@ function solution(s) {
         'nine',
     ];
 
-    dictionary.forEach((word, number) => {
-        const regexp = new RegExp(word, 'g');
-        s = s.replace(regexp, number);
-    });
+    constructor(card) {
+        this.card = card;
+    }
 
-    return +s;
+    setCard(newCard) {
+        this.card = newCard;
+    }
+
+    changeOriginNumber() {
+        this.dictionary.forEach((word, number) =>
+            this.setCard(this.changeWordToNumber(word, number)),
+        );
+
+        return +this.card;
+    }
+
+    changeWordToNumber(word, number) {
+        const regexp = new RegExp(word, 'g');
+        return this.card.replace(regexp, number);
+    }
 }
 
 console.log(solution('one4seveneight'));
