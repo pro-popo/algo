@@ -21,8 +21,7 @@
 
 function solution(s) {
     const game = new Game(s);
-    game.changeOriginNumber();
-    return +game.card;
+    return game.changeOriginNumber();
 }
 
 class Game {
