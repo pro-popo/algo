@@ -8,6 +8,10 @@
  */
 
 function solution(a, b) {
+    return dotProduct(a, b);
+}
+
+function dotProduct(a, b) {
     return a.reduce((answer, _, index) => {
         return answer + a[index] * b[index];
     }, 0);
