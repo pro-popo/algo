@@ -26,8 +26,7 @@ function createNumbers(numbers) {
 
     const N = numbers.length;
     for (let i = 0; i < N; i++) {
-        for (let j = 0; j < N; j++) {
-            if (i === j) continue;
+        for (let j = i + 1; j < N; j++) {
             newNumbers.add(numbers[i] + numbers[j]);
         }
     }
