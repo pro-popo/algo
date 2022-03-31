@@ -7,8 +7,17 @@
  */
 
 function solution(n) {
-    const reverseTrit = [...n.toString(3)].reverse().join('');
-    return parseInt(reverseTrit, 3);
+    const trit = changeDecimalToTrit(n);
+    const reverseTrit = [...trit].reverse().join('');
+    return changeTritToDecimal(reverseTrit);
+}
+
+function changeDecimalToTrit(number) {
+    return number.toString(3);
+}
+
+function changeTritToDecimal(number) {
+    return parseInt(number, 3);
 }
 
 console.log(solution(45));
