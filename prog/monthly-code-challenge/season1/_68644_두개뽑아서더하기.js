@@ -7,17 +7,23 @@
  */
 
 function solution(numbers) {
-    const N = numbers.length;
-    const answer = new Set();
+    const answer = createNumbers(numbers);
+    return answer.sort(ASC);
+}
 
+function createNumbers(numbers) {
+    const newNumbers = new Set();
+
+    const N = numbers.length;
     for (let i = 0; i < N; i++) {
         for (let j = 0; j < N; j++) {
             if (i === j) continue;
-            answer.add(numbers[i] + numbers[j]);
+            newNumbers.add(numbers[i] + numbers[j]);
         }
     }
-
-    return [...answer].sort((a, b) => a - b);
+    return [...newNumbers];
 }
+
+const ASC = (a, b) => a - b;
 
 console.log(solution([2, 1, 3, 4, 1]));
