@@ -52,16 +52,16 @@
 ### 📅 2022.03
 
 #### Day 31. THU
-> 🟣 [[Level 1] 두 개 뽑아서 더하기](https://programmers.co.kr/learn/courses/30/lessons/68644) ([#68644](prog/monthly-code-challenge/season1/_68644_두개뽑아서더하기.js))          
+> 🟣 [[Level 1] 두 개 뽑아서 더하기 - 완전 탐색](https://programmers.co.kr/learn/courses/30/lessons/68644) ([#68644](prog/monthly-code-challenge/season1/_68644_두개뽑아서더하기.js))          
 
-> 🟣 [[Level 1] 3진법 뒤집기](https://programmers.co.kr/learn/courses/30/lessons/68935) ([#68935](prog/monthly-code-challenge/season1/_68935_3진법뒤집기.js))          
+> 🟣 [[Level 1] 3진법 뒤집기 - 구현](https://programmers.co.kr/learn/courses/30/lessons/68935) ([#68935](prog/monthly-code-challenge/season1/_68935_3진법뒤집기.js))          
 
-> 🟣 [[Level 1] 내적](https://programmers.co.kr/learn/courses/30/lessons/70128) ([#70128](prog/monthly-code-challenge/season1/_70128_내적.js))          
+> 🟣 [[Level 1] 내적 - 구현](https://programmers.co.kr/learn/courses/30/lessons/70128) ([#70128](prog/monthly-code-challenge/season1/_70128_내적.js))          
 
 
 #### Day 30. WED
 
-> 🟣 [[Level 1] 숫자 문자열과 영단어](https://programmers.co.kr/learn/courses/30/lessons/81301) ([#81301](prog/2021-kakao-internship/_81301_숫자문자열과영단어.js))
+> 🟣 [[Level 1] 숫자 문자열과 영단어 - 정규식](https://programmers.co.kr/learn/courses/30/lessons/81301) ([#81301](prog/2021-kakao-internship/_81301_숫자문자열과영단어.js))
 
 #### Day 29. TUE
 
