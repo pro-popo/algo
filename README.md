@@ -53,9 +53,7 @@
 
 #### Day 31. THU
 > 🟣 [[Level 1] 두 개 뽑아서 더하기 - 완전 탐색](https://programmers.co.kr/learn/courses/30/lessons/68644) ([#68644](prog/monthly-code-challenge/season1/_68644_두개뽑아서더하기.js))          
-
 > 🟣 [[Level 1] 3진법 뒤집기 - 구현](https://programmers.co.kr/learn/courses/30/lessons/68935) ([#68935](prog/monthly-code-challenge/season1/_68935_3진법뒤집기.js))          
-
 > 🟣 [[Level 1] 내적 - 구현](https://programmers.co.kr/learn/courses/30/lessons/70128) ([#70128](prog/monthly-code-challenge/season1/_70128_내적.js))          
 
 
