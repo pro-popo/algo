@@ -49,6 +49,11 @@
 ![PROGRAMMERS](https://img.shields.io/badge/PROGRAMMERS-7E4DD2.svg?&style=for-the-badge)
 ![BAEKJOON](https://img.shields.io/badge/BAEKJOON-0ABF53.svg?&style=for-the-badge)
 
+### 📅 2022.04
+
+#### Day 1. FRI
+> 🟣 [[Level 4] 가사 검색](https://programmers.co.kr/learn/courses/30/lessons/60060) ([#60060](prog/2020-kakao-blind/_60060_가사검색.js))      
+
 ### 📅 2022.03
 
 #### Day 31. THU
