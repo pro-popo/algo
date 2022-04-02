@@ -8,30 +8,21 @@
  * @param {*} queries 찾고자 하는 키워드가 담긴 배열
  * @returns 각 키워드 별로 매치된 단어가 몇 개인지 순서대로 배열에 담아 반환
  */
+
 function solution(words, queries) {
     const reverseWords = words.map(reverseString);
     const reverseQueries = queries.map(reverseString);
 
-    const [mapWords, mapReverseWords] = [words, reverseWords].map(words =>
-        words.reduce((map, word) => {
-            map[word.length] = map[word.length] || [];
-            map[word.length].push(word);
-            return map;
-        }, {}),
-    );
-
-    [mapWords, mapReverseWords].forEach(mapWords => {
-        for (const key in mapWords) {
-            mapWords[key].sort(ASC);
-        }
-    });
+    const [mapWords, mapReverseWords] = [words, reverseWords]
+        .map(divideByWordLength)
+        .map(sortWords);
 
     const answer = [];
     queries.forEach((query, index) => {
         const info =
             query[0] === '?'
-                ? [mapReverseWords[query.length] || [], reverseQueries[index]]
-                : [mapWords[query.length] || [], query];
+                ? [mapReverseWords[query.length], reverseQueries[index]]
+                : [mapWords[query.length], query];
 
         answer.push(countMachtedWord(...info));
     });
@@ -39,7 +30,31 @@ function solution(words, queries) {
     return answer;
 }
 
-function countMachtedWord(words, query) {
+function reverseString(string) {
+    return [...string].reverse().join('');
+}
+
+function divideByWordLength(words) {
+    return words.reduce((map, word) => {
+        map[word.length] = map[word.length] || [];
+        map[word.length].push(word);
+        return map;
+    }, {});
+}
+
+function sortWords(mapWords) {
+    for (const key in mapWords) {
+        mapWords[key].sort(ASC);
+    }
+    return mapWords;
+}
+
+const ASC = (a, b) => {
+    if (a.length === b.length) return a.localeCompare(b);
+    return a.length - b.length;
+};
+
+function countMachtedWord(words = [], query) {
     const minQuery = query.replace(/\?/g, 'a');
     const maxQuery = query.replace(/\?/g, 'z');
 
@@ -63,15 +78,6 @@ function countMachtedWord(words, query) {
     }
 }
 
-function reverseString(string) {
-    return [...string].reverse().join('');
-}
-
-const ASC = (a, b) => {
-    if (a.length === b.length) return a.localeCompare(b);
-    return a.length - b.length;
-};
-
 console.log(
     solution(
         ['frodo', 'front', 'frost', 'frozen', 'frame', 'kakao'],
@@ -79,4 +85,4 @@ console.log(
     ),
 );
 
-// console.log(solution(['aa', 'ac', 'az', 'aaa', 'a'], ['a']));
+console.log(solution(['aa', 'ac', 'az', 'aaa', 'a'], ['a?']));
