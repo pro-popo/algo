@@ -51,13 +51,16 @@
 
 ### 📅 2022.04
 
+#### Day 2. SAT
+> 🟣 [[Level 2] 이진 변환 반복하기 - 구현](https://programmers.co.kr/learn/courses/30/lessons/70129) ([#70129](prog/monthly-code-challenge/season1/_70129_이진변환반복하기.js))      
+
 #### Day 1. FRI
-> 🟣 [[Level 4] 가사 검색](https://programmers.co.kr/learn/courses/30/lessons/60060) ([#60060](prog/2020-kakao-blind/_60060_가사검색.js))      
+> 🟣 [[Level 4] 가사 검색 - 이분탐색](https://programmers.co.kr/learn/courses/30/lessons/60060) ([#60060](prog/2020-kakao-blind/_60060_가사검색.js))      
 
 ### 📅 2022.03
 
 #### Day 31. THU
-> 🟣 [[Level 1] 두 개 뽑아서 더하기 - 완전 탐색](https://programmers.co.kr/learn/courses/30/lessons/68644) ([#68644](prog/monthly-code-challenge/season1/_68644_두개뽑아서더하기.js))          
+> 🟣 [[Level 1] 두 개 뽑아서 더하기 - 완전탐색](https://programmers.co.kr/learn/courses/30/lessons/68644) ([#68644](prog/monthly-code-challenge/season1/_68644_두개뽑아서더하기.js))          
 > 🟣 [[Level 1] 3진법 뒤집기 - 구현](https://programmers.co.kr/learn/courses/30/lessons/68935) ([#68935](prog/monthly-code-challenge/season1/_68935_3진법뒤집기.js))          
 > 🟣 [[Level 1] 내적 - 구현](https://programmers.co.kr/learn/courses/30/lessons/70128) ([#70128](prog/monthly-code-challenge/season1/_70128_내적.js))          
 
