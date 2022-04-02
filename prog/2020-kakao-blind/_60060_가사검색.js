@@ -9,70 +9,57 @@
  * @returns 각 키워드 별로 매치된 단어가 몇 개인지 순서대로 배열에 담아 반환
  */
 function solution(words, queries) {
-    const reverseWords = words.map(reverseString).sort(ASC);
+    const reverseWords = words.map(reverseString);
     const reverseQueries = queries.map(reverseString);
 
+    const [mapWords, mapReverseWords] = [words, reverseWords].map(words =>
+        words.reduce((map, word) => {
+            map[word.length] = map[word.length] || [];
+            map[word.length].push(word);
+            return map;
+        }, {}),
+    );
+
+    [mapWords, mapReverseWords].forEach(mapWords => {
+        for (const key in mapWords) {
+            mapWords[key].sort(ASC);
+        }
+    });
+
     const answer = [];
-    words.sort(ASC);
     queries.forEach((query, index) => {
         const info =
             query[0] === '?'
-                ? [reverseWords, reverseQueries[index]]
-                : [words, query];
+                ? [mapReverseWords[query.length] || [], reverseQueries[index]]
+                : [mapWords[query.length] || [], query];
 
         answer.push(countMachtedWord(...info));
     });
+
     return answer;
 }
 
 function countMachtedWord(words, query) {
-    const str = query.split('?')[0];
-    return maximumRange() - minimumRange() + 1;
+    const minQuery = query.replace(/\?/g, 'a');
+    const maxQuery = query.replace(/\?/g, 'z');
 
-    function minimumRange() {
-        const min = query.replace(/\?/g, 'a');
+    return search(maxQuery) - search(minQuery);
 
+    function search(query) {
         let start = 0;
-        let end = words.length - 1;
-        let answer = words.length;
-        while (start <= end) {
-            const mid = Math.floor((start + end) / 2);
+        let end = words.length;
 
-            if (
-                words[mid].length === query.length &&
-                words[mid].startsWith(str) &&
-                words[mid].localeCompare(min) >= 0
-            ) {
-                answer = mid;
-                end = mid - 1;
-                continue;
-            }
-            start = mid + 1;
-        }
-        return answer;
-    }
+        while (start < end) {
+            let mid = Math.floor((start + end) / 2);
 
-    function maximumRange() {
-        const max = query.replace(/\?/g, 'z');
-
-        let start = 0;
-        let end = words.length - 1;
-        let answer = words.length - 1;
-        while (start <= end) {
-            const mid = Math.floor((start + end) / 2);
-
-            if (
-                words[mid].length === query.length &&
-                words[mid].startsWith(str) &&
-                words[mid].localeCompare(max) <= 0
-            ) {
-                answer = mid;
+            if (query.localeCompare(words[mid]) >= 0) {
                 start = mid + 1;
                 continue;
             }
-            end = mid - 1;
+            end = mid;
         }
-        return answer;
+
+        return start;
     }
 }
 
@@ -92,4 +79,4 @@ console.log(
     ),
 );
 
-console.log(solution(['aa', 'ac', 'az', 'aaa', 'a'], ['z?']));
+// console.log(solution(['aa', 'ac', 'az', 'aaa', 'a'], ['a']));
