@@ -12,16 +12,27 @@
  */
 
 function solution(s) {
-    const answer = [0, 0];
+    let answer = [0, 0];
     while (s !== '1') {
-        answer[0]++;
+        const stringOfOnes = removeZeros(s);
 
-        const step1 = [...s].filter(char => char != 0).join('');
-        answer[1] += s.length - step1.length;
+        const [countConversions, countRemovedZero] = answer;
+        answer = [
+            countConversions + 1,
+            countRemovedZero + s.length - stringOfOnes.length,
+        ];
 
-        s = step1.length.toString(2);
+        s = convertStringLengthToBinary(stringOfOnes);
     }
     return answer;
+}
+
+function removeZeros(s) {
+    return [...s].filter(char => char !== '0').join('');
+}
+
+function convertStringLengthToBinary(string) {
+    return string.length.toString(2);
 }
 
 /****** TEST CASE *******/
