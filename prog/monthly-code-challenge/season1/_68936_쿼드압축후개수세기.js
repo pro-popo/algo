@@ -13,41 +13,47 @@
 
 function solution(arr) {
     const answer = [0, 0];
-    countZeroAndOne([0, 0], arr.length);
+    countZeroAndOne(new Square([0, 0], arr.length));
 
     return answer;
 
-    function countZeroAndOne(point, size) {
-        const [R, C] = point;
-
-        if (isAllSameNumber()) {
-            answer[arr[R][C]]++;
+    function countZeroAndOne(square) {
+        if (square.isAllSameNumber(arr)) {
+            const number = arr[square.point[0]][square.point[1]];
+            answer[number]++;
             return;
         }
 
-        const halfSize = Math.floor(size / 2);
-        divideIntoFourParts(halfSize).forEach(point =>
-            countZeroAndOne(point, halfSize),
-        );
+        square.divideIntoFourParts().forEach(countZeroAndOne);
+    }
+}
 
-        function isAllSameNumber() {
-            const numbers = new Set();
-            for (let r = R; r < R + size; r++) {
-                for (let c = C; c < C + size; c++) {
-                    numbers.add(arr[r][c]);
-                }
+class Square {
+    constructor(point, size) {
+        this.point = point;
+        this.size = size;
+    }
+
+    isAllSameNumber(arr) {
+        const [R, C] = this.point;
+        for (let r = R; r < R + this.size; r++) {
+            for (let c = C; c < C + this.size; c++) {
+                if (arr[r][c] !== arr[R][C]) return false;
             }
-            return numbers.size === 1;
         }
+        return true;
+    }
 
-        function divideIntoFourParts(size) {
-            return [
-                [R, C],
-                [R, C + size],
-                [R + size, C],
-                [R + size, C + size],
-            ];
-        }
+    divideIntoFourParts() {
+        const [R, C] = this.point;
+        const halfSize = Math.floor(this.size / 2);
+
+        return [
+            [R, C],
+            [R, C + halfSize],
+            [R + halfSize, C],
+            [R + halfSize, C + halfSize],
+        ].map(point => new Square(point, halfSize));
     }
 }
 
