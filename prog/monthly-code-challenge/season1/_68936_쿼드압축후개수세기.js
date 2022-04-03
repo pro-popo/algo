@@ -13,57 +13,32 @@
 
 function solution(arr) {
     const answer = [0, 0];
-
-    countZeroAndOne({ R: 0, C: 0 }, { R: arr.length - 1, C: arr.length - 1 });
+    countZeroAndOne([0, 0], arr.length);
 
     return answer;
-    function countZeroAndOne(start, end) {
-        let standard = arr[start.R][start.C];
 
-        let isAllSameValue = true;
-        for (let r = start.R; r <= end.R; r++) {
-            for (let c = start.C; c <= end.C; c++) {
-                if (standard !== arr[r][c]) isAllSameValue = false;
+    function countZeroAndOne(point, size) {
+        const [R, C] = point;
+
+        const values = new Set();
+        for (let r = R; r < R + size; r++) {
+            for (let c = C; c < C + size; c++) {
+                values.add(arr[r][c]);
             }
         }
 
-        if (isAllSameValue) {
-            answer[standard]++;
+        if (values.size === 1) {
+            answer[[...values][0]]++;
             return;
         }
 
-        if (end.R - start.R === 1) {
-            for (let r = start.R; r <= end.R; r++) {
-                for (let c = start.C; c <= end.C; c++) {
-                    answer[arr[r][c]]++;
-                }
-            }
-            return;
-        }
-
-        const half = {
-            R: Math.floor((start.R + end.R) / 2),
-            C: Math.floor((start.C + end.C) / 2),
-        };
-
+        const half = Math.floor(size / 2);
         [
-            [
-                { R: start.R, C: start.C },
-                { R: half.R, C: half.C },
-            ],
-            [
-                { R: start.R, C: half.C + 1 },
-                { R: half.R, C: end.C },
-            ],
-            [
-                { R: half.R + 1, C: start.C },
-                { R: end.R, C: half.C },
-            ],
-            [
-                { R: half.R + 1, C: half.C + 1 },
-                { R: end.R, C: end.C },
-            ],
-        ].forEach(([start, end]) => countZeroAndOne(start, end));
+            [R, C],
+            [R, C + half],
+            [R + half, C],
+            [R + half, C + half],
+        ].forEach(point => countZeroAndOne(point, half));
     }
 }
 
