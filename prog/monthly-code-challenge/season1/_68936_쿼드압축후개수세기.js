@@ -41,23 +41,26 @@ function solution(arr) {
             return;
         }
 
-        const half = Math.floor((end.R - start.R) / 2) + start.R;
+        const half = {
+            R: Math.floor((start.R + end.R) / 2),
+            C: Math.floor((start.C + end.C) / 2),
+        };
 
         [
             [
                 { R: start.R, C: start.C },
-                { R: half, C: half },
+                { R: half.R, C: half.C },
             ],
             [
-                { R: start.R, C: half + 1 },
-                { R: half, C: end.C },
+                { R: start.R, C: half.C + 1 },
+                { R: half.R, C: end.C },
             ],
             [
-                { R: half + 1, C: start.C },
-                { R: end.R, C: half },
+                { R: half.R + 1, C: start.C },
+                { R: end.R, C: half.C },
             ],
             [
-                { R: half + 1, C: half + 1 },
+                { R: half.R + 1, C: half.C + 1 },
                 { R: end.R, C: end.C },
             ],
         ].forEach(([start, end]) => countZeroAndOne(start, end));
