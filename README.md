@@ -52,7 +52,7 @@
 ### 📅 2022.04
 
 #### Day 3. SUN
-> 🟣 [[Level 2] 퀴드압축 후 개수 세기 - 구현](https://programmers.co.kr/learn/courses/30/lessons/68936) ([#68936](prog/monthly-code-challenge/season1/_68936_쿼드압축후개수세기.js)) 
+> 🟣 [[Level 2] 쿼드압축 후 개수 세기 - 구현](https://programmers.co.kr/learn/courses/30/lessons/68936) ([#68936](prog/monthly-code-challenge/season1/_68936_쿼드압축후개수세기.js)) 
 
 #### Day 2. SAT
 > 🟣 [[Level 2] 이진 변환 반복하기 - 구현](https://programmers.co.kr/learn/courses/30/lessons/70129) ([#70129](prog/monthly-code-challenge/season1/_70129_이진변환반복하기.js))      
