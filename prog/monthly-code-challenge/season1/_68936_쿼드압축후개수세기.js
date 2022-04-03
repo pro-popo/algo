@@ -20,25 +20,34 @@ function solution(arr) {
     function countZeroAndOne(point, size) {
         const [R, C] = point;
 
-        const values = new Set();
-        for (let r = R; r < R + size; r++) {
-            for (let c = C; c < C + size; c++) {
-                values.add(arr[r][c]);
-            }
-        }
-
-        if (values.size === 1) {
-            answer[[...values][0]]++;
+        if (isAllSameNumber()) {
+            answer[arr[R][C]]++;
             return;
         }
 
-        const half = Math.floor(size / 2);
-        [
-            [R, C],
-            [R, C + half],
-            [R + half, C],
-            [R + half, C + half],
-        ].forEach(point => countZeroAndOne(point, half));
+        const halfSize = Math.floor(size / 2);
+        divideIntoFourParts(halfSize).forEach(point =>
+            countZeroAndOne(point, halfSize),
+        );
+
+        function isAllSameNumber() {
+            const numbers = new Set();
+            for (let r = R; r < R + size; r++) {
+                for (let c = C; c < C + size; c++) {
+                    numbers.add(arr[r][c]);
+                }
+            }
+            return numbers.size === 1;
+        }
+
+        function divideIntoFourParts(size) {
+            return [
+                [R, C],
+                [R, C + size],
+                [R + size, C],
+                [R + size, C + size],
+            ];
+        }
     }
 }
 
