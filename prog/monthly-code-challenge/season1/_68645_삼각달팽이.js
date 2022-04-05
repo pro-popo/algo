@@ -11,10 +11,15 @@ function solution(n) {
     triangle.fillMap();
     return triangle.printMap();
 }
+
 class Triangle {
     constructor(n) {
         this.n = n;
-        this.map = Array.from(Array(n), (_, index) =>
+        this.initState();
+    }
+
+    initState() {
+        this.map = Array.from(Array(this.n), (_, index) =>
             Array(index + 1).fill(false),
         );
 
@@ -23,34 +28,40 @@ class Triangle {
         this.number = 1;
     }
 
-    direction = {
-        DOWN: [1, 0],
-        RIGHT: [0, 1],
-        UP: [-1, -1],
-    };
-
     fillMap() {
         let count = Math.ceil(this.n / 2);
 
         while (count--) {
             ['DOWN', 'RIGHT', 'UP'].forEach(type => {
                 this.type = type;
-                this.move();
+                while (this.isMovable()) {
+                    this.moveCursor();
+                    this.fill();
+                }
             });
         }
     }
 
-    move() {
-        while (
-            this.map[this.nextR] &&
-            this.map[this.nextR][this.nextC] === false
-        ) {
-            this.r = this.nextR;
-            this.c = this.nextC;
-
-            this.map[this.r][this.c] = this.number++;
-        }
+    isMovable() {
+        return (
+            this.map[this.nextR] && this.map[this.nextR][this.nextC] === false
+        );
     }
+
+    moveCursor() {
+        this.r = this.nextR;
+        this.c = this.nextC;
+    }
+
+    fill() {
+        this.map[this.r][this.c] = this.number++;
+    }
+
+    direction = {
+        DOWN: [1, 0],
+        RIGHT: [0, 1],
+        UP: [-1, -1],
+    };
 
     get nextR() {
         return this.r + this.direction[this.type][0];
@@ -63,6 +74,8 @@ class Triangle {
         return this.map.flatMap(n => n);
     }
 }
+
+/****** TEST CASE *******/
 
 console.log(solution(4));
 console.log(solution(5));
