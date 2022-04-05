@@ -51,6 +51,14 @@
 
 ### 📅 2022.04
 
+#### Day 5. TUE
+> 🟣 [[Level 3] 외벽 점검 - 또 실패😭](https://programmers.co.kr/learn/courses/30/lessons/60062) ([#60062](prog/2020-kakao-blind/_60062_외벽점검.js)) 
+> 🟣 [[Level 2] 삼각 달팽이 - 구현](https://programmers.co.kr/learn/courses/30/lessons/68645) ([#68645](prog/monthly-code-challenge/season1/_68645_삼각달팽이.js)) 
+
+
+#### Day 4. MON
+> 🟣 [[Level 3] 외벽 점검 - 실패😥](https://programmers.co.kr/learn/courses/30/lessons/60062) ([#60062](prog/2020-kakao-blind/_60062_외벽점검.js))      
+
 #### Day 3. SUN
 > 🟣 [[Level 2] 쿼드압축 후 개수 세기 - 구현](https://programmers.co.kr/learn/courses/30/lessons/68936) ([#68936](prog/monthly-code-challenge/season1/_68936_쿼드압축후개수세기.js)) 
 
