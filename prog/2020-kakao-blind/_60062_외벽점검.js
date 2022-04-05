@@ -13,47 +13,70 @@
  * 친구들은 출발 지점부터 시계 / 반시계 방향으로 외벽을 따라서만 이동 가능하다.
  *
  * @param {*} n 외벽의 길이 (1~200)
- * @param {*} weak 취약 지검의 위치가 담긴 배열 (1~15)
- * @param {*} dist 각 친구가 1시간 동안 이동할 수 있는 거리가 담긴 배열
+ * @param {*} weak 취약 지점의 위치가 담긴 배열 (1~15)
+ * @param {*} dist 각 친구가 1시간 동안 이동할 수 있는 거리가 담긴 배열 (1~8)
  * @returns 취약 지점을 점검하기 위해 보내야하는 친구 수의 최소값. 만약 점검할 수 없다면, -1 반환
  */
 
 function solution(n, weak, dist) {
     const extendedWeak = [...weak, ...weak.map(w => w + n)];
-    const weakIDs = [];
-    while (weakIDs.length <= weak.length)
-        weakIDs.push(...weak.map((_, index) => index));
+    const weakIDs = [...weak.map((_, i) => i), ...weak.map((_, i) => i)];
 
-    dist.sort((a, b) => b - a);
-
-    let answer = Number.MAX_VALUE;
-    extendedWeak.forEach((_, weakID) =>
-        count(0, weakID, weakID + 1, new Set([weakIDs[weakID]])),
+    const selectedFriends = selectFriends(dist.length).sort(
+        (a, b) => a.length - b.length,
     );
 
-    return answer === Number.MAX_VALUE ? -1 : answer;
+    const answer = selectedFriends.find(isCheckedAllWeak);
+    return answer ? answer.length : -1;
 
-    function count(userID, startWeakID, endWeakID, finish) {
-        if (userID === dist.length || endWeakID >= extendedWeak.length) return;
+    function isCheckedAllWeak(friends) {
+        const selectedDist = friends.map(friend => dist[friend]);
+        return weak.find(
+            (_, weakID) =>
+                checkWeak(0, weakID, weakID, new Set()).size === weak.length,
+        );
 
-        if (finish.size === weak.length) {
-            answer = Math.min(answer, userID + 1);
-            return;
+        function checkWeak(friend, startWeak, endWeak, finishWeak) {
+            if (
+                finishWeak.size === weak.length ||
+                friend === selectedDist.length
+            )
+                return finishWeak;
+
+            if (
+                selectedDist[friend] <
+                extendedWeak[endWeak] - extendedWeak[startWeak]
+            ) {
+                return checkWeak(friend + 1, endWeak, endWeak, finishWeak);
+            }
+
+            finishWeak.add(weakIDs[endWeak]);
+            return checkWeak(friend, startWeak, endWeak + 1, finishWeak);
         }
+    }
+}
 
-        if (
-            dist[userID] <
-            extendedWeak[endWeakID] - extendedWeak[startWeakID]
-        ) {
-            count(userID + 1, endWeakID, endWeakID, finish);
-            return;
+function selectFriends(MAX_ID) {
+    const friends = [];
+    permutation(new Set());
+    return friends;
+
+    function permutation(selectedFriends) {
+        if (selectedFriends.size) friends.push([...selectedFriends]);
+
+        for (let id = 0; id < MAX_ID; id++) {
+            if (selectedFriends.has(id)) continue;
+
+            selectedFriends.add(id);
+            permutation(selectedFriends);
+            selectedFriends.delete(id);
         }
-
-        finish.add(weakIDs[endWeakID]);
-        count(userID, startWeakID, endWeakID + 1, finish);
-        finish.delete(weakIDs[endWeakID]);
     }
 }
 
 console.log(solution(12, [1, 5, 6, 10], [1, 2, 3, 4]));
+console.log(solution(200, [0, 10, 50, 80, 120, 160], [1, 10, 5, 40, 30]));
 console.log(solution(12, [1, 3, 4, 9, 10], [3, 5, 7]));
+
+console.log(solution(30, [0, 3, 11, 21], [10, 4]));
+console.log(solution(12, [0, 10], [1, 2]));
