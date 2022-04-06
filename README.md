@@ -51,6 +51,9 @@
 
 ### 📅 2022.04
 
+#### Day 6. WED
+> 🟣 [[Level 3] 기둥과 보 설치 - 구현](https://programmers.co.kr/learn/courses/30/lessons/60061) ([#60061](prog/2020-kakao-blind/_60061_기둥과보설치.js))         
+
 #### Day 5. TUE
 > 🟣 [[Level 3] 외벽 점검 - 또 실패😭](https://programmers.co.kr/learn/courses/30/lessons/60062) ([#60062](prog/2020-kakao-blind/_60062_외벽점검.js))         
 > 🟣 [[Level 2] 삼각 달팽이 - 구현](https://programmers.co.kr/learn/courses/30/lessons/68645) ([#68645](prog/monthly-code-challenge/season1/_68645_삼각달팽이.js)) 
