@@ -19,64 +19,75 @@
  */
 
 function solution(n, weak, dist) {
-    const extendedWeak = [...weak, ...weak.map(w => w + n)];
-    const weakIDs = [...weak.map((_, i) => i), ...weak.map((_, i) => i)];
-
-    const selectedFriends = selectFriends(dist.length).sort(
+    const candidates = createCandidates(dist.length).sort(
         (a, b) => a.length - b.length,
     );
 
-    const answer = selectedFriends.find(isCheckedAllWeak);
+    const extendedWeak = [...weak, ...weak.map(w => w + n)];
+    const answer = candidates.find(startCheckWeak);
+
     return answer ? answer.length : -1;
 
-    function isCheckedAllWeak(friends) {
-        const selectedDist = friends.map(friend => dist[friend]);
-        return weak.find(
-            (_, weakID) =>
-                checkWeak(0, weakID, weakID, new Set()).size === weak.length,
+    function startCheckWeak(candidate) {
+        const candidateDist = candidate.map(id => dist[id]);
+        const isSuccessCheck = weak.find((_, firstWeakId) =>
+            isCheckedAllWeak(candidateDist, firstWeakId),
         );
 
-        function checkWeak(friend, startWeak, endWeak, finishWeak) {
-            if (
-                finishWeak.size === weak.length ||
-                friend === selectedDist.length
-            )
-                return finishWeak;
+        return isSuccessCheck;
+    }
 
-            if (
-                selectedDist[friend] <
-                extendedWeak[endWeak] - extendedWeak[startWeak]
-            ) {
-                return checkWeak(friend + 1, endWeak, endWeak, finishWeak);
+    function isCheckedAllWeak(candidateDist, firstWeakId) {
+        let candidateId = 0;
+        let [startWeakId, endWeakId] = [firstWeakId, firstWeakId];
+
+        while (!isCheckedLastWeak()) {
+            if (candidateId === candidateDist.length) return false;
+
+            if (isNotEnoughDistance()) {
+                startWeakId = endWeakId;
+                candidateId++;
+                continue;
             }
 
-            finishWeak.add(weakIDs[endWeak]);
-            return checkWeak(friend, startWeak, endWeak + 1, finishWeak);
+            endWeakId++;
+        }
+        return true;
+
+        function isCheckedLastWeak() {
+            return endWeakId === firstWeakId + weak.length;
+        }
+
+        function isNotEnoughDistance() {
+            return (
+                extendedWeak[endWeakId] - extendedWeak[startWeakId] >
+                candidateDist[candidateId]
+            );
         }
     }
 }
 
-function selectFriends(MAX_ID) {
-    const friends = [];
+function createCandidates(maxId) {
+    const candidates = [];
     permutation(new Set());
-    return friends;
+    return candidates;
 
-    function permutation(selectedFriends) {
-        if (selectedFriends.size) friends.push([...selectedFriends]);
+    function permutation(candidate) {
+        if (candidate.size) candidates.push([...candidate]);
 
-        for (let id = 0; id < MAX_ID; id++) {
-            if (selectedFriends.has(id)) continue;
+        for (let id = 0; id < maxId; id++) {
+            if (candidate.has(id)) continue;
 
-            selectedFriends.add(id);
-            permutation(selectedFriends);
-            selectedFriends.delete(id);
+            candidate.add(id);
+            permutation(candidate);
+            candidate.delete(id);
         }
     }
 }
 
-console.log(solution(12, [1, 5, 6, 10], [1, 2, 3, 4]));
-console.log(solution(200, [0, 10, 50, 80, 120, 160], [1, 10, 5, 40, 30]));
-console.log(solution(12, [1, 3, 4, 9, 10], [3, 5, 7]));
+console.log(solution(6, [1, 2, 3, 4, 5], [1, 2, 3, 4]));
+// console.log(solution(200, [0, 10, 50, 80, 120, 160], [1, 10, 5, 40, 30]));
+// console.log(solution(12, [1, 3, 4, 9, 10], [3, 5, 7]));
 
-console.log(solution(30, [0, 3, 11, 21], [10, 4]));
-console.log(solution(12, [0, 10], [1, 2]));
+// console.log(solution(30, [0, 3, 11, 21], [10, 4]));
+// console.log(solution(200, [10, 20, 30], [1, 2, 4, 3]));
