@@ -28,10 +28,12 @@ function solution(n, build_frame) {
     const program = new Program(n);
     build_frame.forEach(([x, y, kind, command]) => {
         const structure = new Structure(x, y, kind);
-        if (command === Program.DELETE && program.isPossibleDelete(structure))
-            program.delete(structure);
-        if (command === Program.INSERT && program.isPossibleInsert(structure))
-            program.insert(structure);
+
+        if (command === Program.DELETE)
+            program.isPossibleDelete(structure) && program.delete(structure);
+
+        if (command === Program.INSERT)
+            program.isPossibleInsert(structure) && program.insert(structure);
     });
 
     return program.mapInfo;
@@ -50,40 +52,34 @@ class Program {
         return Array.from(Array(n), () => Array(n).fill(false));
     }
 
+    isPossibleDelete(structure) {
+        this.delete(structure);
+        const isPass = this.structures.every(structure =>
+            this.isPossibleInsert(structure),
+        );
+        this.insert(structure);
+
+        return isPass;
+    }
+
     isPossibleInsert(structure) {
         const [x, y] = structure.info();
 
         if (structure.isColumn()) {
-            return (
-                y === 0 ||
-                this.beamMap[x][y] ||
-                (this.beamMap[x - 1] && this.beamMap[x - 1][y]) ||
-                this.columnMap[x][y - 1]
-            );
+            const { isFloor, isExistStructuresOnBelowOfColumn } =
+                this.conditionsOfInsert([x, y]);
+
+            return isFloor() || isExistStructuresOnBelowOfColumn();
         }
 
         if (structure.isBeam()) {
+            const { isExistColumnOnBelowOfBeam, isExistBeamsOnBothEndsOfBeam } =
+                this.conditionsOfInsert([x, y]);
+
             return (
-                this.columnMap[x][y - 1] ||
-                (this.columnMap[x + 1] && this.columnMap[x + 1][y - 1]) ||
-                (this.beamMap[x - 1] &&
-                    this.beamMap[x + 1] &&
-                    this.beamMap[x - 1][y] &&
-                    this.beamMap[x + 1][y])
+                isExistColumnOnBelowOfBeam() || isExistBeamsOnBothEndsOfBeam()
             );
         }
-    }
-
-    isPossibleDelete(structure) {
-        const map = structure.isBeam() ? this.beamMap : this.columnMap;
-        const [x, y] = structure.info();
-        map[x][y] = false;
-
-        const isPass = this.structures.every(this.isPossibleInsert.bind(this));
-
-        map[x][y] = structure;
-
-        return isPass;
     }
 
     delete(structure) {
@@ -99,6 +95,49 @@ class Program {
     targetMap(structure) {
         if (structure.isBeam()) return this.beamMap;
         if (structure.isColumn()) return this.columnMap;
+    }
+
+    conditionsOfInsert([x, y]) {
+        const isExistBeam = ([x, y]) => this.beamMap[x] && this.beamMap[x][y];
+        const isExistColumn = ([x, y]) =>
+            this.columnMap[x] && this.columnMap[x][y];
+
+        const isFloor = () => y === 0;
+
+        const isExistStructuresOnBelowOfColumn = () => {
+            const columnOnBelow = [x, y - 1];
+            const beamsOnBelow = [
+                [x, y],
+                [x - 1, y],
+            ];
+            return (
+                beamsOnBelow.some(point => isExistBeam(point)) ||
+                isExistColumn(columnOnBelow)
+            );
+        };
+
+        const isExistColumnOnBelowOfBeam = () => {
+            const columnsOnBelow = [
+                [x, y - 1],
+                [x + 1, y - 1],
+            ];
+            return columnsOnBelow.some(point => isExistColumn(point));
+        };
+
+        const isExistBeamsOnBothEndsOfBeam = () => {
+            const beamsOnBothEnds = [
+                [x - 1, y],
+                [x + 1, y],
+            ];
+            return beamsOnBothEnds.every(point => isExistBeam(point));
+        };
+
+        return {
+            isFloor,
+            isExistStructuresOnBelowOfColumn,
+            isExistColumnOnBelowOfBeam,
+            isExistBeamsOnBothEndsOfBeam,
+        };
     }
 
     get mapInfo() {
@@ -140,6 +179,8 @@ class Structure {
         return this.kind === Structure.COLUMN;
     }
 }
+
+/****** TEST CASE *******/
 
 console.log(
     solution(5, [
