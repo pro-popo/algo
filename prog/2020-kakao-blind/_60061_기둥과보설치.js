@@ -33,8 +33,7 @@ function solution(n, build_frame) {
         if (command === Program.INSERT && program.isPossibleInsert(structure))
             program.insert(structure);
     });
-    console.table(program.columnMap);
-    console.table(program.beamMap);
+
     return program.mapInfo;
 }
 
@@ -43,19 +42,16 @@ class Program {
     static INSERT = 1;
 
     constructor(n) {
-        this.maxLength = n + 1;
-        this.beamMap = this.createMap();
-        this.columnMap = this.createMap();
+        this.beamMap = this.createMap(n + 1);
+        this.columnMap = this.createMap(n + 1);
     }
 
-    createMap() {
-        return Array.from(Array(this.maxLength), () =>
-            Array(this.maxLength).fill(false),
-        );
+    createMap(n) {
+        return Array.from(Array(n), () => Array(n).fill(false));
     }
 
     isPossibleInsert(structure) {
-        const [x, y] = [structure.x, structure.y];
+        const [x, y] = structure.info();
 
         if (structure.isColumn()) {
             return (
@@ -79,18 +75,15 @@ class Program {
     }
 
     isPossibleDelete(structure) {
-        const [x, y] = [structure.x, structure.y];
-
         const map = structure.isBeam() ? this.beamMap : this.columnMap;
+        const [x, y] = structure.info();
         map[x][y] = false;
 
-        const isSuccess = this.structures.every(
-            this.isPossibleInsert.bind(this),
-        );
+        const isPass = this.structures.every(this.isPossibleInsert.bind(this));
 
         map[x][y] = structure;
 
-        return isSuccess;
+        return isPass;
     }
 
     delete(structure) {
@@ -111,12 +104,13 @@ class Program {
     get mapInfo() {
         return this.structures
             .sort((a, b) => {
-                if (a.x === b.x && a.y === b.y && a.isBeam()) return 1;
+                if (a.x === b.x && a.y === b.y) return a.isBeam() ? 1 : -1;
                 if (a.x === b.x) return a.y - b.y;
                 return a.x - b.x;
             })
-            .map(structure => [structure.x, structure.y, structure.kind]);
+            .map(structure => structure.info());
     }
+
     get structures() {
         return [...this.columnMap, ...this.beamMap]
             .flatMap(structure => structure)
@@ -132,6 +126,10 @@ class Structure {
         this.x = x;
         this.y = y;
         this.kind = kind;
+    }
+
+    info() {
+        return [this.x, this.y, this.kind];
     }
 
     isBeam() {
