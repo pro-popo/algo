@@ -22,6 +22,7 @@
  *          x좌표를 기준으로 오름차순,
  *          x좌표가 같을 경우 y좌표 기준으로 오름차순,
  *          x,y좌표가 모두 같은 경우 기둥이 보의 앞에 존재.
+ *
  */
 
 function solution(n, build_frame) {
@@ -64,22 +65,20 @@ class Program {
 
     isPossibleInsert(structure) {
         const [x, y] = structure.info();
+        const {
+            isFloor,
+            isExistStructuresOnBelowOfColumn,
+            isExistColumnOnBelowOfBeam,
+            isExistBeamsOnBothEndsOfBeam,
+        } = this.conditionsOfInsert([x, y]);
 
-        if (structure.isColumn()) {
-            const { isFloor, isExistStructuresOnBelowOfColumn } =
-                this.conditionsOfInsert([x, y]);
-
+        if (structure.isColumn())
             return isFloor() || isExistStructuresOnBelowOfColumn();
-        }
 
-        if (structure.isBeam()) {
-            const { isExistColumnOnBelowOfBeam, isExistBeamsOnBothEndsOfBeam } =
-                this.conditionsOfInsert([x, y]);
-
+        if (structure.isBeam())
             return (
                 isExistColumnOnBelowOfBeam() || isExistBeamsOnBothEndsOfBeam()
             );
-        }
     }
 
     delete(structure) {
