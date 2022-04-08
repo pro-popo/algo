@@ -30,10 +30,9 @@ function solution(n, weak, dist) {
 
     function startCheckWeak(candidate) {
         const candidateDist = candidate.map(id => dist[id]);
-        const isSuccessCheck = weak.find((_, firstWeakId) =>
+        const isSuccessCheck = weak.some((_, firstWeakId) =>
             isCheckedAllWeak(candidateDist, firstWeakId),
         );
-
         return isSuccessCheck;
     }
 
@@ -85,7 +84,7 @@ function createCandidates(maxId) {
     }
 }
 
-console.log(solution(6, [1, 2, 3, 4, 5], [1, 2, 3, 4]));
+console.log(solution(6, [0], [1, 2, 3, 4]));
 // console.log(solution(200, [0, 10, 50, 80, 120, 160], [1, 10, 5, 40, 30]));
 // console.log(solution(12, [1, 3, 4, 9, 10], [3, 5, 7]));
 
