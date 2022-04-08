@@ -14,17 +14,7 @@
  */
 
 function solution(board) {
-    (board.BLANK = 0), (board.WALL = 1);
-    const dt = [
-        [0, 1],
-        [1, 1],
-        [1, 0],
-        [1, -1],
-        [0, -1],
-        [-1, -1],
-        [-1, 0],
-        [-1, 1],
-    ];
+    [board.BLANK, board.WALL] = [0, 1];
 
     const queue = new Queue();
     queue.add(new Robot([0, 0], [0, 1]));
@@ -46,13 +36,13 @@ function solution(board) {
     }
 
     function startMove(robot) {
-        for (let d = 0; d < dt.length; d += 2) {
-            const movedRobot = robot.moveRobot(dt[d]);
-
+        for (let d = 0; d < Direction.MAX_LENGTH; d += 2) {
+            const direction = new Direction(d);
+            const movedRobot = robot.moveRobot(direction.get());
             if (
                 movedRobot.point.some(isImmovable) ||
-                queue.isRemainHistory(movedRobot.toString()) ||
-                queue.isRemainHistory(movedRobot.reverse.toString())
+                queue.isRemainHistory(movedRobot) ||
+                queue.isRemainHistory(movedRobot.reverse)
             )
                 continue;
 
@@ -62,32 +52,29 @@ function solution(board) {
 
     function startRotate(robot) {
         [robot, robot.reverse].forEach(robot => {
-            const [standardRobot, rotateRobot] = robot.point;
-            let direction = dt.findIndex(
-                ([x, y]) =>
-                    x + standardRobot[0] === rotateRobot[0] &&
-                    y + standardRobot[1] === rotateRobot[1],
+            const [standardPoint, rotatePoint] = robot.point;
+            const index = Direction.findIndexDirection(
+                standardPoint,
+                rotatePoint,
             );
 
-            const [LEFT_ROTATE, RIGHT_ROTATE] = [1, -1];
-            rotate(robot, direction, LEFT_ROTATE);
-            rotate(robot, direction, RIGHT_ROTATE);
+            rotate(robot, new Direction(index), Direction.LEFT_ROTATE);
+            rotate(robot, new Direction(index), Direction.RIGHT_ROTATE);
         });
     }
 
     function rotate(robot, direction, directionOfRotate) {
         let numberOfRotate = 2;
-        while (numberOfRotate--) {
-            direction += directionOfRotate;
-            if (direction === dt.length) direction = 0;
-            if (direction === -1) direction = dt.length - 1;
 
-            const rotatedRobot = robot.rotateRobot(dt[direction]);
+        while (numberOfRotate--) {
+            direction.add(directionOfRotate);
+
+            const rotatedRobot = robot.rotateRobot(direction.get());
             if (rotatedRobot.point.some(isImmovable)) break;
             if (
                 isSlash(numberOfRotate) ||
-                queue.isRemainHistory(rotatedRobot.toString()) ||
-                queue.isRemainHistory(rotatedRobot.reverse.toString())
+                queue.isRemainHistory(rotatedRobot) ||
+                queue.isRemainHistory(rotatedRobot.reverse)
             )
                 continue;
 
@@ -163,6 +150,55 @@ class Robot {
 
     toString() {
         return `${this.left} ${this.right}`;
+    }
+}
+
+class Direction {
+    static LEFT_ROTATE = 1;
+    static RIGHT_ROTATE = -1;
+
+    constructor(value) {
+        this.value = value;
+    }
+
+    static get list() {
+        return [
+            [0, 1],
+            [1, 1],
+            [1, 0],
+            [1, -1],
+            [0, -1],
+            [-1, -1],
+            [-1, 0],
+            [-1, 1],
+        ];
+    }
+
+    static get MAX_LENGTH() {
+        return Direction.list.length;
+    }
+
+    static findIndexDirection(standardPoint, targetPoint) {
+        return Direction.list.findIndex(
+            ([moveX, moveY]) =>
+                standardPoint[0] + moveX === targetPoint[0] &&
+                standardPoint[1] + moveY === targetPoint[1],
+        );
+    }
+
+    add(value) {
+        value += this.value;
+        if (value >= Direction.MAX_LENGTH) return this.set(0);
+        if (value < 0) return this.set(Direction.MAX_LENGTH - 1);
+        return this.set(value);
+    }
+
+    get() {
+        return Direction.list[this.value];
+    }
+
+    set(value) {
+        this.value = value;
     }
 }
 
