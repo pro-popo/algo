@@ -72,12 +72,7 @@ function solution(board) {
         for (let d = 0; d < Direction.MAX_LENGTH; d += 2) {
             const direction = new Direction(d);
             const movedRobot = robot.moveRobot(direction.get());
-            if (
-                movedRobot.point.some(isImmovable) ||
-                queue.isRemainHistory(movedRobot) ||
-                queue.isRemainHistory(movedRobot.reverse)
-            )
-                continue;
+            if (isImmovable(movedRobot) || isVisited(movedRobot)) continue;
 
             queue.add(movedRobot);
         }
@@ -103,28 +98,31 @@ function solution(board) {
             direction.add(directionOfRotate);
 
             const rotatedRobot = robot.rotateRobot(direction.get());
-            if (rotatedRobot.point.some(isImmovable)) break;
-            if (
-                isSlash(numberOfRotate) ||
-                queue.isRemainHistory(rotatedRobot) ||
-                queue.isRemainHistory(rotatedRobot.reverse)
-            )
-                continue;
+            if (isImmovable(rotatedRobot)) break;
+            if (isSlash(numberOfRotate) || isVisited(rotatedRobot)) continue;
 
             queue.add(rotatedRobot);
         }
     }
 
-    function isSlash(numberOfRotate) {
-        return numberOfRotate % 2 !== 0;
+    function isImmovable(robot) {
+        return robot.point.some(
+            ([x, y]) => isOutOfRange(x, y) || board[x][y] === board.WALL,
+        );
     }
 
-    function isImmovable([x, y]) {
-        return isOutOfRange() || board[x][y] === board.WALL;
+    function isOutOfRange(x, y) {
+        return x < 0 || y < 0 || x === board.length || y === board.length;
+    }
 
-        function isOutOfRange() {
-            return x < 0 || y < 0 || x === board.length || y === board.length;
-        }
+    function isVisited(robot) {
+        return (
+            queue.isRemainHistory(robot) || queue.isRemainHistory(robot.reverse)
+        );
+    }
+
+    function isSlash(numberOfRotate) {
+        return numberOfRotate % 2 !== 0;
     }
 }
 
