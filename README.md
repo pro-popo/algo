@@ -51,6 +51,12 @@
 
 ### 📅 2022.04
 
+#### Day 8. FRI
+> 🟣 [[Level 3] 블록 이동하기 - DFS/BFS, 완전탐색](https://programmers.co.kr/learn/courses/30/lessons/60063) ([#60063](prog/2020-kakao-blind/_60063_블록이동하기.js))   
+
+#### Day 7. THU
+> 🟣 [[Level 3] 블록 이동하기 - 실패😥](https://programmers.co.kr/learn/courses/30/lessons/60063) ([#60063](prog/2020-kakao-blind/_60063_블록이동하기.js))  
+
 #### Day 6. WED
 > 🟣 [[Level 3] 기둥과 보 설치 - 구현](https://programmers.co.kr/learn/courses/30/lessons/60061) ([#60061](prog/2020-kakao-blind/_60061_기둥과보설치.js))         
 
