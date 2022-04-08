@@ -76,7 +76,7 @@ function solution(board) {
     }
 
     function rotate(robot, direction, directionOfRotate) {
-        let numberOfRotate = dt.length - 2;
+        let numberOfRotate = 2;
         while (numberOfRotate--) {
             direction += directionOfRotate;
             if (direction === dt.length) direction = 0;
@@ -92,7 +92,7 @@ function solution(board) {
     }
 
     function isSlash(numberOfRotate) {
-        return numberOfRotate % 2 != 0;
+        return numberOfRotate % 2 !== 0;
     }
 
     function isImmovable([x, y]) {
@@ -133,13 +133,15 @@ class Robot {
     }
 
     get reverse() {
-        return new Robot(this.right, this.left);
+        return new Robot([...this.right], [...this.left]);
     }
 
     toString() {
         return `${this.left} ${this.right}`;
     }
 }
+
+/****** TEST CASE *******/
 
 console.log(
     solution([
