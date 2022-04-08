@@ -26,13 +26,12 @@ function solution(board) {
         [-1, 1],
     ];
 
-    const queue = [];
-    const visited = new Set();
-    addRobotInQueue(new Robot([0, 0], [0, 1]));
+    const queue = new Queue();
+    queue.add(new Robot([0, 0], [0, 1]));
 
     const endPoint = `${board.length - 1},${board.length - 1}`;
     let answer = 0;
-    while (queue.length) {
+    while (!queue.isEmpty) {
         let size = queue.length;
         while (size--) {
             const robot = queue.shift();
@@ -52,11 +51,12 @@ function solution(board) {
 
             if (
                 movedRobot.point.some(isImmovable) ||
-                visited.has(movedRobot.toString())
+                queue.isRemainHistory(movedRobot.toString()) ||
+                queue.isRemainHistory(movedRobot.reverse.toString())
             )
                 continue;
 
-            addRobotInQueue(movedRobot);
+            queue.add(movedRobot);
         }
     }
 
@@ -84,10 +84,14 @@ function solution(board) {
 
             const rotatedRobot = robot.rotateRobot(dt[direction]);
             if (rotatedRobot.point.some(isImmovable)) break;
-            if (isSlash(numberOfRotate) || visited.has(rotatedRobot.toString()))
+            if (
+                isSlash(numberOfRotate) ||
+                queue.isRemainHistory(rotatedRobot.toString()) ||
+                queue.isRemainHistory(rotatedRobot.reverse.toString())
+            )
                 continue;
 
-            addRobotInQueue(rotatedRobot);
+            queue.add(rotatedRobot);
         }
     }
 
@@ -102,10 +106,31 @@ function solution(board) {
             return x < 0 || y < 0 || x === board.length || y === board.length;
         }
     }
+}
 
-    function addRobotInQueue(robot) {
-        queue.push(robot);
-        visited.add(robot.toString()).add(robot.reverse.toString());
+class Queue {
+    items = [];
+    history = new Set();
+
+    add(item) {
+        this.items.push(item);
+        this.history.add(item.toString());
+    }
+
+    get length() {
+        return this.items.length;
+    }
+
+    get isEmpty() {
+        return this.length === 0;
+    }
+
+    isRemainHistory(item) {
+        return this.history.has(item.toString());
+    }
+
+    shift() {
+        return this.items.shift();
     }
 }
 
