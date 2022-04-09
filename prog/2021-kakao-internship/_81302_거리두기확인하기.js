@@ -15,20 +15,21 @@
 
 const MAX_LENGTH = 5;
 const [PERSON, TABLE] = ['P', 'O', 'X'];
+const [PASS, FAIL] = [1, 0];
 
 function solution(places) {
     return places.map(place => {
         for (let i = 0; i < MAX_LENGTH; i++) {
             for (let j = 0; j < MAX_LENGTH; j++) {
                 if (place[i][j] === PERSON && !isKeepDistance(place, [i, j]))
-                    return 0;
+                    return FAIL;
             }
         }
-        return 1;
+        return PASS;
     });
 }
 
-const dt = [
+const direction = [
     [0, 1],
     [0, -1],
     [1, 0],
@@ -44,14 +45,16 @@ function isKeepDistance(place, start) {
         let size = queue.length;
         while (size--) {
             const [x, y] = queue.shift();
-            for (let d = 0; d < 4; d++) {
-                const next = [x + dt[d][0], y + dt[d][1]];
+
+            for (let move of direction) {
+                const next = [x + move[0], y + move[1]];
                 if (isOutOfRange(next) || visited.has(next.toString()))
                     continue;
 
                 const type = place[next[0]][next[1]];
                 if (type === PERSON) return false;
                 if (type === TABLE) queue.push(next);
+
                 visited.add(next.toString());
             }
         }
@@ -62,6 +65,8 @@ function isKeepDistance(place, start) {
 function isOutOfRange([x, y]) {
     return x < 0 || y < 0 || x === MAX_LENGTH || y === MAX_LENGTH;
 }
+
+/****** TEST CASE *******/
 
 console.log(
     solution([
