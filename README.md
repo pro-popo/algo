@@ -52,7 +52,8 @@
 ### 📅 2022.04
 
 #### Day 9. SAT
-> 🟣 [[Level 3] 외벽 점검 - 순열, 완전탐색](https://programmers.co.kr/learn/courses/30/lessons/60062) ([#60062](prog/2020-kakao-blind/_60062_외벽점검.js))   
+> 🟣 [[Level 3] 외벽 점검 - 순열, 완전탐색](https://programmers.co.kr/learn/courses/30/lessons/60062) ([#60062](prog/2020-kakao-blind/_60062_외벽점검.js)) 
+> 🟣 [[Level 2] 거리두기 확인하기 - DFS/BFS](https://programmers.co.kr/learn/courses/30/lessons/81302) ([#81302](prog/2021-kakao-internship/_81302_거리두기확인하기.js))
 
 #### Day 8. FRI
 > 🟣 [[Level 3] 블록 이동하기 - DFS/BFS, 구현](https://programmers.co.kr/learn/courses/30/lessons/60063) ([#60063](prog/2020-kakao-blind/_60063_블록이동하기.js))   
