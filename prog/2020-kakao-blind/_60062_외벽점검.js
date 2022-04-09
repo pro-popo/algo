@@ -73,7 +73,7 @@
  */
 
 function solution(n, weak, dist) {
-    const candidates = createCandidates(dist.length).sort(
+    const candidates = createCandidates(dist).sort(
         (a, b) => a.length - b.length,
     );
 
@@ -83,19 +83,18 @@ function solution(n, weak, dist) {
     return answer ? answer.length : -1;
 
     function startCheckWeak(candidate) {
-        const candidateDist = candidate.map(id => dist[id]);
         const isSuccessCheck = weak.some((_, firstWeakId) =>
-            isCheckedAllWeak(candidateDist, firstWeakId),
+            isCheckedAllWeak(candidate, firstWeakId),
         );
         return isSuccessCheck;
     }
 
-    function isCheckedAllWeak(candidateDist, firstWeakId) {
+    function isCheckedAllWeak(candidate, firstWeakId) {
         let candidateId = 0;
         let [startWeakId, endWeakId] = [firstWeakId, firstWeakId];
 
         while (!isCheckedLastWeak()) {
-            if (candidateId === candidateDist.length) return false;
+            if (candidateId === candidate.length) return false;
 
             if (isNotEnoughDistance()) {
                 startWeakId = endWeakId;
@@ -114,21 +113,21 @@ function solution(n, weak, dist) {
         function isNotEnoughDistance() {
             return (
                 extendedWeak[endWeakId] - extendedWeak[startWeakId] >
-                candidateDist[candidateId]
+                candidate[candidateId]
             );
         }
     }
 }
 
-function createCandidates(maxId) {
+function createCandidates(dist) {
     const candidates = [];
     permutation(new Set());
     return candidates;
 
     function permutation(candidate) {
-        if (candidate.size) candidates.push([...candidate]);
+        if (candidate.size) candidates.push([...candidate].map(id => dist[id]));
 
-        for (let id = 0; id < maxId; id++) {
+        for (let id = 0; id < dist.length; id++) {
             if (candidate.has(id)) continue;
 
             candidate.add(id);
