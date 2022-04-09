@@ -83,39 +83,12 @@ function solution(n, weak, dist) {
     return answer ? answer.length : -1;
 
     function startCheckWeak(candidate) {
-        const isSuccessCheck = weak.some((_, firstWeakId) =>
-            isCheckedAllWeak(candidate, firstWeakId),
+        return weak.some((_, weakId) =>
+            isCheckedAllWeak(
+                candidate,
+                extendedWeak.slice(weakId, weakId + weak.length),
+            ),
         );
-        return isSuccessCheck;
-    }
-
-    function isCheckedAllWeak(candidate, firstWeakId) {
-        let candidateId = 0;
-        let [startWeakId, endWeakId] = [firstWeakId, firstWeakId];
-
-        while (!isCheckedLastWeak()) {
-            if (candidateId === candidate.length) return false;
-
-            if (isNotEnoughDistance()) {
-                startWeakId = endWeakId;
-                candidateId++;
-                continue;
-            }
-
-            endWeakId++;
-        }
-        return true;
-
-        function isCheckedLastWeak() {
-            return endWeakId === firstWeakId + weak.length;
-        }
-
-        function isNotEnoughDistance() {
-            return (
-                extendedWeak[endWeakId] - extendedWeak[startWeakId] >
-                candidate[candidateId]
-            );
-        }
     }
 }
 
@@ -134,6 +107,28 @@ function createCandidates(dist) {
             permutation(candidate);
             candidate.delete(id);
         }
+    }
+}
+
+function isCheckedAllWeak(candidate, weak) {
+    let candidateId = 0;
+    let [startWeakId, endWeakId] = [0, 0];
+
+    while (endWeakId < weak.length) {
+        if (candidateId === candidate.length) return false;
+
+        if (isNotEnoughDistance()) {
+            startWeakId = endWeakId;
+            candidateId++;
+            continue;
+        }
+
+        endWeakId++;
+    }
+    return true;
+
+    function isNotEnoughDistance() {
+        return weak[endWeakId] - weak[startWeakId] > candidate[candidateId];
     }
 }
 
