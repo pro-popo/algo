@@ -51,15 +51,18 @@ class Row {
         this.nextRow = row;
     }
 
+    connect(firstRow, secondRow) {
+        firstRow?.setNext(secondRow);
+        secondRow?.setPrevious(firstRow);
+    }
+
     add(newRow) {
-        if (this.next) this.next.setPrevious(newRow);
-        this.setNext(newRow);
-        newRow.setPrevious(this);
+        this.connect(newRow, this.next);
+        this.connect(this, newRow);
     }
 
     remove() {
-        this.previous?.setNext(this.next);
-        this.next?.setPrevious(this.previous);
+        this.connect(this.previous, this.next);
     }
 }
 
