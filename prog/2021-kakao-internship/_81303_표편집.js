@@ -14,16 +14,11 @@
  */
 
 function solution(n, k, cmd) {
-    const rows = [...Array(n)].map((_, number) => new Row(number));
-    rows.reduce((row, nextRow) => {
-        row.add(nextRow);
-        return nextRow;
-    });
-
-    const program = new Program(n, rows[k]);
+    const program = new Program(n, k);
 
     cmd.forEach(command => {
         const [type, number] = command.split(' ');
+
         if (type === 'U' || type === 'D') program.moveCursor(type, number);
         if (type === 'C') program.remove();
         if (type === 'Z') program.cancelRemove();
@@ -61,26 +56,33 @@ class Row {
         this.setNext(newRow);
         newRow.setPrevious(this);
     }
+
+    remove() {
+        this.previous?.setNext(this.next);
+        this.next?.setPrevious(this.previous);
+    }
 }
 
 class Program {
     history = [];
 
-    constructor(n, row) {
+    constructor(n, k) {
         this.numberOfRow = n;
-        this.cursor = row;
+
+        const rows = this.createTable(n);
+        this.cursor = rows[k];
+    }
+
+    createTable(n) {
+        const rows = [...Array(n)].map((_, number) => new Row(number));
+        for (let number = 0; number < n - 1; number++) {
+            rows[number].add(rows[number + 1]);
+        }
+        return rows;
     }
 
     setCursor(row) {
         this.cursor = row;
-    }
-
-    get previous() {
-        return this.cursor.previous;
-    }
-
-    get next() {
-        return this.cursor.next;
     }
 
     moveCursor(type, number) {
@@ -91,8 +93,7 @@ class Program {
     }
 
     remove() {
-        this.previous?.setNext(this.next);
-        this.next?.setPrevious(this.previous);
+        this.cursor.remove();
 
         this.history.push(this.cursor);
         this.setCursor(this.next || this.previous);
@@ -102,6 +103,14 @@ class Program {
         const row = this.history.pop();
         if (row.previous) row.previous.add(row);
         else row.add(row.next);
+    }
+
+    get previous() {
+        return this.cursor.previous;
+    }
+
+    get next() {
+        return this.cursor.next;
     }
 
     get rows() {
