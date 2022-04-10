@@ -13,6 +13,25 @@
  * @returns 모든 명령어를 수행한 후 표의 상태 (삭제:X, 존재:O)
  */
 
+function solution(n, k, cmd) {
+    const rows = [...Array(n)].map((_, number) => new Row(number));
+    rows.reduce((row, nextRow) => {
+        row.add(nextRow);
+        return nextRow;
+    });
+
+    const program = new Program(n, rows[k]);
+
+    cmd.forEach(command => {
+        const [type, number] = command.split(' ');
+        if (type === 'U' || type === 'D') program.moveCursor(type, number);
+        if (type === 'C') program.remove();
+        if (type === 'Z') program.cancelRemove();
+    });
+
+    return program.rows;
+}
+
 class Row {
     previousRow = null;
     nextRow = null;
@@ -38,16 +57,17 @@ class Row {
     }
 
     add(newRow) {
-        if (this.nextRow) this.nextRow.setPrevious(newRow);
+        if (this.next) this.next.setPrevious(newRow);
         this.setNext(newRow);
         newRow.setPrevious(this);
     }
 }
 
 class Program {
-    history = null;
+    history = [];
 
-    constructor(row) {
+    constructor(n, row) {
+        this.numberOfRow = n;
         this.cursor = row;
     }
 
@@ -74,34 +94,49 @@ class Program {
         this.previous?.setNext(this.next);
         this.next?.setPrevious(this.previous);
 
-        const moveCursor = this.next || this.previous;
-        this.setCursor(moveCursor);
         this.history.push(this.cursor);
+        this.setCursor(this.next || this.previous);
     }
 
     cancelRemove() {
         const row = this.history.pop();
+        if (row.previous) row.previous.add(row);
+        else row.add(row.next);
+    }
+
+    get rows() {
+        const remain = Array(this.numberOfRow).fill('X');
+
+        ['previous', 'next'].forEach(direction => {
+            let row = this.cursor;
+            while (row) {
+                remain[row.number] = 'O';
+                row = row[direction];
+            }
+        });
+
+        return remain.join('');
     }
 }
 
-function solution(n, k, cmd) {
-    const rows = [...Array(n - 1)].map((_, number) => new Row(number));
-    rows.reduce((row, nextRow) => {
-        row.add(nextRow);
-        return nextRow;
-    });
+/****** TEST CASE *******/
 
-    const program = new Program(rows[k]);
+console.log(
+    solution(8, 2, ['D 2', 'C', 'U 3', 'C', 'D 4', 'C', 'U 2', 'Z', 'Z']),
+);
 
-    cmd.forEach(command => {
-        const [type, number] = command.split(' ');
-        console.log(program.cursor);
-
-        if (type === 'U' || type === 'D') program.moveCursor(type, number);
-        if (type === 'C') program.remove();
-        if (type === 'Z') program.cancelRemove();
-    });
-    return program;
-}
-
-console.log(solution(8, 2, ['D 2', 'C']));
+console.log(
+    solution(8, 2, [
+        'D 2',
+        'C',
+        'U 3',
+        'C',
+        'D 4',
+        'C',
+        'U 2',
+        'Z',
+        'Z',
+        'U 1',
+        'C',
+    ]),
+);
