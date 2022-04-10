@@ -16,69 +16,26 @@
 function solution(n, k, cmd) {
     const program = new Program(n, k);
 
-    cmd.forEach(command => {
-        const [type, number] = command.split(' ');
-
-        if (type === 'U' || type === 'D') program.moveCursor(type, number);
-        if (type === 'C') program.remove();
-        if (type === 'Z') program.cancelRemove();
-    });
+    cmd.forEach(command => program.execute(command));
 
     return program.rows;
 }
 
-class Row {
-    previousRow = null;
-    nextRow = null;
-
-    constructor(number) {
-        this.number = number;
-    }
-
-    get previous() {
-        return this.previousRow;
-    }
-
-    get next() {
-        return this.nextRow;
-    }
-
-    setPrevious(row) {
-        this.previousRow = row;
-    }
-
-    setNext(row) {
-        this.nextRow = row;
-    }
-
-    connect(firstRow, secondRow) {
-        firstRow?.setNext(secondRow);
-        secondRow?.setPrevious(firstRow);
-    }
-
-    add(newRow) {
-        this.connect(newRow, this.next);
-        this.connect(this, newRow);
-    }
-
-    remove() {
-        this.connect(this.previous, this.next);
-    }
-}
-
 class Program {
+    cursor = null;
     history = [];
 
     constructor(n, k) {
         this.numberOfRow = n;
 
         const rows = this.createTable(n);
-        this.cursor = rows[k];
+        this.header = rows[0];
+        this.setCursor(rows[k + 1]);
     }
 
     createTable(n) {
-        const rows = [...Array(n)].map((_, number) => new Row(number));
-        for (let number = 0; number < n - 1; number++) {
+        const rows = [...Array(n + 1)].map((_, number) => new Row(number - 1));
+        for (let number = 0; number < n; number++) {
             rows[number].add(rows[number + 1]);
         }
         return rows;
@@ -86,6 +43,14 @@ class Program {
 
     setCursor(row) {
         this.cursor = row;
+    }
+
+    execute(command) {
+        const [type, number] = command.split(' ');
+
+        if (type === 'U' || type === 'D') this.moveCursor(type, number);
+        if (type === 'C') this.remove();
+        if (type === 'Z') this.cancelRemove();
     }
 
     moveCursor(type, number) {
@@ -104,8 +69,7 @@ class Program {
 
     cancelRemove() {
         const row = this.history.pop();
-        if (row.previous) row.previous.add(row);
-        else row.add(row.next);
+        row.previous.add(row);
     }
 
     get previous() {
@@ -119,15 +83,49 @@ class Program {
     get rows() {
         const remain = Array(this.numberOfRow).fill('X');
 
-        ['previous', 'next'].forEach(direction => {
-            let row = this.cursor;
-            while (row) {
-                remain[row.number] = 'O';
-                row = row[direction];
-            }
-        });
+        let row = this.header;
+        while ((row = row.next)) remain[row.number] = 'O';
 
         return remain.join('');
+    }
+}
+
+class Row {
+    previousRow = null;
+    nextRow = null;
+
+    constructor(number) {
+        this.number = number;
+    }
+
+    connect(firstRow, secondRow) {
+        firstRow?.setNext(secondRow);
+        secondRow?.setPrevious(firstRow);
+    }
+
+    add(newRow) {
+        this.connect(newRow, this.next);
+        this.connect(this, newRow);
+    }
+
+    remove() {
+        this.connect(this.previous, this.next);
+    }
+
+    setPrevious(row) {
+        this.previousRow = row;
+    }
+
+    setNext(row) {
+        this.nextRow = row;
+    }
+
+    get previous() {
+        return this.previousRow;
+    }
+
+    get next() {
+        return this.nextRow;
     }
 }
 
