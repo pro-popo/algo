@@ -51,6 +51,10 @@
 
 ### 📅 2022.04
 
+#### Day 11. MON
+> 🟣 [[Level 1] 키패드 누르기 - 구현](https://programmers.co.kr/learn/courses/30/lessons/67256) ([#67256](prog/2020-kakao-internship/_67256_키패드누르기.js))         
+> 🟣 [[Level 2] 수식 최대화 - 순열, 완전탐색](https://programmers.co.kr/learn/courses/30/lessons/67257) ([#67257](prog/2020-kakao-internship/_67257_수식최대화.js))
+
 #### Day 10. SUN
 > 🟣 [[Level 3] 표 편집 - 연결 리스트](https://programmers.co.kr/learn/courses/30/lessons/81303) ([#81302](prog/2021-kakao-internship/_81303_표편집.js))
 
