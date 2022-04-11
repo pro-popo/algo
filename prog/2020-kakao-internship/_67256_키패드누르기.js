@@ -86,14 +86,6 @@ class PhoneUser {
         this.right = Phone.point('#');
     }
 
-    setLeft(point) {
-        this.left = point;
-    }
-
-    setRight(point) {
-        this.right = point;
-    }
-
     changeHandPoint(hand, point) {
         this[hand] = point;
     }
