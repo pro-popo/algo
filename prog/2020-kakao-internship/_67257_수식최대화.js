@@ -14,51 +14,54 @@
  */
 
 function solution(expression) {
+    const numbers = filterNumbers(expression);
+    const operators = filterOperators(expression);
+
     const priorities = createOperatorPriorities();
-
-    const numbers = expression
-        .replace(/[*,+,-]/g, ' ')
-        .split(' ')
-        .map(Number);
-    const operators = expression.replace(/[0-9]/g, '').split('');
-
-    return Math.max(
-        ...priorities.map(priority => calculateExpression(priority)),
-    );
+    return Math.max(...priorities.map(calculateExpression));
 
     function calculateExpression(priority) {
-        let remainOperators = [...operators];
         let remainNumbers = [...numbers];
+        let remainOperators = [...operators];
+
         priority.forEach(priorityOperator => {
+            remainNumbers = [...useOperator(priorityOperator)];
+            remainOperators = remainOperators.filter(
+                operator => operator !== priorityOperator,
+            );
+        });
+
+        return Math.abs(remainNumbers.pop());
+
+        function useOperator(targetOperator) {
             const stack = [remainNumbers[0]];
             remainOperators.forEach((operator, index) => {
                 let result = remainNumbers[index + 1];
-                if (operator === priorityOperator) {
+                if (operator === targetOperator) {
                     result = calculator(stack.pop(), result, operator);
                 }
                 stack.push(result);
             });
-
-            remainOperators = remainOperators.filter(
-                operator => operator !== priorityOperator,
-            );
-            remainNumbers = [...stack];
-        });
-
-        return Math.abs(remainNumbers.pop());
+            return stack;
+        }
     }
+}
 
-    function calculator(a, b, operator) {
-        if (operator === '+') return a + b;
-        if (operator === '-') return a - b;
-        if (operator === '*') return a * b;
-    }
+function filterNumbers(expression) {
+    return expression
+        .replace(/[*,+,-]/g, ' ')
+        .split(' ')
+        .map(Number);
+}
+
+function filterOperators(expression) {
+    return expression.replace(/[0-9]/g, '').split('');
 }
 
 function createOperatorPriorities() {
     const operators = ['+', '-', '*'];
     const priorities = [];
-    const used = new Set();
+    const usedOperators = new Set();
 
     permutation([]);
     return priorities;
@@ -68,13 +71,21 @@ function createOperatorPriorities() {
             priorities.push(priority);
             return;
         }
+
         operators.forEach(operator => {
-            if (used.has(operator)) return;
-            used.add(operator);
+            if (usedOperators.has(operator)) return;
+
+            usedOperators.add(operator);
             permutation(priority.concat(operator));
-            used.delete(operator);
+            usedOperators.delete(operator);
         });
     }
+}
+
+function calculator(a, b, operator) {
+    if (operator === '+') return a + b;
+    if (operator === '-') return a - b;
+    if (operator === '*') return a * b;
 }
 
 /****** TEST CASE *******/
