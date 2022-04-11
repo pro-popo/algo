@@ -19,45 +19,36 @@
  */
 
 function solution(numbers, hand) {
-    const phone = [
-        [1, 2, 3],
-        [4, 5, 6],
-        [7, 8, 9],
-        ['*', 0, '#'],
-    ];
-    const points = {};
-    for (let r = 0; r < 4; r++) {
-        for (let c = 0; c < 3; c++) {
-            points[phone[r][c]] = [r, c];
-        }
-    }
-    const user = { left: points['*'], right: points['#'], hand };
+    const phone = new Phone();
+
+    const user = { left: phone.point('*'), right: phone.point('#'), hand };
     const [LEFT, RIGHT] = ['L', 'R'];
     return numbers
         .map(number => {
-            const [, column] = points[number];
-            if (column === 0) {
-                user.left = points[number];
+            const point = phone.point(number);
+
+            if (point[1] === 0) {
+                user.left = point;
                 return LEFT;
             }
 
-            if (column === 2) {
-                user.right = points[number];
+            if (point[1] === 2) {
+                user.right = point;
                 return RIGHT;
             }
 
             const leftMovement = countMovement(user.left, number);
             const rightMovement = countMovement(user.right, number);
             if (leftMovement === rightMovement) {
-                user[user.hand] = points[number];
+                user[user.hand] = point;
                 return user.hand === 'left' ? LEFT : RIGHT;
             }
             if (leftMovement < rightMovement) {
-                user.left = points[number];
+                user.left = point;
                 return LEFT;
             }
             if (leftMovement > rightMovement) {
-                user.right = points[number];
+                user.right = point;
                 return RIGHT;
             }
         })
@@ -77,7 +68,7 @@ function solution(numbers, hand) {
             let size = queue.length;
             while (size--) {
                 const [r, c] = queue.shift();
-                if (phone[r][c] === number) return move;
+                if (phone.number([r, c]) === number) return move;
                 for (const move of dt) {
                     const next = [r + move[0], c + move[1]];
                     if (isOutOfRange(next) || visited.has(next.toString()))
@@ -94,5 +85,38 @@ function solution(numbers, hand) {
         }
     }
 }
+
+class Phone {
+    keypad = [
+        [1, 2, 3],
+        [4, 5, 6],
+        [7, 8, 9],
+        ['*', 0, '#'],
+    ];
+
+    constructor() {
+        this.points = this.createPoints();
+    }
+
+    createPoints() {
+        const points = {};
+        for (let r = 0; r < 4; r++) {
+            for (let c = 0; c < 3; c++) {
+                points[this.keypad[r][c]] = [r, c];
+            }
+        }
+        return points;
+    }
+
+    number([r, c]) {
+        return this.keypad[r][c];
+    }
+
+    point(number) {
+        return this.points[number];
+    }
+}
+
+/****** TEST CASE *******/
 
 console.log(solution([1, 3, 4, 5, 8, 2, 1, 4, 5, 9, 5], 'right'));
