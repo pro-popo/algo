@@ -128,49 +128,18 @@ class PhoneUser {
     }
 
     countMovement(hand, startPoint, searchNumber) {
-        const [, searchColumn] = Phone.point(searchNumber);
+        const searchPoint = Phone.point(searchNumber);
         if (
-            (hand === PhoneUser.LEFT && searchColumn === 0) ||
-            (hand === PhoneUser.RIGHT && searchColumn === Phone.MAX_COLUMN - 1)
+            (hand === PhoneUser.LEFT && searchPoint[1] === 0) ||
+            (hand === PhoneUser.RIGHT &&
+                searchPoint[1] === Phone.MAX_COLUMN - 1)
         )
-            return -1;
+            return 0;
 
-        return moveHand();
+        return manhattanDistance(startPoint, searchPoint);
 
-        function moveHand() {
-            const queue = [startPoint];
-            const visited = new Set([startPoint.toString()]);
-            const dt = [
-                [0, 1],
-                [0, -1],
-                [1, 0],
-                [-1, 0],
-            ];
-
-            let movement = 0;
-            while (queue.length) {
-                let size = queue.length;
-                while (size--) {
-                    const [r, c] = queue.shift();
-                    if (Phone.number([r, c]) === searchNumber) return movement;
-
-                    for (const move of dt) {
-                        const next = [r + move[0], c + move[1]];
-                        if (isOutOfRange(next) || visited.has(next.toString()))
-                            continue;
-
-                        queue.push(next);
-                        visited.add(next.toString());
-                    }
-                }
-                movement++;
-            }
-        }
-
-        function isOutOfRange([r, c]) {
-            return (
-                r < 0 || c < 0 || r === Phone.MAX_ROW || c === Phone.MAX_COLUMN
-            );
+        function manhattanDistance([x1, y1], [x2, y2]) {
+            return Math.abs(x1 - x2) + Math.abs(y1 - y2);
         }
     }
 }
