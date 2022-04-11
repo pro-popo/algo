@@ -129,10 +129,10 @@ class PhoneUser {
 
     countMovement(hand, startPoint, searchNumber) {
         const searchPoint = Phone.point(searchNumber);
+        const [FIRST_COLUMN, LAST_COLUMN] = [0, Phone.MAX_COLUMN - 1];
         if (
-            (hand === PhoneUser.LEFT && searchPoint[1] === 0) ||
-            (hand === PhoneUser.RIGHT &&
-                searchPoint[1] === Phone.MAX_COLUMN - 1)
+            (hand === PhoneUser.LEFT && searchPoint[1] === FIRST_COLUMN) ||
+            (hand === PhoneUser.RIGHT && searchPoint[1] === LAST_COLUMN)
         )
             return 0;
 
