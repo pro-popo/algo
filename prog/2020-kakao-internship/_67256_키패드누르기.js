@@ -19,111 +19,143 @@
  */
 
 function solution(numbers, hand) {
-    const phone = new Phone();
-
-    const user = { left: phone.point('*'), right: phone.point('#'), hand };
-    const [LEFT, RIGHT] = ['L', 'R'];
-    return numbers
-        .map(number => {
-            const point = phone.point(number);
-
-            if (point[1] === 0) {
-                user.left = point;
-                return LEFT;
-            }
-
-            if (point[1] === 2) {
-                user.right = point;
-                return RIGHT;
-            }
-
-            const leftMovement = countMovement(user.left, number);
-            const rightMovement = countMovement(user.right, number);
-            if (leftMovement === rightMovement) {
-                user[user.hand] = point;
-                return user.hand === 'left' ? LEFT : RIGHT;
-            }
-            if (leftMovement < rightMovement) {
-                user.left = point;
-                return LEFT;
-            }
-            if (leftMovement > rightMovement) {
-                user.right = point;
-                return RIGHT;
-            }
-        })
-        .join('');
-
-    function countMovement(startPoint, number) {
-        const queue = [startPoint];
-        const visited = new Set([startPoint.toString()]);
-        const dt = [
-            [0, 1],
-            [0, -1],
-            [1, 0],
-            [-1, 0],
-        ];
-        let move = 0;
-        while (queue.length) {
-            let size = queue.length;
-            while (size--) {
-                const [r, c] = queue.shift();
-                if (phone.number([r, c]) === number) return move;
-                for (const move of dt) {
-                    const next = [r + move[0], c + move[1]];
-                    if (isOutOfRange(next) || visited.has(next.toString()))
-                        continue;
-                    queue.push(next);
-                    visited.add(next.toString());
-                }
-            }
-            move++;
-        }
-
-        function isOutOfRange([r, c]) {
-            return (
-                r < 0 || c < 0 || r === phone.MAX_ROW || c === phone.MAX_COLUMN
-            );
-        }
-    }
+    const user = new PhoneUser(hand);
+    return numbers.map(number => user.pressNumber(number)).join('');
 }
 
 class Phone {
-    keypad = [
+    static keypad = [
         [1, 2, 3],
         [4, 5, 6],
         [7, 8, 9],
         ['*', 0, '#'],
     ];
 
-    constructor() {
-        this.points = this.createPoints();
-    }
+    static points = Phone.createPoints();
 
-    createPoints() {
+    static createPoints() {
         const points = {};
-        for (let r = 0; r < this.MAX_ROW; r++) {
-            for (let c = 0; c < this.MAX_COLUMN; c++) {
-                points[this.keypad[r][c]] = [r, c];
+        for (let r = 0; r < Phone.MAX_ROW; r++) {
+            for (let c = 0; c < Phone.MAX_COLUMN; c++) {
+                points[Phone.keypad[r][c]] = [r, c];
             }
         }
         return points;
     }
 
-    number([r, c]) {
+    static number([r, c]) {
         return this.keypad[r][c];
     }
 
-    point(number) {
+    static point(number) {
         return this.points[number];
     }
 
-    get MAX_ROW() {
+    static get MAX_ROW() {
         return this.keypad.length;
     }
 
-    get MAX_COLUMN() {
+    static get MAX_COLUMN() {
         return this.keypad[0].length;
+    }
+}
+
+class PhoneUser {
+    static LEFT = 'left';
+    static RIGHT = 'right';
+
+    constructor(hand = null) {
+        this.hand = hand;
+        this.left = Phone.point('*');
+        this.right = Phone.point('#');
+    }
+
+    setLeft(point) {
+        this.left = point;
+    }
+
+    setRight(point) {
+        this.right = point;
+    }
+
+    changeHandPoint(hand, point) {
+        this[hand] = point;
+    }
+
+    pressNumber(number) {
+        const leftMovement = this.countMovement(
+            PhoneUser.LEFT,
+            this.left,
+            number,
+        );
+        const rightMovement = this.countMovement(
+            PhoneUser.RIGHT,
+            this.right,
+            number,
+        );
+
+        const point = Phone.point(number);
+        if (leftMovement === rightMovement) {
+            this.changeHandPoint(this.hand, point);
+            return this.hand[0].toUpperCase();
+        }
+
+        if (leftMovement < rightMovement) {
+            this.changeHandPoint(PhoneUser.LEFT, point);
+            return 'L';
+        }
+
+        if (leftMovement > rightMovement) {
+            this.changeHandPoint(PhoneUser.RIGHT, point);
+            return 'R';
+        }
+    }
+
+    countMovement(hand, startPoint, searchNumber) {
+        const [, searchColumn] = Phone.point(searchNumber);
+        if (
+            (hand === PhoneUser.LEFT && searchColumn === 0) ||
+            (hand === PhoneUser.RIGHT && searchColumn === Phone.MAX_COLUMN - 1)
+        )
+            return -1;
+
+        return moveHand();
+
+        function moveHand() {
+            const queue = [startPoint];
+            const visited = new Set([startPoint.toString()]);
+            const dt = [
+                [0, 1],
+                [0, -1],
+                [1, 0],
+                [-1, 0],
+            ];
+
+            let movement = 0;
+            while (queue.length) {
+                let size = queue.length;
+                while (size--) {
+                    const [r, c] = queue.shift();
+                    if (Phone.number([r, c]) === searchNumber) return movement;
+
+                    for (const move of dt) {
+                        const next = [r + move[0], c + move[1]];
+                        if (isOutOfRange(next) || visited.has(next.toString()))
+                            continue;
+
+                        queue.push(next);
+                        visited.add(next.toString());
+                    }
+                }
+                movement++;
+            }
+        }
+
+        function isOutOfRange([r, c]) {
+            return (
+                r < 0 || c < 0 || r === Phone.MAX_ROW || c === Phone.MAX_COLUMN
+            );
+        }
     }
 }
 
