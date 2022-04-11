@@ -25,7 +25,8 @@ function solution(expression) {
         let remainOperators = [...operators];
 
         priority.forEach(priorityOperator => {
-            remainNumbers = [...useOperator(priorityOperator)];
+            const resultNumbers = useOperator(priorityOperator);
+            remainNumbers = [...resultNumbers];
             remainOperators = remainOperators.filter(
                 operator => operator !== priorityOperator,
             );
