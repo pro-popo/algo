@@ -81,7 +81,9 @@ function solution(numbers, hand) {
         }
 
         function isOutOfRange([r, c]) {
-            return r < 0 || c < 0 || r === 4 || c === 3;
+            return (
+                r < 0 || c < 0 || r === phone.MAX_ROW || c === phone.MAX_COLUMN
+            );
         }
     }
 }
@@ -100,8 +102,8 @@ class Phone {
 
     createPoints() {
         const points = {};
-        for (let r = 0; r < 4; r++) {
-            for (let c = 0; c < 3; c++) {
+        for (let r = 0; r < this.MAX_ROW; r++) {
+            for (let c = 0; c < this.MAX_COLUMN; c++) {
                 points[this.keypad[r][c]] = [r, c];
             }
         }
@@ -114,6 +116,14 @@ class Phone {
 
     point(number) {
         return this.points[number];
+    }
+
+    get MAX_ROW() {
+        return this.keypad.length;
+    }
+
+    get MAX_COLUMN() {
+        return this.keypad[0].length;
     }
 }
 
