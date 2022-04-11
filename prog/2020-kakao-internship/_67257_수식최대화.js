@@ -64,10 +64,7 @@ function solution(expression) {
 }
 
 function filterNumbers(expression) {
-    return expression
-        .replace(/[*,+,-]/g, ' ')
-        .split(' ')
-        .map(Number);
+    return expression.split(/[^0-9]/g).map(Number);
 }
 
 function filterOperators(expression) {
