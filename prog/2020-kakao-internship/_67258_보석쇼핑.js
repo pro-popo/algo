@@ -34,11 +34,11 @@
  *
  * - 다른 풀이 방식으로는,
  *   투 포인터를 사용하지 않고, Map 객체만 사용해서 구할 수 있다.
- *   먼저, 선택한 gem을 저장하는 Map 객체를 생성한다. (보석이름: index)
  *
- *   그리고 gems를 순회하여,
- *   해당 gem을 Map 객체에 추가한다.
+ *   먼저, 선택한 gem을 저장하는 Map 객체를 생성한다.
+ *   그 다음 gems를 순회하여 해당 gem을 Map 객체에 추가한다. (보석이름: index)
  *   만약 Map 객체에 저장된 gem이 있다면, 기존 값은 제거한 뒤에 추가한다.
+ *
  *   이때, Map 객체의 size가 Gem의 종류의 개수와 동일한 경우,
  *   길이가 작은 경우로 answer를 갱신한다.
  *   answer = min([map.value()[0], index], answer)
@@ -106,7 +106,7 @@ console.log(
         'DIA',
     ]),
 );
-// console.log(solution(['AA', 'AB', 'AC', 'AA', 'AC']));
-// console.log(solution(['XYZ', 'XYZ', 'XYZ']));
-// console.log(solution(['ZZZ', 'YYY', 'NNNN', 'YYY', 'BBB']));
-// console.log(solution(['A', 'B', 'A', 'B']));
+console.log(solution(['AA', 'AB', 'AC', 'AA', 'AC']));
+console.log(solution(['XYZ', 'XYZ', 'XYZ']));
+console.log(solution(['ZZZ', 'YYY', 'NNNN', 'YYY', 'BBB']));
+console.log(solution(['A', 'B', 'A', 'B']));
