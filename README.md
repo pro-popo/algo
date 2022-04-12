@@ -91,6 +91,8 @@
 #### Day 1. FRI
 > 🟣 [[Level 4] 가사 검색 - 이분탐색](https://programmers.co.kr/learn/courses/30/lessons/60060) ([#60060](prog/2020-kakao-blind/_60060_가사검색.js))      
 
+<br/>
+
 ### 📅 2022.03
 
 #### Day 31. THU
@@ -223,6 +225,8 @@
 
 > 🟣 [[Level 2] 큰 수 만들기 - 그리디](https://programmers.co.kr/learn/courses/30/lessons/42883) ([#42883](prog/greedy/_42883_큰수만들기.js))  
 > 🟣 [[Level 2] 구명보트 - 그리디](https://programmers.co.kr/learn/courses/30/lessons/42885) ([#42885](prog/greedy/_42885_구명보트.js))
+
+<br/>
 
 ### 📅 2022.02
 
