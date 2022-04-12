@@ -10,28 +10,41 @@
 
 function solution(gems) {
     const numberOfGems = new Set(gems).size;
+
     let [start, end] = [0, -1];
-    let boughtGems = new Map();
     let answer = [0, gems.length];
+    let boughtGems = new Map();
+
     while (end < gems.length) {
         if (boughtGems.size !== numberOfGems) {
-            const gem = gems[++end];
-            const count = (boughtGems.get(gem) || 0) + 1;
-
-            boughtGems.set(gem, count);
+            buyGem(++end);
             continue;
         }
 
         if (end - start < answer[1] - answer[0]) answer = [start, end];
 
-        const gem = gems[start];
-        const count = boughtGems.get(gem) - 1;
-        if (count === 0) boughtGems.delete(gem);
-        else boughtGems.set(gem, count);
-        start++;
+        refundGem(start++);
     }
 
     return answer.map(index => index + 1);
+
+    function buyGem(index) {
+        const [gem, count] = getBoughtGem(index);
+        boughtGems.set(gem, count + 1);
+    }
+
+    function refundGem(index) {
+        const [gem, count] = getBoughtGem(index);
+
+        if (count === 1) boughtGems.delete(gem);
+        else boughtGems.set(gem, count - 1);
+    }
+
+    function getBoughtGem(index) {
+        const gem = gems[index];
+        const count = boughtGems.get(gem) || 0;
+        return [gem, count];
+    }
 }
 
 /****** TEST CASE *******/
