@@ -6,6 +6,7 @@
  *
  * @param {*} gems 진열대 번호 순서대로 보석들의 이름이 저장된 배열 (1~100_000)
  * @returns 가장 짧은 구간의 [시작 진열대 번호, 끝 진열대 번호]
+ *
  */
 
 function solution(gems) {
@@ -21,7 +22,7 @@ function solution(gems) {
             continue;
         }
 
-        if (end - start < answer[1] - answer[0]) answer = [start, end];
+        answer = Point.minDistance([start, end], answer);
 
         refundGem(start++);
     }
@@ -44,6 +45,15 @@ function solution(gems) {
         const gem = gems[index];
         const count = boughtGems.get(gem) || 0;
         return [gem, count];
+    }
+}
+
+class Point {
+    static minDistance(point, other) {
+        const pointDistance = point[1] - point[0];
+        const otherDistance = other[1] - other[0];
+
+        return pointDistance < otherDistance ? point : other;
     }
 }
 
