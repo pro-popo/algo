@@ -39,38 +39,27 @@ function solution(board) {
         prices.set(new Point(startPoint.point, d), 0);
     }
 
-    let answer = Number.MAX_VALUE;
-    DFS(startPoint, new RaceTrack(0, -1), new Set());
+    DFS(startPoint, new RaceTrack(0, -1));
 
-    return answer;
+    return Math.min(...prices[board.length - 1][board.length - 1]);
 
-    function DFS(point, raceTrack, visited) {
+    function DFS(point, raceTrack) {
         if (prices.get(point) <= raceTrack.price) return;
         prices.set(point, raceTrack.price);
 
-        if (point.isSamePoint(endPoint)) {
-            answer = Math.min(answer, raceTrack.price);
-            return;
-        }
+        if (point.isSamePoint(endPoint)) return;
 
         Direction.move(point).forEach(next => {
-            if (
-                isOutOfRange(next.x, next.y) ||
-                visited.has(next.toString()) ||
-                board[next.x][next.y] === 1
-            )
+            if (isOutOfRange(next.x, next.y) || board[next.x][next.y] === 1)
                 return;
 
-            visited.add(next.toString());
             DFS(
                 next,
                 new RaceTrack(
                     raceTrack.straightRoad + 1,
                     raceTrack.corner + Direction.isDifferent(point, next),
                 ),
-                visited,
             );
-            visited.delete(next.toString());
         });
     }
 
