@@ -51,6 +51,9 @@
 
 ### 📅 2022.04
 
+#### Day 13. WED
+> 🟣 [[Level 3] 경주로 건설 - DFS/BFS, DP](https://programmers.co.kr/learn/courses/30/lessons/67259) ([#67259](prog/2020-kakao-internship/_67259_경주로건설.js))   
+
 #### Day 12. TUE
 > 🟣 [[Level 3] 보석 쇼핑 - 투포인터](https://programmers.co.kr/learn/courses/30/lessons/67258) ([#67258](prog/2020-kakao-internship/_67258_보석쇼핑.js))   
 
