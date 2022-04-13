@@ -47,13 +47,9 @@ function solution(board) {
     const endPoint = new Point([board.length - 1, board.length - 1]);
 
     const prices = createPrices(board.length);
-    for (let d = 0; d < 4; d++) {
-        prices.set(new Point(startPoint.point, d), 0);
-    }
-
     DFS(startPoint, new RaceTrack(0, -1));
 
-    return Math.min(...prices[board.length - 1][board.length - 1]);
+    return prices.min(endPoint.point);
 
     function DFS(point, raceTrack) {
         if (prices.get(point) <= raceTrack.price) return;
@@ -86,11 +82,15 @@ function createPrices(N) {
     );
 
     prices.get = function (point) {
-        return prices[point.x][point.y][point.direction];
+        return this[point.x][point.y][point.direction];
     };
 
     prices.set = function (point, value) {
-        prices[point.x][point.y][point.direction] = value;
+        this[point.x][point.y][point.direction] = value;
+    };
+
+    prices.min = function ([x, y]) {
+        return Math.min(...this[x][y]);
     };
 
     return prices;
