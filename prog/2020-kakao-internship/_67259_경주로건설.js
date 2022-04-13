@@ -45,7 +45,7 @@ function solution(board) {
             return;
         }
 
-        point.move().forEach(next => {
+        Direction.move(point).forEach(next => {
             if (
                 isOutOfRange(next.x, next.y) ||
                 visited.has(next.toString()) ||
@@ -108,7 +108,9 @@ class Point {
     isSameDirection(point) {
         return this.direction === point.direction;
     }
+}
 
+class Direction {
     static dt = [
         [0, 1],
         [0, -1],
@@ -116,10 +118,16 @@ class Point {
         [-1, 0],
     ];
 
-    move() {
-        return Point.dt.map(
-            (move, direction) =>
-                new Point([this.x + move[0], this.y + move[1]], direction),
+    static get points() {
+        return Direction.dt.map(
+            (point, direction) => new Point(point, direction),
+        );
+    }
+
+    static move(point) {
+        return Direction.points.map(
+            move =>
+                new Point([point.x + move.x, point.y + move.y], move.direction),
         );
     }
 }
