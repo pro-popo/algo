@@ -21,14 +21,12 @@
  */
 
 function solution(board) {
-    const startPoint = new Point([0, 0], -1);
+    const startPoint = new Point([0, 0]);
     const endPoint = new Point([board.length - 1, board.length - 1]);
 
-    const dp = Array.from(Array(board.length), () =>
-        [...Array(board.length)].map(() => Array(4).fill(Number.MAX_VALUE)),
-    );
+    const prices = createPrices(board.length);
     for (let d = 0; d < 4; d++) {
-        dp[startPoint.x][startPoint.y][d] = 0;
+        prices.set(new Point(startPoint.point, d), 0);
     }
 
     let answer = Number.MAX_VALUE;
@@ -37,8 +35,8 @@ function solution(board) {
     return answer;
 
     function DFS(point, raceTrack, visited) {
-        if (dp[point.x][point.y][point.direction] <= raceTrack.price) return;
-        dp[point.x][point.y][point.direction] = raceTrack.price;
+        if (prices.get(point) <= raceTrack.price) return;
+        prices.set(point, raceTrack.price);
 
         if (point.isSamePoint(endPoint)) {
             answer = Math.min(answer, raceTrack.price);
@@ -69,6 +67,22 @@ function solution(board) {
     function isOutOfRange(x, y) {
         return x < 0 || y < 0 || x === board.length || y === board.length;
     }
+}
+
+function createPrices(N) {
+    const prices = Array.from(Array(N), () =>
+        [...Array(N)].map(() => Array(4).fill(Number.MAX_VALUE)),
+    );
+
+    prices.get = function (point) {
+        return prices[point.x][point.y][point.direction];
+    };
+
+    prices.set = function (point, value) {
+        prices[point.x][point.y][point.direction] = value;
+    };
+
+    return prices;
 }
 
 class RaceTrack {
@@ -125,7 +139,7 @@ class Direction {
         );
     }
 
-    static isDifferen(point, other) {
+    static isDifferent(point, other) {
         return point.direction !== other.direction;
     }
 }
