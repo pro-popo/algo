@@ -58,9 +58,7 @@ function solution(board) {
                 next,
                 new RaceTrack(
                     raceTrack.straightRoad + 1,
-                    point.isSameDirection(next)
-                        ? raceTrack.corner
-                        : raceTrack.corner + 1,
+                    raceTrack.corner + Direction.isDifferent(point, next),
                 ),
                 visited,
             );
@@ -104,10 +102,6 @@ class Point {
     isSamePoint(point) {
         return this.toString() === point.toString();
     }
-
-    isSameDirection(point) {
-        return this.direction === point.direction;
-    }
 }
 
 class Direction {
@@ -129,6 +123,10 @@ class Direction {
             move =>
                 new Point([point.x + move.x, point.y + move.y], move.direction),
         );
+    }
+
+    static isDifferen(point, other) {
+        return point.direction !== other.direction;
     }
 }
 
