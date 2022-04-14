@@ -51,6 +51,9 @@
 
 ### 📅 2022.04
 
+#### Day 14. THU
+> 🟣 [[Level 4] 동굴 탐험 - DFS/BFS, 그래프](https://programmers.co.kr/learn/courses/30/lessons/67260) ([#67260](prog/2020-kakao-internship/_67260_동굴탐험.js))   
+
 #### Day 13. WED
 > 🟣 [[Level 3] 경주로 건설 - DFS/BFS, DP](https://programmers.co.kr/learn/courses/30/lessons/67259) ([#67259](prog/2020-kakao-internship/_67259_경주로건설.js))   
 
