@@ -17,6 +17,11 @@
  *    - 먼저 방문해야 하는 방이면서, 동시에 나중에 방문해야 하는 방인 경우는 없다.
  *    - 먼저 방문해야 하는 방과 나중에 방문할 방을 반드시 연속적으로 방문할 필요는 없다.
  *
+ * 또한,
+ * - "A->B", "A->C"인 경우는 없다
+ * - "X->A", "Z->A"인 경우는 없다.
+ * - "A->B->C"인 경우는 없다.
+ *
  * @param {*} n 방 개수 (2~200_000)
  * @param {*} path 동굴의 통로에 대한 2차원 배열 (n-1)
  *                 [방 번호 A, 방 번호 B]
@@ -26,54 +31,37 @@
  */
 
 function solution(n, path, order) {
-    const tree = createTree(n, path);
-
-    const prioirty = [...Array(n)].map(() => new Set());
-    order.forEach(([parent, child]) => prioirty[child].add(parent));
-}
-
-function createTree(n, path) {
     const graph = Array.from(Array(n), () => []);
     path.forEach(([node, other]) => {
         graph[node].push(other);
         graph[other].push(node);
     });
 
-    const tree = [...Array(n)].map((_, number) => new Node(number));
-    const queue = [tree[0]];
+    const highPrioirty = Array(n).fill(null);
+    order.forEach(
+        ([prioirtyNode, node]) => (highPrioirty[node] = prioirtyNode),
+    );
 
+    const queue = [0];
     const visited = new Set();
+    const lowPriority = Array(n).fill(null);
     while (queue.length) {
-        const parent = queue.shift();
-        visited.add(parent.number);
+        const node = queue.shift();
 
-        graph[parent.number].forEach(number => {
-            if (visited.has(number)) return;
+        if (highPrioirty[node] && !visited.has(highPrioirty[node])) {
+            lowPriority[highPrioirty[node]] = node;
+            continue;
+        }
+        if (lowPriority[node]) queue.push(lowPriority[node]);
 
-            const child = tree[number];
-            child.setParent(parent);
-            parent.insertChild(child);
-
+        for (const child of graph[node]) {
+            if (visited.has(child)) continue;
             queue.push(child);
-        });
-    }
-    return tree;
-}
+        }
 
-class Node {
-    parent = null;
-    childs = [];
-    constructor(number) {
-        this.number = number;
+        visited.add(node);
     }
-
-    insertChild(child) {
-        this.childs.push(child);
-    }
-
-    setParent(parent) {
-        this.parent = parent;
-    }
+    return visited.size === n;
 }
 
 /****** TEST CASE *******/
@@ -99,43 +87,43 @@ console.log(
     ),
 );
 
-console.log(
-    solution(
-        9,
-        [
-            [8, 1],
-            [0, 1],
-            [1, 2],
-            [0, 7],
-            [4, 7],
-            [0, 3],
-            [7, 5],
-            [3, 6],
-        ],
-        [
-            [4, 1],
-            [5, 2],
-        ],
-    ),
-);
+// console.log(
+//     solution(
+//         9,
+//         [
+//             [8, 1],
+//             [0, 1],
+//             [1, 2],
+//             [0, 7],
+//             [4, 7],
+//             [0, 3],
+//             [7, 5],
+//             [3, 6],
+//         ],
+//         [
+//             [4, 1],
+//             [5, 2],
+//         ],
+//     ),
+// );
 
-console.log(
-    solution(
-        9,
-        [
-            [0, 1],
-            [0, 3],
-            [0, 7],
-            [8, 1],
-            [3, 6],
-            [1, 2],
-            [4, 7],
-            [7, 5],
-        ],
-        [
-            [4, 1],
-            [8, 7],
-            [6, 5],
-        ],
-    ),
-);
+// console.log(
+//     solution(
+//         9,
+//         [
+//             [0, 1],
+//             [0, 3],
+//             [0, 7],
+//             [8, 1],
+//             [3, 6],
+//             [1, 2],
+//             [4, 7],
+//             [7, 5],
+//         ],
+//         [
+//             [4, 1],
+//             [8, 7],
+//             [6, 5],
+//         ],
+//     ),
+// );
