@@ -56,7 +56,7 @@ function solution(n, start, end, roads, originTraps) {
     }
 
     function isReverseArrows(traps, room, nextRoom) {
-        return !(traps.isTriggered(room) === traps.isTriggered(nextRoom));
+        return traps.isTriggered(room) ^ traps.isTriggered(nextRoom);
     }
 
     function ASC_COST([, cost], [, otherCost]) {
