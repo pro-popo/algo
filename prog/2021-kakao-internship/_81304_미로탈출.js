@@ -19,60 +19,71 @@
  */
 
 function solution(n, start, end, roads, traps) {
-    const graph = Array.from(Array(n + 1), () =>
-        Array(n + 1).fill(Number.MAX_VALUE),
-    );
-    roads.forEach(([start, end, cost]) => {
-        graph[start][end] = Math.min(graph[start][end], cost);
-    });
+    const graph = createGraph(n + 1, roads);
 
-    const MAX_TRAPS_CASE = 1 << traps.length;
     const visitedRooms = Array.from(Array(n + 1), () =>
-        Array(MAX_TRAPS_CASE).fill(false),
+        Array(1 << traps.length).fill(false),
     );
 
     const queue = [[start, 0, 0]];
     while (queue.length) {
         const [room, totalCost, visitedTraps] = queue.shift();
+
         if (room === end) return totalCost;
 
         if (visitedRooms[room][visitedTraps]) continue;
         visitedRooms[room][visitedTraps] = true;
 
-        graph[room].forEach((_, nextRoom) => {
-            const cost = isReverseArrow(visitedTraps, room, nextRoom)
-                ? graph[nextRoom][room]
-                : graph[room][nextRoom];
+        graph[room].forEach((cost, nextRoom) => {
+            if (isReverseArrow(visitedTraps, room, nextRoom))
+                cost = graph[nextRoom][room];
 
-            if (cost === Number.MAX_VALUE) return;
+            if (cost === graph.MAX_COST) return;
 
-            let newVisitedTraps = visitedTraps;
-            if (traps.includes(nextRoom)) {
-                const trap = traps.indexOf(nextRoom);
-                newVisitedTraps = isVisitedTraps(visitedTraps, nextRoom)
-                    ? visitedTraps ^ (1 << trap)
-                    : visitedTraps | (1 << trap);
-            }
-
-            queue.push([nextRoom, totalCost + cost, newVisitedTraps]);
+            queue.push([
+                nextRoom,
+                totalCost + cost,
+                updateVisitedTraps(visitedTraps, nextRoom),
+            ]);
         });
 
         queue.sort(([, cost], [, otherCost]) => cost - otherCost);
     }
 
     function isReverseArrow(visitedTraps, room, nextRoom) {
-        return (
-            Math.abs(
-                isVisitedTraps(visitedTraps, room) -
-                    isVisitedTraps(visitedTraps, nextRoom),
-            ) > 0
+        return !(
+            isVisitedTraps(visitedTraps, room) ===
+            isVisitedTraps(visitedTraps, nextRoom)
         );
+    }
+
+    function updateVisitedTraps(visitedTraps, room) {
+        if (!traps.includes(room)) return visitedTraps;
+
+        const trap = traps.indexOf(room);
+        return isVisitedTraps(visitedTraps, room)
+            ? visitedTraps ^ (1 << trap)
+            : visitedTraps | (1 << trap);
     }
 
     function isVisitedTraps(visitedTraps, room) {
         return (visitedTraps & (1 << traps.indexOf(room))) !== 0;
     }
 }
+
+function createGraph(n, roads) {
+    const MAX_COST = Number.MAX_VALUE;
+    const graph = Array.from(Array(n), () => Array(n).fill(MAX_COST));
+    roads.forEach(([start, end, cost]) => {
+        graph[start][end] = Math.min(graph[start][end], cost);
+    });
+
+    graph.MAX_COST = MAX_COST;
+
+    return graph;
+}
+
+/****** TEST CASE *******/
 
 console.log(
     solution(
