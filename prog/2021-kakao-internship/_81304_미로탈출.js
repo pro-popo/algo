@@ -21,35 +21,40 @@
 function solution(n, start, end, roads, originTraps) {
     const graph = createGraph(n + 1, roads);
 
+    const rooms = [...Array(n + 1)].map(
+        (_, number) => new Room(number, originTraps.indexOf(number)),
+    );
+
     const visitedRooms = Array.from(Array(n + 1), () =>
         Array(1 << originTraps.length).fill(false),
     );
 
-    const queue = [[start, 0, new Trap(originTraps, 0)]];
+    const queue = [[rooms[start], 0, new Trap(0)]];
     while (queue.length) {
         const [room, totalCost, traps] = queue.shift();
-        if (room === end) return totalCost;
+        if (room.number === end) return totalCost;
 
-        if (visitedRooms[room][traps.triggerd]) continue;
-        visitedRooms[room][traps.triggerd] = true;
+        if (visitedRooms[room.number][traps.triggered]) continue;
+        visitedRooms[room.number][traps.triggered] = true;
 
-        graph[room].forEach((cost, nextRoom) => {
-            if (isReverseArrow(traps, room, nextRoom))
-                cost = graph[nextRoom][room];
+        rooms.forEach(nextRoom => {
+            let cost = isReverseArrows(traps, room, nextRoom)
+                ? graph[nextRoom.number][room.number]
+                : graph[room.number][nextRoom.number];
 
             if (cost === graph.MAX_COST) return;
 
             queue.push([
                 nextRoom,
                 totalCost + cost,
-                traps.isTrap(nextRoom) ? traps.triggerTrap(nextRoom) : traps,
+                nextRoom.isTrap() ? traps.trigger(nextRoom) : traps,
             ]);
         });
 
         queue.sort(ASC_COST);
     }
 
-    function isReverseArrow(traps, room, nextRoom) {
+    function isReverseArrows(traps, room, nextRoom) {
         return !(traps.isTriggered(room) === traps.isTriggered(nextRoom));
     }
 
@@ -58,38 +63,36 @@ function solution(n, start, end, roads, originTraps) {
     }
 }
 
+class Room {
+    constructor(number, trapNumber) {
+        this.number = number;
+        this.trapNumber = trapNumber;
+    }
+
+    isTrap() {
+        return this.trapNumber !== -1;
+    }
+}
+
 class Trap {
-    constructor(traps, triggeredTraps) {
-        this.traps = traps;
+    constructor(triggeredTraps) {
         this.triggeredTraps = triggeredTraps;
     }
 
-    isTrap(room) {
-        return this.traps.includes(room);
-    }
-
-    get triggerd() {
+    get triggered() {
         return this.triggeredTraps;
     }
 
-    changeToTrapNumber(room) {
-        return this.traps.indexOf(room);
-    }
-
-    triggerTrap(room) {
-        const trap = this.changeToTrapNumber(room);
+    trigger(room) {
         return new Trap(
-            this.traps,
             this.isTriggered(room)
-                ? this.triggeredTraps ^ (1 << trap)
-                : this.triggeredTraps | (1 << trap),
+                ? this.triggered ^ (1 << room.trapNumber)
+                : this.triggered | (1 << room.trapNumber),
         );
     }
 
     isTriggered(room) {
-        return (
-            (this.triggeredTraps & (1 << this.changeToTrapNumber(room))) !== 0
-        );
+        return (this.triggered & (1 << room.trapNumber)) !== 0;
     }
 }
 
