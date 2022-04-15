@@ -32,6 +32,7 @@ function solution(n, start, end, roads, originTraps) {
     const queue = [[rooms[start], 0, new Trap(0)]];
     while (queue.length) {
         const [room, totalCost, traps] = queue.shift();
+
         if (room.number === end) return totalCost;
 
         if (visitedRooms[room.number][traps.triggered]) continue;
@@ -84,11 +85,7 @@ class Trap {
     }
 
     trigger(room) {
-        return new Trap(
-            this.isTriggered(room)
-                ? this.triggered ^ (1 << room.trapNumber)
-                : this.triggered | (1 << room.trapNumber),
-        );
+        return new Trap(this.triggered ^ (1 << room.trapNumber));
     }
 
     isTriggered(room) {
@@ -98,6 +95,7 @@ class Trap {
 
 function createGraph(n, roads) {
     const MAX_COST = Number.MAX_VALUE;
+
     const graph = Array.from(Array(n), () => Array(n).fill(MAX_COST));
     roads.forEach(([start, end, cost]) => {
         graph[start][end] = Math.min(graph[start][end], cost);
