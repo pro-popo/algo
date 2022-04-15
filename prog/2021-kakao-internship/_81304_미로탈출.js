@@ -19,65 +19,73 @@
  */
 
 function solution(n, start, end, roads, traps) {
-    const costs = Array.from(Array(n + 1), () =>
+    const graph = Array.from(Array(n + 1), () =>
         Array(n + 1).fill(Number.MAX_VALUE),
     );
     roads.forEach(([start, end, cost]) => {
-        costs[start][end] = Math.min(costs[start][end], cost);
+        graph[start][end] = Math.min(graph[start][end], cost);
     });
 
-    const queue = [[start, 0, new Map(traps.map(trap => [trap, 0]))]];
-    const visitedRooms = new Set();
+    const MAX_TRAPS_CASE = 1 << traps.length;
+    const visitedRooms = Array.from(Array(n + 1), () =>
+        Array(MAX_TRAPS_CASE).fill(false),
+    );
+
+    const queue = [[start, 0, 0]];
     while (queue.length) {
         const [room, totalCost, visitedTraps] = queue.shift();
         if (room === end) return totalCost;
 
-        [...visitedTraps.entries()].forEach(reverseArrows);
+        if (visitedRooms[room][visitedTraps]) continue;
+        visitedRooms[room][visitedTraps] = true;
 
-        costs[room].forEach((cost, end) => {
-            if (cost === Number.MAX_VALUE || visitedRooms.has(end)) return;
+        graph[room].forEach((_, nextRoom) => {
+            const cost = isReverseArrow(visitedTraps, room, nextRoom)
+                ? graph[nextRoom][room]
+                : graph[room][nextRoom];
 
-            queue.push([
-                end,
-                totalCost + cost,
-                new Map(
-                    [...visitedTraps.entries()].map(([trap, count]) => [
-                        trap,
-                        count + (trap === end),
-                    ]),
-                ),
-            ]);
+            if (cost === Number.MAX_VALUE) return;
+
+            let newVisitedTraps = visitedTraps;
+            if (traps.includes(nextRoom)) {
+                const trap = traps.indexOf(nextRoom);
+                newVisitedTraps = isVisitedTraps(visitedTraps, nextRoom)
+                    ? visitedTraps ^ (1 << trap)
+                    : visitedTraps | (1 << trap);
+            }
+
+            queue.push([nextRoom, totalCost + cost, newVisitedTraps]);
         });
 
-        [...visitedTraps.entries()].forEach(reverseArrows);
-
-        if (!visitedTraps.has(room)) visitedRooms.add(room);
-        queue.sort(([, cost], [, other]) => cost - other);
+        queue.sort(([, cost], [, otherCost]) => cost - otherCost);
     }
 
-    function reverseArrows([trap, count]) {
-        if (count % 2 === 0) return;
-        for (let room = 1; room <= n; room++) {
-            [costs[trap][room], costs[room][trap]] = [
-                costs[room][trap],
-                costs[trap][room],
-            ];
-        }
+    function isReverseArrow(visitedTraps, room, nextRoom) {
+        return (
+            Math.abs(
+                isVisitedTraps(visitedTraps, room) -
+                    isVisitedTraps(visitedTraps, nextRoom),
+            ) > 0
+        );
+    }
+
+    function isVisitedTraps(visitedTraps, room) {
+        return (visitedTraps & (1 << traps.indexOf(room))) !== 0;
     }
 }
 
-// console.log(
-//     solution(
-//         3,
-//         1,
-//         3,
-//         [
-//             [1, 2, 2],
-//             [3, 2, 3],
-//         ],
-//         [2],
-//     ),
-// );
+console.log(
+    solution(
+        3,
+        1,
+        3,
+        [
+            [1, 2, 2],
+            [3, 2, 3],
+        ],
+        [2],
+    ),
+);
 
 console.log(
     solution(
