@@ -35,8 +35,7 @@ function solution(n, start, end, roads, traps) {
         [...visitedTraps.entries()].forEach(reverseArrows);
 
         costs[room].forEach((cost, end) => {
-            if (cost === Number.MAX_VALUE || visitedTraps.get(end) === 2)
-                return;
+            if (cost === Number.MAX_VALUE || visitedRooms.has(end)) return;
 
             queue.push([
                 end,
