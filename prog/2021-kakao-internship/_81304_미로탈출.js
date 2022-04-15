@@ -18,24 +18,23 @@
  * @returns 탈출하는데 걸리는 최소 시간
  */
 
-function solution(n, start, end, roads, traps) {
+function solution(n, start, end, roads, originTraps) {
     const graph = createGraph(n + 1, roads);
 
     const visitedRooms = Array.from(Array(n + 1), () =>
-        Array(1 << traps.length).fill(false),
+        Array(1 << originTraps.length).fill(false),
     );
 
-    const queue = [[start, 0, 0]];
+    const queue = [[start, 0, new Trap(originTraps, 0)]];
     while (queue.length) {
-        const [room, totalCost, visitedTraps] = queue.shift();
-
+        const [room, totalCost, traps] = queue.shift();
         if (room === end) return totalCost;
 
-        if (visitedRooms[room][visitedTraps]) continue;
-        visitedRooms[room][visitedTraps] = true;
+        if (visitedRooms[room][traps.triggerd]) continue;
+        visitedRooms[room][traps.triggerd] = true;
 
         graph[room].forEach((cost, nextRoom) => {
-            if (isReverseArrow(visitedTraps, room, nextRoom))
+            if (isReverseArrow(traps, room, nextRoom))
                 cost = graph[nextRoom][room];
 
             if (cost === graph.MAX_COST) return;
@@ -43,31 +42,54 @@ function solution(n, start, end, roads, traps) {
             queue.push([
                 nextRoom,
                 totalCost + cost,
-                updateVisitedTraps(visitedTraps, nextRoom),
+                traps.isTrap(nextRoom) ? traps.triggerTrap(nextRoom) : traps,
             ]);
         });
 
-        queue.sort(([, cost], [, otherCost]) => cost - otherCost);
+        queue.sort(ASC_COST);
     }
 
-    function isReverseArrow(visitedTraps, room, nextRoom) {
-        return !(
-            isVisitedTraps(visitedTraps, room) ===
-            isVisitedTraps(visitedTraps, nextRoom)
+    function isReverseArrow(traps, room, nextRoom) {
+        return !(traps.isTriggered(room) === traps.isTriggered(nextRoom));
+    }
+
+    function ASC_COST([, cost], [, otherCost]) {
+        return cost - otherCost;
+    }
+}
+
+class Trap {
+    constructor(traps, triggeredTraps) {
+        this.traps = traps;
+        this.triggeredTraps = triggeredTraps;
+    }
+
+    isTrap(room) {
+        return this.traps.includes(room);
+    }
+
+    get triggerd() {
+        return this.triggeredTraps;
+    }
+
+    changeToTrapNumber(room) {
+        return this.traps.indexOf(room);
+    }
+
+    triggerTrap(room) {
+        const trap = this.changeToTrapNumber(room);
+        return new Trap(
+            this.traps,
+            this.isTriggered(room)
+                ? this.triggeredTraps ^ (1 << trap)
+                : this.triggeredTraps | (1 << trap),
         );
     }
 
-    function updateVisitedTraps(visitedTraps, room) {
-        if (!traps.includes(room)) return visitedTraps;
-
-        const trap = traps.indexOf(room);
-        return isVisitedTraps(visitedTraps, room)
-            ? visitedTraps ^ (1 << trap)
-            : visitedTraps | (1 << trap);
-    }
-
-    function isVisitedTraps(visitedTraps, room) {
-        return (visitedTraps & (1 << traps.indexOf(room))) !== 0;
+    isTriggered(room) {
+        return (
+            (this.triggeredTraps & (1 << this.changeToTrapNumber(room))) !== 0
+        );
     }
 }
 
