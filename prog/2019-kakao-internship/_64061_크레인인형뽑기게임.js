@@ -17,6 +17,26 @@
  */
 
 function solution(board, moves) {
+    const rotatedBoard = rotateBoard(board);
+    const basket = [];
+    let remove = 0;
+    moves.forEach(move => {
+        const top = basket.pop();
+        const input = rotatedBoard[move - 1].pop();
+
+        if (top === input) {
+            remove += 2;
+            return;
+        }
+
+        if (top) basket.push(top);
+        if (input) basket.push(input);
+    });
+
+    return remove;
+}
+
+function rotateBoard(board) {
     const BOARD_LENGTH = board.length;
     const rotatedBoard = Array.from(Array(BOARD_LENGTH), () => []);
     for (let c = 0; c < BOARD_LENGTH; c++) {
@@ -24,22 +44,7 @@ function solution(board, moves) {
             board[r][c] && rotatedBoard[c].push(board[r][c]);
         }
     }
-
-    const basket = [];
-    let total = 0;
-    moves.forEach(move => {
-        const top = basket.pop();
-        const input = rotatedBoard[move - 1].pop();
-
-        input && total++;
-
-        if (top === input) return;
-
-        if (top) basket.push(top);
-        if (input) basket.push(input);
-    });
-
-    return total - basket.length;
+    return rotatedBoard;
 }
 
 /****** TEST CASE *******/
