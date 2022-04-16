@@ -51,6 +51,9 @@
 
 ### 📅 2022.04
 
+#### Day 15. FRI
+> 🟣 [[Level 4] 미로 탈출 - 그래프, 비트마스킹](https://programmers.co.kr/learn/courses/30/lessons/81304) ([#81304](prog/2021-kakao-internship/_81304_미로탈출.js))  
+
 #### Day 14. THU
 > 🟣 [[Level 4] 동굴 탐험 - DFS/BFS, 그래프](https://programmers.co.kr/learn/courses/30/lessons/67260) ([#67260](prog/2020-kakao-internship/_67260_동굴탐험.js))   
 
