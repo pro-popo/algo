@@ -23,16 +23,14 @@
  */
 
 function solution(s) {
-    return [
-        ...s
-            .match(/{[0-9,]+}/g)
-            .map(s => s.replace(/[{}]/g, '').split(',').map(Number))
-            .sort((a, b) => a.length - b.length)
-            .reduce((tuple, set) => {
-                set.forEach(number => tuple.add(number));
-                return tuple;
-            }, new Set()),
-    ];
+    let answer = convertToArray(s)
+        .sort((a, b) => a.length - b.length)
+        .flatMap(set => set);
+    return [...new Set(answer)];
+}
+
+function convertToArray(s) {
+    return s.match(/{[\d,]+}/g).map(s => s.match(/\d+/g).map(Number));
 }
 
 /****** TEST CASE *******/
