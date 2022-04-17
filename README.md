@@ -51,6 +51,9 @@
 
 ### 📅 2022.04
 
+#### Day 17. SUN
+> 🟣 [[Level 3] 불량 사용자 - 완전탐색](https://programmers.co.kr/learn/courses/30/lessons/64064) ([#64064](prog/2019-kakao-internship/_64064_불량사용자.js))     
+
 #### Day 16. SAT
 > 🟣 [[Level 1] 크레인 인형뽑기 게임 - 스택](https://programmers.co.kr/learn/courses/30/lessons/64061) ([#64061](prog/2019-kakao-internship/_64061_크레인인형뽑기게임.js))            
 > 🟣 [[Level 2] 튜플 - 정규식](https://programmers.co.kr/learn/courses/30/lessons/64065) ([#64065](prog/2019-kakao-internship/_64065_튜플.js))     
