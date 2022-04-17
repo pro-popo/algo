@@ -13,9 +13,9 @@
  * @returns 당첨에서 제외되어야 할 제재 아이디 목록의 경우의 수
  */
 function solution(userIds, bannedIds) {
-    bannedIds = bannedIds.map(bannedId => bannedId.replace(/\*/g, '.'));
-    const sanctions = bannedIds.map(findSanctionUsers);
+    bannedIds = bannedIds.map(convertToRegExp);
 
+    const sanctions = bannedIds.map(findSanctionUsers);
     const answer = new Set();
     permutation(0, 0);
 
@@ -23,12 +23,14 @@ function solution(userIds, bannedIds) {
 
     function findSanctionUsers(bannedId) {
         const sanctionIds = userIds.filter(isSanctionUser);
-        return sanctionIds.map(sanctionId =>
-            userIds.findIndex(userId => userId === sanctionId),
-        );
+        return sanctionIds.map(convertToUserIndex);
 
         function isSanctionUser(userId) {
             return (userId.match(bannedId) || [''])[0] === userId;
+        }
+
+        function convertToUserIndex(targetId) {
+            return userIds.findIndex(userId => userId === targetId);
         }
     }
 
@@ -40,9 +42,13 @@ function solution(userIds, bannedIds) {
 
         sanctions[sanctionIndex].forEach(userIndex => {
             if (Bitmask.has(selected, userIndex)) return;
-            permutation(sanctionIndex + 1, Bitmask.add(selected, userIndex));
+            permutation(sanctionIndex + 1, Bitmask.insert(selected, userIndex));
         });
     }
+}
+
+function convertToRegExp(bannedId) {
+    return bannedId.replace(/\*/g, '.');
 }
 
 class Bitmask {
@@ -50,7 +56,7 @@ class Bitmask {
         return (bit & (1 << target)) !== 0;
     }
 
-    static add(bit, target) {
+    static insert(bit, target) {
         return bit | (1 << target);
     }
 }
