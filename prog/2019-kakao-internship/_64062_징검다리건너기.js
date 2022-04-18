@@ -35,13 +35,14 @@ function solution(stones, k) {
     return answer;
 
     function isCrossedEveryone(person) {
-        const regexp = new RegExp(`0{${k},}`, 'g');
-        return (
-            stones
-                .map(stone => (stone < person ? 0 : 1))
-                .join('')
-                .search(regexp) === -1
-        );
+        let skip = 0;
+        for (const stone of stones) {
+            if (stone - person < 0) skip++;
+            else skip = 0;
+
+            if (skip === k) return false;
+        }
+        return true;
     }
 }
 
