@@ -51,6 +51,9 @@
 
 ### 📅 2022.04
 
+#### Day 18. MON
+> 🟣 [[Level 3] 징검다리 건너기 - 이분탐색](https://programmers.co.kr/learn/courses/30/lessons/64062) ([#64062](prog/2019-kakao-internship/_64062_징검다리건너기.js))   
+
 #### Day 17. SUN
 > 🟣 [[Level 3] 불량 사용자 - 완전탐색](https://programmers.co.kr/learn/courses/30/lessons/64064) ([#64064](prog/2019-kakao-internship/_64064_불량사용자.js))     
 
