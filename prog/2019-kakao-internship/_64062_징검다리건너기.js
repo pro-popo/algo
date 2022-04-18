@@ -15,6 +15,7 @@
  * @param {*} k 한 번에 건널 뛸 수 있는 최대 칸
  * @returns 최대 몇 명까지 징검다리를 건널 수 있는가
  *          이때, 친구들의 수는 무제한이다.
+ *
  */
 
 function solution(stones, k) {
@@ -23,24 +24,24 @@ function solution(stones, k) {
 
     let answer = 0;
     while (min <= max) {
-        const mid = Math.floor((min + max) / 2);
+        const person = Math.floor((min + max) / 2);
 
-        if (isCrossedEveryone(mid)) {
-            min = mid + 1;
-            answer = mid;
+        if (isCrossedEveryone(person)) {
+            min = person + 1;
+            answer = person;
             continue;
         }
-        max = mid - 1;
+        max = person - 1;
     }
     return answer;
 
     function isCrossedEveryone(person) {
-        let skip = 0;
+        let skipStone = 0;
         for (const stone of stones) {
-            if (stone - person < 0) skip++;
-            else skip = 0;
+            if (stone - person < 0) skipStone++;
+            else skipStone = 0;
 
-            if (skip === k) return false;
+            if (skipStone === k) return false;
         }
         return true;
     }
