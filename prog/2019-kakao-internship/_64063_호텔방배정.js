@@ -17,23 +17,32 @@
  */
 
 function solution(k, room_number) {
-    const parents = new Map();
+    const hotel = new Hotel();
+    return room_number.map(room => hotel.useRoom(room));
+}
 
-    return room_number.map(room => {
-        const useRoom = findParent(room);
-        setParent(useRoom, useRoom + 1);
-        return useRoom;
-    });
+class Hotel {
+    parents = new Map();
 
-    function findParent(room) {
-        if (!parents.get(room)) return room;
-        parents.set(room, findParent(parents.get(room)));
-        return parents.get(room);
+    useRoom(room) {
+        const targetRoom = this.findParent(room);
+        this.setParent(targetRoom, targetRoom + 1);
+        return targetRoom;
     }
 
-    function setParent(room, nextRoom) {
-        let nextRoomParent = findParent(nextRoom);
-        parents.set(room, nextRoomParent);
+    findParent(room) {
+        if (!this.getParent(room)) return room;
+
+        this.setParent(room, this.getParent(room));
+        return this.getParent(room);
+    }
+
+    setParent(room, nextRoom) {
+        this.parents.set(room, this.findParent(nextRoom));
+    }
+
+    getParent(room) {
+        return this.parents.get(room);
     }
 }
 
