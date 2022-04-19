@@ -22,28 +22,34 @@ function solution(k, room_number) {
 }
 
 class Hotel {
-    parents = new Map();
+    alternativeRooms = new Map();
 
     useRoom(room) {
-        const targetRoom = this.findParent(room);
-        this.setParent(targetRoom, targetRoom + 1);
+        const targetRoom = this.findUseableRoom(room);
+        this.setAlternativeRoom(targetRoom, targetRoom + 1);
         return targetRoom;
     }
 
-    findParent(room) {
-        if (!this.getParent(room)) return room;
+    findUseableRoom(room) {
+        if (this.isUnusedRoom(room)) return room;
 
-        this.setParent(room, this.getParent(room));
-        return this.getParent(room);
+        this.setAlternativeRoom(room, this.getAlternativeRoom(room));
+        return this.getAlternativeRoom(room);
     }
 
-    setParent(room, nextRoom) {
-        this.parents.set(room, this.findParent(nextRoom));
+    isUnusedRoom(room) {
+        return !this.getAlternativeRoom(room);
     }
 
-    getParent(room) {
-        return this.parents.get(room);
+    setAlternativeRoom(room, alternativeRoom) {
+        this.alternativeRooms.set(room, this.findUseableRoom(alternativeRoom));
+    }
+
+    getAlternativeRoom(room) {
+        return this.alternativeRooms.get(room);
     }
 }
+
+/****** TEST CASE *******/
 
 console.log(solution(10, [1, 3, 4, 1, 3, 1]));
