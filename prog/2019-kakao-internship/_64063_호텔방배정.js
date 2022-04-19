@@ -43,24 +43,24 @@ class Hotel {
     alternativeRooms = new Map();
 
     useRoom(room) {
-        const targetRoom = this.findUseableRoom(room);
+        const targetRoom = this.findEmptyRoom(room);
         this.setAlternativeRoom(targetRoom, targetRoom + 1);
         return targetRoom;
     }
 
-    findUseableRoom(room) {
-        if (this.isUnusedRoom(room)) return room;
+    findEmptyRoom(room) {
+        if (this.isEmptyRoom(room)) return room;
 
         this.setAlternativeRoom(room, this.getAlternativeRoom(room));
         return this.getAlternativeRoom(room);
     }
 
-    isUnusedRoom(room) {
+    isEmptyRoom(room) {
         return !this.getAlternativeRoom(room);
     }
 
     setAlternativeRoom(room, alternativeRoom) {
-        this.alternativeRooms.set(room, this.findUseableRoom(alternativeRoom));
+        this.alternativeRooms.set(room, this.findEmptyRoom(alternativeRoom));
     }
 
     getAlternativeRoom(room) {
