@@ -19,13 +19,14 @@
 function solution(k, num, links) {
     const tree = createTree(num, links);
     const root = tree.find(node => !node.parent);
+    const heights = calculateHeight(root);
 
     let min = 1;
     let max = 1e9;
     let answer = 1e9;
     while (min <= max) {
         const mid = Math.floor((min + max) / 2);
-        if (countGroup(root, k, mid) <= k) {
+        if (countGroup(heights, mid) <= k) {
             max = mid - 1;
             answer = mid;
             continue;
@@ -33,36 +34,60 @@ function solution(k, num, links) {
         min = mid + 1;
     }
     return answer;
-}
 
-function countGroup(root, k, MAX_TEST_TAKER) {
-    let numberOfGroup = 0;
-    DFS(root);
-    return numberOfGroup + 1;
+    function countGroup(heights, MAX_TEST_TAKER) {
+        let numberOfGroup = 0;
+        const testTakers = Array(num.length).fill(0);
 
-    function DFS(node) {
-        const root = node.testTakers;
-        if (root > MAX_TEST_TAKER) {
-            numberOfGroup = k;
-            return;
+        for (let i = heights.length - 1; i >= 0; i--) {
+            for (let j = 0; j < heights[i].length; j++) {
+                const node = heights[i][j];
+                const root = node.testTakers;
+                if (root > MAX_TEST_TAKER) return k + 1;
+
+                const [left, right] = [
+                    node.leftChild ? testTakers[node.leftChild.id] : 0,
+                    node.rightChild ? testTakers[node.rightChild.id] : 0,
+                ];
+
+                if (root + left + right <= MAX_TEST_TAKER) {
+                    testTakers[node.id] = root + left + right;
+                    continue;
+                }
+
+                if (root + Math.min(left, right) <= MAX_TEST_TAKER) {
+                    numberOfGroup++;
+                    testTakers[node.id] = root + Math.min(left, right);
+                    continue;
+                }
+
+                numberOfGroup += 2;
+                testTakers[node.id] = root;
+            }
         }
 
-        let [left, right] = [0, 0];
-        if (node.leftChild) left = DFS(node.leftChild);
-        if (node.rightChild) right = DFS(node.rightChild);
-
-        if (root + left + right <= MAX_TEST_TAKER) {
-            return root + left + right;
-        }
-
-        if (root + Math.min(left, right) <= MAX_TEST_TAKER) {
-            numberOfGroup++;
-            return root + Math.min(left, right);
-        }
-
-        numberOfGroup += 2;
-        return root;
+        return numberOfGroup + 1;
     }
+}
+function calculateHeight(root) {
+    const heights = [];
+
+    const queue = [root];
+    let countHeight = 0;
+    while (queue.length) {
+        let size = queue.length;
+        heights.push([]);
+        while (size--) {
+            const node = queue.shift();
+            if (!node) continue;
+
+            heights[countHeight].push(node);
+            queue.push(node.leftChild, node.rightChild);
+        }
+        countHeight++;
+    }
+
+    return heights;
 }
 
 function createTree(num, links) {
@@ -103,82 +128,67 @@ class Node {
 
 /****** TEST CASE *******/
 
-// console.log(
-//     solution(
-//         3,
-//         [12, 30, 1, 8, 8, 6, 20, 7, 5, 10, 4, 1],
-//         [
-//             [-1, -1],
-//             [-1, -1],
-//             [-1, -1],
-//             [-1, -1],
-//             [8, 5],
-//             [2, 10],
-//             [3, 0],
-//             [6, 1],
-//             [11, -1],
-//             [7, 4],
-//             [-1, -1],
-//             [-1, -1],
-//         ],
-//     ),
-// );
+console.log(
+    solution(
+        3,
+        [12, 30, 1, 8, 8, 6, 20, 7, 5, 10, 4, 1],
+        [
+            [-1, -1],
+            [-1, -1],
+            [-1, -1],
+            [-1, -1],
+            [8, 5],
+            [2, 10],
+            [3, 0],
+            [6, 1],
+            [11, -1],
+            [7, 4],
+            [-1, -1],
+            [-1, -1],
+        ],
+    ),
+);
 
-// console.log(
-//     solution(
-//         1,
-//         [6, 9, 7, 5],
-//         [
-//             [-1, -1],
-//             [-1, -1],
-//             [-1, 0],
-//             [2, 1],
-//         ],
-//     ),
-// );
+console.log(
+    solution(
+        1,
+        [6, 9, 7, 5],
+        [
+            [-1, -1],
+            [-1, -1],
+            [-1, 0],
+            [2, 1],
+        ],
+    ),
+);
 
-// console.log(
-//     solution(
-//         2,
-//         [6, 9, 7, 5],
-//         [
-//             [-1, -1],
-//             [-1, -1],
-//             [-1, 0],
-//             [2, 1],
-//         ],
-//     ),
-// );
+console.log(
+    solution(
+        2,
+        [6, 9, 7, 5],
+        [
+            [-1, -1],
+            [-1, -1],
+            [-1, 0],
+            [2, 1],
+        ],
+    ),
+);
 
-// console.log(
-//     solution(
-//         3,
-//         [100, 90, 7, 95, 93],
-//         [
-//             [-1, -1],
-//             [-1, 4],
-//             [-1, 0],
-//             [2, 1],
-//             [-1, -1],
-//         ],
-//     ),
-// ); // 반례
-
-// console.log(
-//     solution(
-//         3,
-//         [1000, 2, 3, 5, 1000, 1000],
-//         [
-//             [1, 2],
-//             [-1, -1],
-//             [3, 5],
-//             [4, -1],
-//             [-1, -1],
-//             [-1, -1],
-//         ],
-//     ),
-// );
+console.log(
+    solution(
+        3,
+        [100, 90, 7, 95, 93],
+        [
+            [-1, -1],
+            [-1, 4],
+            [-1, 0],
+            [2, 1],
+            [-1, -1],
+        ],
+    ),
+);
 
 const values = Array(10_000).fill(10_000);
 const arr = [...Array(10_000)].map((_, index) => [index + 1, -1]);
-console.log(solution(5_000, values, arr));
+console.log(solution(10_000, values, arr));
