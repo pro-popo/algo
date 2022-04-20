@@ -51,6 +51,9 @@
 
 ### 📅 2022.04
 
+#### Day 20. WED
+> 🟣 [[Level 5] 시험장 나누기 - 트리, 이분탐색](https://programmers.co.kr/learn/courses/30/lessons/81305) ([#81305](prog/2021-kakao-internship/_81305_시험장나누기.js))  
+
 #### Day 19. TUE
 > 🟣 [[Level 4] 호텔 방 배정 - 서로소 집합](https://programmers.co.kr/learn/courses/30/lessons/64063) ([#64063](prog/2019-kakao-internship/_64063_호텔방배정.js))  
 
