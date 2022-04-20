@@ -38,44 +38,40 @@ function solution(k, num, links) {
 
 function countGroup(heights, num, MAX_TEST_TAKER) {
     let numberOfGroup = 0;
-    const testTakers = [...num];
+    const people = [...num];
 
     for (let i = heights.length - 1; i >= 0; i--) {
         for (let j = 0; j < heights[i].length; j++) {
             const node = heights[i][j];
+            const [leftNode, rightNode] = node.childs;
 
-            const root = testTakers[node.id];
-            const left = node.leftChild ? testTakers[node.leftChild.id] : 0;
-            const right = node.rightChild ? testTakers[node.rightChild.id] : 0;
+            const [root, left, right] = [node, leftNode, rightNode].map(node =>
+                node ? people[node.id] : 0,
+            );
 
             const [OneGroup, TwoGroup, ThreeGroup] = [1, 2, 3].map(type =>
                 splitGroup([root, left, right], type),
             );
 
-            if (isPossibleGroup(OneGroup)) {
-                testTakers[node.id] = OneGroup[0];
-                continue;
-            }
+            const isExistPossibleGroup = [OneGroup, TwoGroup, ThreeGroup].some(
+                (group, count) => {
+                    if (isPossibleGroup(group)) {
+                        people[node.id] = group[0];
+                        numberOfGroup += count;
+                        return true;
+                    }
+                    return false;
+                },
+            );
 
-            if (isPossibleGroup(TwoGroup)) {
-                testTakers[node.id] = TwoGroup[0];
-                numberOfGroup++;
-                continue;
-            }
-            if (isPossibleGroup(ThreeGroup)) {
-                testTakers[node.id] = ThreeGroup[0];
-                numberOfGroup += 2;
-                continue;
-            }
-
-            return Number.MAX_VALUE;
+            if (!isExistPossibleGroup) return Number.MAX_VALUE;
         }
     }
 
     return numberOfGroup + 1;
 
     function isPossibleGroup(group) {
-        return group.every(testTakers => testTakers <= MAX_TEST_TAKER);
+        return group.every(people => people <= MAX_TEST_TAKER);
     }
 }
 
@@ -96,13 +92,12 @@ function createTree(num, links) {
         (_, id) => new Node(id, num[id]),
     );
 
-    links.forEach((childs, id) => {
-        const root = tree[id];
-        const [leftChild, rightChild] = childs.map(child => tree[child]);
+    links.forEach((childIds, rootId) => {
+        const root = tree[rootId];
+        const childs = childIds.map(child => tree[child]);
 
-        root.setChilds([leftChild, rightChild]);
-        if (leftChild) leftChild.setParent(root);
-        if (rightChild) rightChild.setParent(root);
+        root.setChilds(childs);
+        childs.forEach(child => child && child.setParent(root));
     });
 
     return tree;
