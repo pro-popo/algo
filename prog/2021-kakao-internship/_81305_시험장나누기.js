@@ -21,73 +21,73 @@ function solution(k, num, links) {
     const root = tree.find(node => !node.parent);
     const heights = calculateHeight(root);
 
-    let min = 1;
-    let max = 1e9;
-    let answer = 1e9;
+    let [min, max] = [1, 1e9];
+    let answer = -1;
     while (min <= max) {
         const mid = Math.floor((min + max) / 2);
-        if (countGroup(heights, mid) <= k) {
+        if (countGroup(heights, num, mid) <= k) {
             max = mid - 1;
             answer = mid;
             continue;
         }
         min = mid + 1;
     }
+
     return answer;
+}
 
-    function countGroup(heights, MAX_TEST_TAKER) {
-        let numberOfGroup = 0;
-        const testTakers = Array(num.length).fill(0);
+function countGroup(heights, num, MAX_TEST_TAKER) {
+    let numberOfGroup = 0;
+    const testTakers = [...num];
 
-        for (let i = heights.length - 1; i >= 0; i--) {
-            for (let j = 0; j < heights[i].length; j++) {
-                const node = heights[i][j];
-                const root = node.testTakers;
-                if (root > MAX_TEST_TAKER) return k + 1;
+    for (let i = heights.length - 1; i >= 0; i--) {
+        for (let j = 0; j < heights[i].length; j++) {
+            const node = heights[i][j];
 
-                const [left, right] = [
-                    node.leftChild ? testTakers[node.leftChild.id] : 0,
-                    node.rightChild ? testTakers[node.rightChild.id] : 0,
-                ];
+            const root = testTakers[node.id];
+            const left = node.leftChild ? testTakers[node.leftChild.id] : 0;
+            const right = node.rightChild ? testTakers[node.rightChild.id] : 0;
 
-                if (root + left + right <= MAX_TEST_TAKER) {
-                    testTakers[node.id] = root + left + right;
-                    continue;
-                }
+            const [OneGroup, TwoGroup, ThreeGroup] = [1, 2, 3].map(type =>
+                splitGroup([root, left, right], type),
+            );
 
-                if (root + Math.min(left, right) <= MAX_TEST_TAKER) {
-                    numberOfGroup++;
-                    testTakers[node.id] = root + Math.min(left, right);
-                    continue;
-                }
-
-                numberOfGroup += 2;
-                testTakers[node.id] = root;
+            if (isPossibleGroup(OneGroup)) {
+                testTakers[node.id] = OneGroup[0];
+                continue;
             }
-        }
 
-        return numberOfGroup + 1;
+            if (isPossibleGroup(TwoGroup)) {
+                testTakers[node.id] = TwoGroup[0];
+                numberOfGroup++;
+                continue;
+            }
+            if (isPossibleGroup(ThreeGroup)) {
+                testTakers[node.id] = ThreeGroup[0];
+                numberOfGroup += 2;
+                continue;
+            }
+
+            return Number.MAX_VALUE;
+        }
+    }
+
+    return numberOfGroup + 1;
+
+    function isPossibleGroup(group) {
+        return group.every(testTakers => testTakers <= MAX_TEST_TAKER);
     }
 }
-function calculateHeight(root) {
-    const heights = [];
 
-    const queue = [root];
-    let countHeight = 0;
-    while (queue.length) {
-        let size = queue.length;
-        heights.push([]);
-        while (size--) {
-            const node = queue.shift();
-            if (!node) continue;
-
-            heights[countHeight].push(node);
-            queue.push(node.leftChild, node.rightChild);
-        }
-        countHeight++;
+function splitGroup([root, left, right], type) {
+    switch (type) {
+        case 1:
+            return [root + left + right];
+        case 2:
+            return [root + Math.min(left, right), Math.max(left, right)];
+        case 3:
+            return [root, left, right];
     }
-
-    return heights;
 }
 
 function createTree(num, links) {
@@ -96,14 +96,35 @@ function createTree(num, links) {
         (_, id) => new Node(id, num[id]),
     );
 
-    links.forEach(([leftChild, rightChild], id) => {
-        tree[id].setChilds(tree[leftChild], tree[rightChild]);
+    links.forEach((childs, id) => {
+        const root = tree[id];
+        const [leftChild, rightChild] = childs.map(child => tree[child]);
 
-        if (tree[leftChild]) tree[leftChild].setParent(tree[id]);
-        if (tree[rightChild]) tree[rightChild].setParent(tree[id]);
+        root.setChilds([leftChild, rightChild]);
+        if (leftChild) leftChild.setParent(root);
+        if (rightChild) rightChild.setParent(root);
     });
 
     return tree;
+}
+
+function calculateHeight(root) {
+    const heights = [];
+
+    const queue = [root];
+    while (queue.length) {
+        let size = queue.length;
+        heights.push([]);
+        while (size--) {
+            const node = queue.shift();
+            if (!node) continue;
+
+            heights[heights.length - 1].push(node);
+            queue.push(node.leftChild, node.rightChild);
+        }
+    }
+
+    return heights;
 }
 
 class Node {
@@ -111,18 +132,20 @@ class Node {
     leftChild = null;
     rightChild = null;
 
-    constructor(id, testTakers) {
+    constructor(id) {
         this.id = id;
-        this.testTakers = testTakers;
     }
 
     setParent(parent) {
         this.parent = parent;
     }
 
-    setChilds(leftChild, rightChild) {
-        this.leftChild = leftChild;
-        this.rightChild = rightChild;
+    setChilds(childs) {
+        [this.leftChild, this.rightChild] = childs;
+    }
+
+    get childs() {
+        return [this.leftChild, this.rightChild];
     }
 }
 
@@ -189,6 +212,6 @@ console.log(
     ),
 );
 
-const values = Array(10_000).fill(10_000);
-const arr = [...Array(10_000)].map((_, index) => [index + 1, -1]);
-console.log(solution(10_000, values, arr));
+const num = Array(10_000).fill(10_000);
+const links = [...Array(10_000)].map((_, index) => [index + 1, -1]);
+console.log(solution(10_000, num, links));
