@@ -37,15 +37,12 @@ function solution(k, num, links) {
 }
 
 function countGroup(heights, num, MAX_TEST_TAKER) {
-    let numberOfGroup = 0;
     const people = [...num];
+    let numberOfGroup = 0;
 
-    for (let i = heights.length - 1; i >= 0; i--) {
-        for (let j = 0; j < heights[i].length; j++) {
-            const node = heights[i][j];
-            const [leftNode, rightNode] = node.childs;
-
-            const [root, left, right] = [node, leftNode, rightNode].map(node =>
+    const isSuccessGrouping = heights.every(siblingNodes =>
+        siblingNodes.every(node => {
+            const [root, left, right] = [node, ...node.childs].map(node =>
                 node ? people[node.id] : 0,
             );
 
@@ -53,22 +50,17 @@ function countGroup(heights, num, MAX_TEST_TAKER) {
                 splitGroup([root, left, right], type),
             );
 
-            const isExistPossibleGroup = [OneGroup, TwoGroup, ThreeGroup].some(
-                (group, count) => {
-                    if (isPossibleGroup(group)) {
-                        people[node.id] = group[0];
-                        numberOfGroup += count;
-                        return true;
-                    }
-                    return false;
-                },
-            );
+            return [OneGroup, TwoGroup, ThreeGroup].some((group, count) => {
+                if (isPossibleGroup(group)) {
+                    people[node.id] = group[0];
+                    numberOfGroup += count;
+                    return true;
+                }
+            });
+        }),
+    );
 
-            if (!isExistPossibleGroup) return Number.MAX_VALUE;
-        }
-    }
-
-    return numberOfGroup + 1;
+    return isSuccessGrouping ? numberOfGroup + 1 : Number.MAX_VALUE;
 
     function isPossibleGroup(group) {
         return group.every(people => people <= MAX_TEST_TAKER);
@@ -119,7 +111,7 @@ function calculateHeight(root) {
         }
     }
 
-    return heights;
+    return heights.reverse();
 }
 
 class Node {
