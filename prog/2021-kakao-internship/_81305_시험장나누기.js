@@ -19,51 +19,49 @@
 function solution(k, num, links) {
     const tree = createTree(num, links);
     const root = tree.find(node => !node.parent);
-    const groups = createGroups(tree, root);
 
-    const queue = [root];
-
-    while (--k > 0) {
-        const node = queue.shift();
-        const splitNodes = splitTree(node);
-        if (!splitNodes) return groups[node.id];
-
-        queue.push(...splitNodes);
-        queue.sort((node, otherNode) => groups[otherNode.id] - groups[node.id]);
-    }
-
-    return groups[queue[0].id];
-
-    function splitTree(node) {
-        const target = findSplitNode(node);
-        if (target === node) return null;
-
-        const targetParent = target.parent;
-
-        if (targetParent.leftChild === target) targetParent.leftChild = null;
-        if (targetParent.rightChild === target) targetParent.rightChild = null;
-        target.setParent(null);
-
-        let parent = targetParent;
-        while (parent) {
-            groups[parent.id] -= groups[target.id];
-            parent = parent.parent;
+    let min = 1;
+    let max = 1e9;
+    let answer = 1e9;
+    while (min <= max) {
+        const mid = Math.floor((min + max) / 2);
+        if (countGroup(root, k, mid) <= k) {
+            max = mid - 1;
+            answer = mid;
+            continue;
         }
-        return [node, target];
+        min = mid + 1;
     }
+    return answer;
+}
 
-    function findSplitNode(root) {
-        let max = [root, groups[root.id]];
-        const queue = [root];
-        while (queue.length) {
-            const node = queue.shift();
-            const diff = Math.abs(groups[root.id] - groups[node.id] * 2);
-            if (max[1] > diff) max = [node, diff];
+function countGroup(root, k, MAX_TEST_TAKER) {
+    let numberOfGroup = 0;
+    DFS(root);
+    return numberOfGroup + 1;
 
-            if (node.leftChild) queue.push(node.leftChild);
-            if (node.rightChild) queue.push(node.rightChild);
+    function DFS(node) {
+        const root = node.testTakers;
+        if (root > MAX_TEST_TAKER) {
+            numberOfGroup = k;
+            return;
         }
-        return max[0];
+
+        let [left, right] = [0, 0];
+        if (node.leftChild) left = DFS(node.leftChild);
+        if (node.rightChild) right = DFS(node.rightChild);
+
+        if (root + left + right <= MAX_TEST_TAKER) {
+            return root + left + right;
+        }
+
+        if (root + Math.min(left, right) <= MAX_TEST_TAKER) {
+            numberOfGroup++;
+            return root + Math.min(left, right);
+        }
+
+        numberOfGroup += 2;
+        return root;
     }
 }
 
@@ -79,19 +77,8 @@ function createTree(num, links) {
         if (tree[leftChild]) tree[leftChild].setParent(tree[id]);
         if (tree[rightChild]) tree[rightChild].setParent(tree[id]);
     });
-    return tree;
-}
 
-function createGroups(tree) {
-    const groups = tree.map(node => node.testTakers);
-    [...groups].forEach((testTakers, id) => {
-        let node = tree[id].parent;
-        while (node) {
-            groups[node.id] += testTakers;
-            node = node.parent;
-        }
-    });
-    return groups;
+    return tree;
 }
 
 class Node {
@@ -116,26 +103,26 @@ class Node {
 
 /****** TEST CASE *******/
 
-console.log(
-    solution(
-        3,
-        [12, 30, 1, 8, 8, 6, 20, 7, 5, 10, 4, 1],
-        [
-            [-1, -1],
-            [-1, -1],
-            [-1, -1],
-            [-1, -1],
-            [8, 5],
-            [2, 10],
-            [3, 0],
-            [6, 1],
-            [11, -1],
-            [7, 4],
-            [-1, -1],
-            [-1, -1],
-        ],
-    ),
-);
+// console.log(
+//     solution(
+//         3,
+//         [12, 30, 1, 8, 8, 6, 20, 7, 5, 10, 4, 1],
+//         [
+//             [-1, -1],
+//             [-1, -1],
+//             [-1, -1],
+//             [-1, -1],
+//             [8, 5],
+//             [2, 10],
+//             [3, 0],
+//             [6, 1],
+//             [11, -1],
+//             [7, 4],
+//             [-1, -1],
+//             [-1, -1],
+//         ],
+//     ),
+// );
 
 // console.log(
 //     solution(
@@ -192,6 +179,6 @@ console.log(
 //     ),
 // );
 
-// const values = Array(10_000).fill(10_000);
-// const arr = [...Array(10_000)].map((_, index) => [index + 1, -1]);
-// console.log(solution(5_000 - 1, values, arr));
+const values = Array(10_000).fill(10_000);
+const arr = [...Array(10_000)].map((_, index) => [index + 1, -1]);
+console.log(solution(5_000, values, arr));
