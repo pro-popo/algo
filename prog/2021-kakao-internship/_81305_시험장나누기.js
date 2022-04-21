@@ -81,7 +81,7 @@ function solution(k, num, links) {
     let answer = -1;
     while (min <= max) {
         const mid = Math.floor((min + max) / 2);
-        if (countGroup(mid) <= k) {
+        if (isSuccessGrouping(mid)) {
             max = mid - 1;
             answer = mid;
             continue;
@@ -91,11 +91,14 @@ function solution(k, num, links) {
 
     return answer;
 
+    function isSuccessGrouping(MAX_PEOPLE) {
+        return countGroup(MAX_PEOPLE) <= k;
+    }
+
     function countGroup(MAX_PEOPLE) {
         const people = [...num];
         let numberOfGroup = 0;
-
-        const isSuccessGrouping = heights.every(siblingNodes =>
+        heights.every(siblingNodes =>
             siblingNodes.every(node => {
                 const [root, left, right] = [node, ...node.childs].map(node =>
                     node ? people[node.id] : 0,
@@ -112,10 +115,11 @@ function solution(k, num, links) {
                     people[node.id] = splitedGroup[0];
                     return true;
                 }
+
+                numberOfGroup = k;
             }),
         );
-
-        return isSuccessGrouping ? numberOfGroup + 1 : Number.MAX_VALUE;
+        return numberOfGroup + 1;
 
         function isPossibleGroup(group) {
             return group.every(people => people <= MAX_PEOPLE);
