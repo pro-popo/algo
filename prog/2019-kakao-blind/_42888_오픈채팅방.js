@@ -19,22 +19,24 @@
  */
 
 function solution(record) {
+    record = record.map(record => record.split(' '));
     const [ENTER, LEAVE] = ['Enter', 'Leave'];
 
     const users = new Map();
-    const messages = record.map(record => {
-        const [type, userId, nickname] = record.split(' ');
+    const messages = [];
+    record.forEach(([type, userId, nickname]) => {
         if (nickname) users.set(userId, nickname);
-        return [type, userId];
+        if ([ENTER, LEAVE].includes(type)) messages.push([type, userId]);
     });
 
-    return messages
-        .filter(([type]) => [ENTER, LEAVE].includes(type))
-        .map(([type, userId]) => {
-            const nickname = users.get(userId);
-            if (type === ENTER) return `${nickname}님이 들어왔습니다.`;
-            if (type === LEAVE) return `${nickname}님이 나갔습니다.`;
-        });
+    return messages.map(([type, userId]) =>
+        printMessage(type, users.get(userId)),
+    );
+
+    function printMessage(type, nickname) {
+        if (type === ENTER) return `${nickname}님이 들어왔습니다.`;
+        if (type === LEAVE) return `${nickname}님이 나갔습니다.`;
+    }
 }
 
 /****** TEST CASE *******/
