@@ -51,6 +51,9 @@
 
 ### 📅 2022.04
 
+#### Day 21. THU
+> 🟣 [[Level 2] 오픈채팅방 - 해시](https://programmers.co.kr/learn/courses/30/lessons/42888) ([#42888](prog/2019-kakao-blind/_42888_오픈채팅방.js))  
+
 #### Day 20. WED
 > 🟣 [[Level 5] 시험장 나누기 - 트리, 이분탐색](https://programmers.co.kr/learn/courses/30/lessons/81305) ([#81305](prog/2021-kakao-internship/_81305_시험장나누기.js))  
 
