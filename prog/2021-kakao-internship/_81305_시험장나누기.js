@@ -81,7 +81,7 @@ function solution(k, num, links) {
     let answer = -1;
     while (min <= max) {
         const mid = Math.floor((min + max) / 2);
-        if (countGroup(heights, num, mid) <= k) {
+        if (countGroup(mid) <= k) {
             max = mid - 1;
             answer = mid;
             continue;
@@ -90,36 +90,36 @@ function solution(k, num, links) {
     }
 
     return answer;
-}
 
-function countGroup(heights, num, MAX_TEST_TAKER) {
-    const people = [...num];
-    let numberOfGroup = 0;
+    function countGroup(MAX_PEOPLE) {
+        const people = [...num];
+        let numberOfGroup = 0;
 
-    const isSuccessGrouping = heights.every(siblingNodes =>
-        siblingNodes.every(node => {
-            const [root, left, right] = [node, ...node.childs].map(node =>
-                node ? people[node.id] : 0,
-            );
+        const isSuccessGrouping = heights.every(siblingNodes =>
+            siblingNodes.every(node => {
+                const [root, left, right] = [node, ...node.childs].map(node =>
+                    node ? people[node.id] : 0,
+                );
 
-            const [OneGroup, TwoGroup, ThreeGroup] = [1, 2, 3].map(type =>
-                splitGroup([root, left, right], type),
-            );
+                const splitedGroups = [1, 2, 3].map(type =>
+                    splitGroup([root, left, right], type),
+                );
 
-            return [OneGroup, TwoGroup, ThreeGroup].some((group, count) => {
-                if (isPossibleGroup(group)) {
-                    people[node.id] = group[0];
-                    numberOfGroup += count;
+                const splitedGroup = splitedGroups.find(isPossibleGroup);
+
+                if (splitedGroup) {
+                    numberOfGroup += splitedGroup.length - 1;
+                    people[node.id] = splitedGroup[0];
                     return true;
                 }
-            });
-        }),
-    );
+            }),
+        );
 
-    return isSuccessGrouping ? numberOfGroup + 1 : Number.MAX_VALUE;
+        return isSuccessGrouping ? numberOfGroup + 1 : Number.MAX_VALUE;
 
-    function isPossibleGroup(group) {
-        return group.every(people => people <= MAX_TEST_TAKER);
+        function isPossibleGroup(group) {
+            return group.every(people => people <= MAX_PEOPLE);
+        }
     }
 }
 
