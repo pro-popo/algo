@@ -20,15 +20,14 @@
 
 function solution(record) {
     record = record.map(record => record.split(' '));
-    const [ENTER, LEAVE] = ['Enter', 'Leave'];
 
     const users = new Map();
-    const messages = [];
-    record.forEach(([type, userId, nickname]) => {
+    record.forEach(([, userId, nickname]) => {
         if (nickname) users.set(userId, nickname);
-        if ([ENTER, LEAVE].includes(type)) messages.push([type, userId]);
     });
 
+    const [ENTER, LEAVE] = ['Enter', 'Leave'];
+    const messages = record.filter(([type]) => [ENTER, LEAVE].includes(type));
     return messages.map(([type, userId]) =>
         printMessage(type, users.get(userId)),
     );
