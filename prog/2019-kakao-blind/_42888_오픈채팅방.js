@@ -38,10 +38,9 @@ function solution(record) {
     });
 
     const [ENTER, LEAVE] = ['Enter', 'Leave'];
-    const messages = record.filter(([type]) => [ENTER, LEAVE].includes(type));
-    return messages.map(([type, userId]) =>
-        printMessage(type, users.get(userId)),
-    );
+    return record
+        .filter(([type]) => [ENTER, LEAVE].includes(type))
+        .map(([type, userId]) => printMessage(type, users.get(userId)));
 
     function printMessage(type, nickname) {
         if (type === ENTER) return `${nickname}님이 들어왔습니다.`;
