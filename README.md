@@ -51,6 +51,9 @@
 
 ### 📅 2022.04
 
+#### Day 22. FRI
+> 🟣 [[Level 1] 실패율 - 완전탐색](https://programmers.co.kr/learn/courses/30/lessons/42889) ([#42889](prog/2019-kakao-blind/_42889_실패율.js)) 
+
 #### Day 21. THU
 > 🟣 [[Level 2] 오픈채팅방 - 해시](https://programmers.co.kr/learn/courses/30/lessons/42888) ([#42888](prog/2019-kakao-blind/_42888_오픈채팅방.js))  
 
