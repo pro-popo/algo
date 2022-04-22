@@ -19,14 +19,13 @@ function solution(N, stages) {
     const challengePlayers = Array(N + 2).fill(0);
     stages.forEach(stage => challengePlayers[stage]++);
 
-    const completedPlayers = Array(N + 2).fill(0);
+    const completedPlayers = [...challengePlayers];
     for (let i = challengePlayers.length - 1; i > 0; i--) {
-        completedPlayers[i - 1] = completedPlayers[i] + challengePlayers[i];
+        completedPlayers[i - 1] += completedPlayers[i];
     }
 
-    const failureRates = {};
+    const failureRates = Object.fromEntries([...Array(N)].map((_, i) => [++i]));
     for (let stage = 1; stage <= N; stage++) {
-        failureRates[stage] = failureRates[stage] || 0;
         failureRates[stage] = challengePlayers[stage] / completedPlayers[stage];
     }
 
