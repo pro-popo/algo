@@ -30,15 +30,15 @@ function countCandidateKey(relation, keys) {
     return candidateKeys.length;
 
     function isContainCandidateKey(key) {
-        return candidateKeys.some(candidateKey =>
-            candidateKey.every(column => key.includes(column)),
+        return candidateKeys.some(
+            candidateKey => (candidateKey & key) === candidateKey,
         );
     }
 
     function isCandidateKey(key) {
         const ROW_LENGTH = relation.length;
         const rows = relation.map(row =>
-            row.filter((_, column) => key.includes(column)).join(' '),
+            row.filter((_, column) => (key & (1 << column)) !== 0).join(' '),
         );
 
         return new Set(rows).size === ROW_LENGTH;
@@ -46,18 +46,7 @@ function countCandidateKey(relation, keys) {
 }
 
 function createKeys(COLUMN_LENGTH) {
-    const keys = new Set();
-    permutation([], 0);
-
-    return [...keys].sort((a, b) => a.length - b.length);
-
-    function permutation(usedKeys, column) {
-        if (column === COLUMN_LENGTH + 1) return;
-        if (usedKeys.length) keys.add(usedKeys);
-
-        permutation(usedKeys.concat(column), column + 1);
-        permutation(usedKeys, column + 1);
-    }
+    return [...Array((1 << COLUMN_LENGTH) - 1)].map((_, i) => i + 1);
 }
 
 /****** TEST CASE *******/
