@@ -51,6 +51,9 @@
 
 ### 📅 2022.04
 
+#### Day 23. SAT
+> 🟣 [[Level 2] 후보키 - 조합](https://programmers.co.kr/learn/courses/30/lessons/42890) ([#42890](prog/2019-kakao-blind/_42890_후보키.js)) 
+
 #### Day 22. FRI
 > 🟣 [[Level 1] 실패율 - 완전탐색](https://programmers.co.kr/learn/courses/30/lessons/42889) ([#42889](prog/2019-kakao-blind/_42889_실패율.js)) 
 
