@@ -30,15 +30,15 @@ function countCandidateKey(relation, keys) {
     return candidateKeys.length;
 
     function isContainCandidateKey(key) {
-        return candidateKeys.some(
-            candidateKey => (candidateKey & key) === candidateKey,
+        return candidateKeys.some(candidateKey =>
+            BitMask.isContain(key, candidateKey),
         );
     }
 
     function isCandidateKey(key) {
         const ROW_LENGTH = relation.length;
         const rows = relation.map(row =>
-            row.filter((_, column) => (key & (1 << column)) !== 0).join(' '),
+            row.filter((_, column) => BitMask.has(key, column)).join(' '),
         );
 
         return new Set(rows).size === ROW_LENGTH;
@@ -47,6 +47,16 @@ function countCandidateKey(relation, keys) {
 
 function createKeys(COLUMN_LENGTH) {
     return [...Array((1 << COLUMN_LENGTH) - 1)].map((_, i) => i + 1);
+}
+
+class BitMask {
+    static has(bit, value) {
+        return (bit & (1 << value)) !== 0;
+    }
+
+    static isContain(bit, targetBit) {
+        return (targetBit & bit) === targetBit;
+    }
 }
 
 /****** TEST CASE *******/
