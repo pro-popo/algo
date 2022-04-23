@@ -23,17 +23,17 @@ function solution(relation) {
 function countCandidateKey(relation, keys) {
     const candidateKeys = [];
     keys.forEach(key => {
-        if (
-            candidateKeys.some(candidateKey =>
-                candidateKey.every(column => key.includes(column)),
-            )
-        )
-            return;
-
+        if (isContainCandidateKey(key)) return;
         if (isCandidateKey(key)) candidateKeys.push(key);
     });
 
     return candidateKeys.length;
+
+    function isContainCandidateKey(key) {
+        return candidateKeys.some(candidateKey =>
+            candidateKey.every(column => key.includes(column)),
+        );
+    }
 
     function isCandidateKey(key) {
         const ROW_LENGTH = relation.length;
