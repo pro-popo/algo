@@ -67,25 +67,24 @@ function solution(relation) {
 function countCandidateKey(relation, keys) {
     const candidateKeys = [];
     keys.forEach(key => {
-        if (isContainCandidateKey(key)) return;
-        if (isCandidateKey(key)) candidateKeys.push(key);
+        if (isUniqueness(key) && isMinimality(key)) candidateKeys.push(key);
     });
 
     return candidateKeys.length;
 
-    function isContainCandidateKey(key) {
-        return candidateKeys.some(candidateKey =>
-            BitMask.isContain(key, candidateKey),
-        );
-    }
-
-    function isCandidateKey(key) {
+    function isUniqueness(key) {
         const ROW_LENGTH = relation.length;
         const rows = relation.map(row =>
             row.filter((_, column) => BitMask.has(key, column)).join(' '),
         );
 
         return new Set(rows).size === ROW_LENGTH;
+    }
+
+    function isMinimality(key) {
+        return candidateKeys.every(
+            candidateKey => !BitMask.isContain(key, candidateKey),
+        );
     }
 }
 
@@ -156,5 +155,3 @@ console.log(1 | (1 << 2)); // 0, 2    => 5
 console.log(2 | (1 << 2)); // 1, 2    => 6
 
 console.log(3 | (1 << 2)); // 0, 1, 2 => 7
-
-console.log(1 << 3);
