@@ -64,6 +64,10 @@ function solution(relation) {
     return countCandidateKey(relation, keys);
 }
 
+function createKeys(COLUMN_LENGTH) {
+    return [...Array((1 << COLUMN_LENGTH) - 1)].map((_, i) => i + 1);
+}
+
 function countCandidateKey(relation, keys) {
     const candidateKeys = [];
     keys.forEach(key => {
@@ -86,10 +90,6 @@ function countCandidateKey(relation, keys) {
             candidateKey => !BitMask.isContain(key, candidateKey),
         );
     }
-}
-
-function createKeys(COLUMN_LENGTH) {
-    return [...Array((1 << COLUMN_LENGTH) - 1)].map((_, i) => i + 1);
 }
 
 class BitMask {
