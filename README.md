@@ -51,6 +51,10 @@
 
 ### 📅 2022.04
 
+#### Day 24. SUN
+> 🟣 [[Level 1] 음양 더하기 - 구현](https://programmers.co.kr/learn/courses/30/lessons/76501) ([#76501](prog/monthly-code-challenge/season2/_76501_음양더하기.js)) 
+
+
 #### Day 23. SAT
 > 🟣 [[Level 2] 후보키 - 조합](https://programmers.co.kr/learn/courses/30/lessons/42890) ([#42890](prog/2019-kakao-blind/_42890_후보키.js)) 
 
