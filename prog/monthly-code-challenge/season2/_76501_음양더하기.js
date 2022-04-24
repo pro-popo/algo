@@ -12,10 +12,8 @@
  */
 
 function solution(absolutes, signs) {
-    return absolutes.reduce(
-        (sum, absolute, i) => (sum += absolute * (signs[i] || -1)),
-        0,
-    );
+    const numbers = absolutes.map((absolute, i) => absolute * (signs[i] || -1));
+    return numbers.reduce((sum, number) => sum + number, 0);
 }
 
 /****** TEST CASE *******/
