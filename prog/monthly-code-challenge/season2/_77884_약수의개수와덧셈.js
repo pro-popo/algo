@@ -9,24 +9,26 @@
  */
 
 function solution(left, right) {
-    let sum = 0;
+    const numbers = [];
     for (let i = left; i <= right; i++) {
-        const divisors = calculateDivisor(i);
-        sum += i * (isEven(divisors.size) || -1);
+        const divisors = countDivisors(i);
+        const sign = isEven(divisors) || -1;
+        numbers.push(i * sign);
     }
-    return sum;
+
+    return numbers.reduce((sum, number) => sum + number, 0);
 }
 
 function isEven(value) {
     return value % 2 === 0;
 }
 
-function calculateDivisor(number) {
-    const divisors = new Set();
-    for (let i = 1; i <= number; i++) {
-        if (number % i === 0) divisors.add(i);
+function countDivisors(number) {
+    return [...Array(number)].map((_, i) => i + 1).filter(isDivisor).length;
+
+    function isDivisor(i) {
+        return number % i === 0;
     }
-    return divisors;
 }
 
 /****** TEST CASE *******/
