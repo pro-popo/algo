@@ -6,9 +6,10 @@
  */
 
 function solution(absolutes, signs) {
-    return absolutes.reduce((sum, absolute, i) => {
-        return (sum += absolute * (signs[i] || -1));
-    }, 0);
+    return absolutes.reduce(
+        (sum, absolute, i) => (sum += absolute * (signs[i] || -1)),
+        0,
+    );
 }
 
 /****** TEST CASE *******/
