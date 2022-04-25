@@ -12,17 +12,14 @@
  */
 
 function solution(s) {
-    let answer = 0;
-    let numberOfRorate = s.length;
-    do {
-        const rotated = s.slice(numberOfRorate) + s.slice(0, numberOfRorate);
-        if (isCorrectBracket(rotated)) answer++;
-    } while (--numberOfRorate);
+    const rotatedStrings = [...Array(s.length)]
+        .map((_, i) => i)
+        .map(numberRotate => s.slice(numberRotate) + s.slice(0, numberRotate));
 
-    return answer;
+    return rotatedStrings.filter(isCorrectBrackets).length;
 }
 
-function isCorrectBracket(s) {
+function isCorrectBrackets(s) {
     const brackets = new Bracket();
 
     const stack = [];
