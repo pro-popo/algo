@@ -31,18 +31,24 @@ function isCorrectBracket(s) {
 
     const stack = [];
     for (let i = 0; i < s.length; i++) {
-        if (isLeftBracket(s[i])) {
-            stack.push(s[i]);
+        const bracket = s[i];
+        if (isLeftBracket(bracket)) {
+            stack.push(bracket);
             continue;
         }
-        if (brackets.get(stack.pop()) === s[i]) continue;
+        if (isPair(stack.pop(), bracket)) continue;
 
         return false;
     }
-    return stack.length ? false : true;
+
+    if (!stack.length) return true;
 
     function isLeftBracket(bracket) {
         return [...brackets.keys()].includes(bracket);
+    }
+
+    function isPair(left, right) {
+        return brackets.get(left) === right;
     }
 }
 
