@@ -10,6 +10,7 @@
  * @param {*} s 괄호로 이루어진 문자열 (1~1_000)
  * @returns s를 회전시켰을 때 나타나는 올바른 괄호 문자열의 개수
  */
+
 function solution(s) {
     let answer = 0;
     let numberOfRorate = s.length;
@@ -22,7 +23,7 @@ function solution(s) {
 }
 
 function isCorrectBracket(s) {
-    const bracket = new Map([
+    const brackets = new Map([
         ['(', ')'],
         ['[', ']'],
         ['{', '}'],
@@ -30,16 +31,22 @@ function isCorrectBracket(s) {
 
     const stack = [];
     for (let i = 0; i < s.length; i++) {
-        if ([...bracket.keys()].includes(s[i])) {
+        if (isLeftBracket(s[i])) {
             stack.push(s[i]);
             continue;
         }
-        if (bracket.get(stack.pop()) === s[i]) continue;
+        if (brackets.get(stack.pop()) === s[i]) continue;
 
         return false;
     }
     return stack.length ? false : true;
+
+    function isLeftBracket(bracket) {
+        return [...brackets.keys()].includes(bracket);
+    }
 }
+
+/****** TEST CASE *******/
 
 console.log(solution('[](){}'));
 console.log(solution('}]()[{'));
