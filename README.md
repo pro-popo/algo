@@ -51,10 +51,12 @@
 
 ### 📅 2022.04
 
+#### Day 25. MON
+> 🟣 [[Level 2] 괄호 회전하기 - 스택](https://programmers.co.kr/learn/courses/30/lessons/76502) ([#76502](prog/monthly-code-challenge/season2/_76502_괄호회전하기.js))   
+
 #### Day 24. SUN
 > 🟣 [[Level 1] 음양 더하기 - 구현](https://programmers.co.kr/learn/courses/30/lessons/76501) ([#76501](prog/monthly-code-challenge/season2/_76501_음양더하기.js))                
 > 🟣 [[Level 1] 약수의 개수와 덧셈 - 구현](https://programmers.co.kr/learn/courses/30/lessons/77884) ([#77884](prog/monthly-code-challenge/season2/_77884_약수의개수와덧셈.js)) 
-
 
 #### Day 23. SAT
 > 🟣 [[Level 2] 후보키 - 조합](https://programmers.co.kr/learn/courses/30/lessons/42890) ([#42890](prog/2019-kakao-blind/_42890_후보키.js)) 
