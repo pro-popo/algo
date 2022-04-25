@@ -23,32 +23,36 @@ function solution(s) {
 }
 
 function isCorrectBracket(s) {
-    const brackets = new Map([
-        ['(', ')'],
-        ['[', ']'],
-        ['{', '}'],
-    ]);
+    const brackets = new Bracket();
 
     const stack = [];
     for (let i = 0; i < s.length; i++) {
         const bracket = s[i];
-        if (isLeftBracket(bracket)) {
+        if (brackets.isLeft(bracket)) {
             stack.push(bracket);
             continue;
         }
-        if (isPair(stack.pop(), bracket)) continue;
+        if (brackets.isPair(stack.pop(), bracket)) continue;
 
         return false;
     }
 
     if (!stack.length) return true;
+}
 
-    function isLeftBracket(bracket) {
-        return [...brackets.keys()].includes(bracket);
+class Bracket {
+    brackets = new Map([
+        ['(', ')'],
+        ['[', ']'],
+        ['{', '}'],
+    ]);
+
+    isLeft(bracket) {
+        return [...this.brackets.keys()].includes(bracket);
     }
 
-    function isPair(left, right) {
-        return brackets.get(left) === right;
+    isPair(left, right) {
+        return this.brackets.get(left) === right;
     }
 }
 
