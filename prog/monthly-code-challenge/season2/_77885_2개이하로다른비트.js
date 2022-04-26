@@ -12,8 +12,19 @@ function solution(numbers) {
 }
 
 function f(number) {
-    if (number % 2 === 0) return number + 1;
+    if (isEven(number)) return evenF(number);
+    else return oddF(number);
+}
 
+function isEven(number) {
+    return number % 2 === 0;
+}
+
+function evenF(number) {
+    return number + 1;
+}
+
+function oddF(number) {
     let bit = number.toString(2);
     let firstZero = bit.lastIndexOf('0');
     if (firstZero === -1) {
