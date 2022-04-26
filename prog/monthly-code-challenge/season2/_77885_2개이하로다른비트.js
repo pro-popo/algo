@@ -12,31 +12,38 @@ function solution(numbers) {
 }
 
 function f(number) {
-    if (isEven(number)) return evenF(number);
-    else return oddF(number);
+    if (isEven(number)) return evenF();
+    else return oddF();
+
+    function evenF() {
+        return number + 1;
+    }
+
+    function oddF() {
+        let bit = convertToBinary(number);
+        let lastZero = bit.lastIndexOf('0');
+        if (lastZero === -1) {
+            bit = '0' + bit;
+            lastZero = 0;
+        }
+
+        const answer = [...bit];
+        [answer[lastZero], answer[lastZero + 1]] = [1, 0];
+
+        return convertToDecimal(answer.join(''));
+    }
 }
 
 function isEven(number) {
     return number % 2 === 0;
 }
 
-function evenF(number) {
-    return number + 1;
+function convertToDecimal(number) {
+    return parseInt(number, 2);
 }
 
-function oddF(number) {
-    let bit = number.toString(2);
-    let firstZero = bit.lastIndexOf('0');
-    if (firstZero === -1) {
-        bit = '0' + bit;
-        firstZero = 0;
-    }
-
-    const answer = [...bit];
-    answer[firstZero] = 1;
-    if (firstZero !== answer.length - 1) answer[firstZero + 1] = 0;
-
-    return parseInt(answer.join(''), 2);
+function convertToBinary(number) {
+    return number.toString(2);
 }
 
 /****** TEST CASE *******/
