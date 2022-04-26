@@ -51,6 +51,9 @@
 
 ### 📅 2022.04
 
+#### Day 26. TUE
+> 🟣 [[Level 2] 2개 이하로 다른 비트 - 구현](https://programmers.co.kr/learn/courses/30/lessons/77885) ([#77885](prog/monthly-code-challenge/season2/_77885_2개이하로다른비트.js))  
+
 #### Day 25. MON
 > 🟣 [[Level 2] 괄호 회전하기 - 스택](https://programmers.co.kr/learn/courses/30/lessons/76502) ([#76502](prog/monthly-code-challenge/season2/_76502_괄호회전하기.js))   
 
