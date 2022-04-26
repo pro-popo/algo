@@ -12,19 +12,23 @@ function solution(numbers) {
 }
 
 function f(number) {
-    let bit = number.toString(2);
-    let target = number + 1;
-    while (true) {
-        const movedBit = target.toString(2);
-        if (bit.length != movedBit.length) bit = '0' + bit;
-        const diff = [...movedBit].reduce(
-            (diff, number, index) => (number == bit[index] ? diff : diff + 1),
-            0,
-        );
+    if (number % 2 === 0) return number + 1;
 
-        if (diff <= 2) return target;
-        target++;
+    let bit = number.toString(2);
+    let firstZero = bit.lastIndexOf('0');
+    if (firstZero === -1) {
+        bit = '0' + bit;
+        firstZero = 0;
     }
+
+    const answer = [...bit];
+    answer[firstZero] = 1;
+    if (firstZero !== answer.length - 1) answer[firstZero + 1] = 0;
+
+    return parseInt(answer.join(''), 2);
 }
 
-console.log(solution([2, 7]));
+/****** TEST CASE *******/
+
+console.log(solution([1, 2, 7, 3]));
+console.log(solution([21]));
