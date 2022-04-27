@@ -30,34 +30,32 @@
  */
 
 function solution(word, pages) {
-    const webPages = pages.map((HTML, index) => new WebPage(HTML, index, word));
+    WebPage.pages = pages.map((HTML, index) => new WebPage(HTML, index));
+    WebPage.searchWord = word;
 
-    webPages.forEach(page => {
-        page.setLinkScore(page.calculateLinkScore(webPages));
-    });
-
-    return webPages.sort((a, b) => {
+    return WebPage.pages.sort((a, b) => {
         if (a.matchScore === b.matchScore) return a.index - b.index;
         return b.matchScore - a.matchScore;
     })[0].index;
 }
 
 class WebPage {
-    linkScore = 0;
+    static pages = [];
+    static searchWord = '';
 
-    constructor(HTML, index, searchWord) {
+    constructor(HTML, index) {
         this.HTML = HTML;
         this.index = index;
-        this.searchWord = searchWord;
     }
 
     get url() {
-        const urlRegExp = /<meta property="og:url" content="(?<URL>[^"]+)/;
-        return this.HTML.match(urlRegExp).groups.URL;
+        const urlRegExp = /<meta property="og:url" content="(?<url>[^"]+)/;
+
+        return this.HTML.match(urlRegExp).groups.url;
     }
 
     get defaultScore() {
-        const wordRegExp = new RegExp(`^${this.searchWord}$`, 'gi');
+        const wordRegExp = new RegExp(`^${WebPage.searchWord}$`, 'gi');
 
         return this.HTML.split(/[^a-zA-Z]/).filter(word =>
             word.match(wordRegExp),
@@ -65,18 +63,15 @@ class WebPage {
     }
 
     get externalLinks() {
-        const externalLinkRegExp = /<a href="(?<URL>[^"]+)/g;
+        const externalLinkRegExp = /<a href="(?<url>[^"]+)/g;
+
         return (this.HTML.match(externalLinkRegExp) || []).map(s =>
             s.replace(externalLinkRegExp, '$1'),
         );
     }
 
-    setLinkScore(linkScore) {
-        this.linkScore = linkScore;
-    }
-
-    calculateLinkScore(webPages) {
-        return webPages.reduce((matchScore, page) => {
+    get linkScore() {
+        return WebPage.pages.reduce((matchScore, page) => {
             if (!page.externalLinks.includes(this.url)) return matchScore;
 
             return matchScore + page.defaultScore / page.externalLinks.length;
