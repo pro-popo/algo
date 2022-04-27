@@ -33,10 +33,7 @@ function solution(word, pages) {
     WebPage.pages = pages.map((HTML, index) => new WebPage(HTML, index));
     WebPage.searchWord = word;
 
-    return WebPage.pages.sort((a, b) => {
-        if (a.matchScore === b.matchScore) return a.index - b.index;
-        return b.matchScore - a.matchScore;
-    })[0].index;
+    return WebPage.sortPages(WebPage.DESC_MathScore)[0].index;
 }
 
 class WebPage {
@@ -50,23 +47,24 @@ class WebPage {
 
     get url() {
         const urlRegExp = /<meta property="og:url" content="(?<url>[^"]+)/;
-
         return this.HTML.match(urlRegExp).groups.url;
     }
 
     get defaultScore() {
-        const wordRegExp = new RegExp(`^${WebPage.searchWord}$`, 'gi');
-
         return this.HTML.split(/[^a-zA-Z]/).filter(word =>
-            word.match(wordRegExp),
+            this.isSearchWord(word),
         ).length;
+    }
+
+    isSearchWord(word) {
+        const wordRegExp = new RegExp(`^${WebPage.searchWord}$`, 'gi');
+        return word.match(wordRegExp);
     }
 
     get externalLinks() {
         const externalLinkRegExp = /<a href="(?<url>[^"]+)/g;
-
-        return (this.HTML.match(externalLinkRegExp) || []).map(s =>
-            s.replace(externalLinkRegExp, '$1'),
+        return [...this.HTML.matchAll(externalLinkRegExp)].map(
+            regExp => regExp.groups.url,
         );
     }
 
@@ -80,6 +78,16 @@ class WebPage {
 
     get matchScore() {
         return this.defaultScore + this.linkScore;
+    }
+
+    static sortPages(predicate) {
+        return WebPage.pages.sort(predicate);
+    }
+
+    static DESC_MathScore(page, otherPage) {
+        if (page.matchScore === otherPage.matchScore)
+            return page.index - otherPage.index;
+        return otherPage.matchScore - page.matchScore;
     }
 }
 
