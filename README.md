@@ -51,6 +51,10 @@
 
 ### 📅 2022.04
 
+#### Day 28. THU
+> 🟣 [[Level 1] 없는 숫자 더하기](https://programmers.co.kr/learn/courses/30/lessons/86051) ([#86051](prog/monthly-code-challenge/season3/_86051_없는숫자더하기.js))  
+
+
 #### Day 27. WED
 > 🟣 [[Level 3] 매칭 점수 - 정규식](https://programmers.co.kr/learn/courses/30/lessons/42893) ([#42893](prog/2019-kakao-blind/_42893_매칭점수.js))  
 
