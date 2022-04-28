@@ -3,6 +3,13 @@
  * 이때 numbers에 포함되지 않은 숫자들을 모두 더하자.
  * @param {*} numbers
  * @returns numbers에 미포함된 숫자들의 합
+ *
+ * ### 리뷰
+ * - 풀이 방식은 다음과 같다.
+ *   0~9까지의 모든 수의 합과 numbers의 모든 수의 합을 빼준다.
+ *
+ * - 다른 풀이 방식으로는,
+ *   0~9까지 더할 때, numbers에 포함된 숫자는 제외하고 더한다.
  */
 
 function solution(numbers) {
