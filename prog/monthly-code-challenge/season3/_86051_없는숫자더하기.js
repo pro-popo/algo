@@ -6,12 +6,12 @@
  */
 
 function solution(numbers) {
-    return [...Array(10)]
-        .map((_, number) => number)
-        .reduce((sum, number) => {
-            if (numbers.includes(number)) return sum;
-            return sum + number;
-        }, 0);
+    const originNumbers = [...Array(10)].map((_, number) => number);
+    return sumAll(originNumbers) - sumAll(numbers);
+}
+
+function sumAll(numbers) {
+    return numbers.reduce((sum, number) => sum + number, 0);
 }
 
 /****** TEST CASE *******/
