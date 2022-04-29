@@ -16,34 +16,34 @@
 
 function solution(nodeinfo) {
     const root = createTree(nodeinfo);
-    return [preorderTraverse(root, []), postorderTraverse(root, [])];
+    return [preorderTraverse, postorderTraverse].map(traverse =>
+        traverse(root, []),
+    );
 }
 
 function createTree(nodeinfo) {
-    const nodes = nodeinfo.map((point, number) => new Node(point, number + 1));
-    nodes.sort((node, otherNode) => otherNode.y - node.y);
+    const nodes = nodeinfo
+        .map((point, number) => new Node(point, number + 1))
+        .sort((node, otherNode) => otherNode.y - node.y);
+
+    const limit = Array.from(Array(nodeinfo.length + 1), () => [-1, 100_001]);
 
     nodes.forEach(parent => {
-        const leftLimit = [parent.limit[0], parent.x];
-        const rightLimit = [parent.x, parent.limit[1]];
+        const parentLimit = limit[parent.number];
+        const childsLimit = [
+            [parentLimit[0], parent.x],
+            [parent.x, parentLimit[1]],
+        ];
 
-        const leftChild = findChild(parent, leftLimit);
-        const rightChild = findChild(parent, rightLimit);
+        const childs = childsLimit.map(limit => findChild(parent, limit));
 
-        parent.leftChild = leftChild;
-        parent.rightChild = rightChild;
-
-        if (leftChild) {
-            leftChild.parent = parent;
-            leftChild.limit = leftLimit;
-        }
-
-        if (rightChild) {
-            rightChild.parent = parent;
-            rightChild.limit = rightLimit;
-        }
+        parent.setChilds(childs);
+        childs.forEach((child, index) => {
+            if (!child) return;
+            child.setParent(parent);
+            limit[child.number] = childsLimit[index];
+        });
     });
-    console.log(nodes[6]);
 
     return nodes[0];
 
@@ -56,7 +56,7 @@ function createTree(nodeinfo) {
 }
 
 function preorderTraverse(node, visited) {
-    if (!node) return visited;
+    if (!node) return;
     visited.push(node.number);
     preorderTraverse(node.leftChild, visited);
     preorderTraverse(node.rightChild, visited);
@@ -73,12 +73,9 @@ function postorderTraverse(node, visited) {
 
 class Node {
     parent = null;
-    leftChild = null;
-    rightChild = null;
+    childs = [null, null];
 
-    limit = [-1, 100_001];
-
-    constructor(point, number) {
+    constructor(point = [], number = null) {
         this.point = point;
         this.number = number;
     }
@@ -90,23 +87,39 @@ class Node {
     get y() {
         return this.point[1];
     }
+
+    get leftChild() {
+        return this.childs[0];
+    }
+
+    get rightChild() {
+        return this.childs[1];
+    }
+
+    setParent(parent) {
+        this.parent = parent;
+    }
+
+    setChilds(childs) {
+        this.childs = childs;
+    }
 }
 
 /****** TEST CASE *******/
 
-// console.log(
-//     solution([
-//         [5, 3],
-//         [11, 5],
-//         [13, 3],
-//         [3, 5],
-//         [6, 1],
-//         [1, 3],
-//         [8, 6],
-//         [7, 2],
-//         [2, 2],
-//     ]),
-// );
+console.log(
+    solution([
+        [5, 3],
+        [11, 5],
+        [13, 3],
+        [3, 5],
+        [6, 1],
+        [1, 3],
+        [8, 6],
+        [7, 2],
+        [2, 2],
+    ]),
+);
 
 console.log(
     solution([
