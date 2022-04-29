@@ -26,7 +26,8 @@ function createTree(nodeinfo) {
         .map((point, number) => new Node(point, number + 1))
         .sort((node, otherNode) => otherNode.y - node.y);
 
-    const limit = Array.from(Array(nodeinfo.length + 1), () => [-1, 100_001]);
+    const LIMIT_X = [1, 100_001];
+    const limit = Array.from(Array(nodes.length + 1), () => LIMIT_X);
 
     nodes.forEach(parent => {
         const parentLimit = limit[parent.number];
@@ -58,15 +59,13 @@ function createTree(nodeinfo) {
 function preorderTraverse(node, visited) {
     if (!node) return;
     visited.push(node.number);
-    preorderTraverse(node.leftChild, visited);
-    preorderTraverse(node.rightChild, visited);
+    node.childs.forEach(child => preorderTraverse(child, visited));
     return visited;
 }
 
 function postorderTraverse(node, visited) {
     if (!node) return;
-    postorderTraverse(node.leftChild, visited);
-    postorderTraverse(node.rightChild, visited);
+    node.childs.forEach(child => postorderTraverse(child, visited));
     visited.push(node.number);
     return visited;
 }
@@ -75,7 +74,7 @@ class Node {
     parent = null;
     childs = [null, null];
 
-    constructor(point = [], number = null) {
+    constructor(point, number) {
         this.point = point;
         this.number = number;
     }
@@ -86,14 +85,6 @@ class Node {
 
     get y() {
         return this.point[1];
-    }
-
-    get leftChild() {
-        return this.childs[0];
-    }
-
-    get rightChild() {
-        return this.childs[1];
     }
 
     setParent(parent) {
