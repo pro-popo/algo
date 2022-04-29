@@ -75,7 +75,7 @@ function createTree(nodeinfo) {
         .map((point, number) => new Node(point, number + 1))
         .sort((node, otherNode) => otherNode.y - node.y);
 
-    const LIMIT_X = [1, 100_001];
+    const LIMIT_X = [-1, 100_001];
     const limit = Array.from(Array(nodes.length + 1), () => LIMIT_X);
 
     nodes.forEach(parent => {
@@ -90,7 +90,6 @@ function createTree(nodeinfo) {
         parent.setChilds(childs);
         childs.forEach((child, index) => {
             if (!child) return;
-            child.setParent(parent);
             limit[child.number] = childsLimit[index];
         });
     });
@@ -120,7 +119,6 @@ function postorderTraverse(node, visited) {
 }
 
 class Node {
-    parent = null;
     childs = [null, null];
 
     constructor(point, number) {
@@ -134,10 +132,6 @@ class Node {
 
     get y() {
         return this.point[1];
-    }
-
-    setParent(parent) {
-        this.parent = parent;
     }
 
     setChilds(childs) {
