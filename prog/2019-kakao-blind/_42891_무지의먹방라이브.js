@@ -22,27 +22,22 @@
 
 function solution(food_times, k) {
     const foods = food_times
-        .map((time, number) => ({
-            time,
-            number: number + 1,
-        }))
-        .sort((a, b) => a.time - b.time);
+        .map((time, number) => new Food(time, number + 1))
+        .sort(Food.ASC_TIME);
 
     return findFoodToEatAgain(foods, k) || -1;
 }
 
-function findFoodToEatAgain(foods, k) {
+function findFoodToEatAgain(foods, MAX_TIME) {
     let currentTime = 0;
     for (let i = 0; i < foods.length; i++) {
         const additionalTime = foods[i].time - (i > 0 && foods[i - 1].time);
         const remainFoods = foods.length - i;
         const nextTime = additionalTime * remainFoods + currentTime;
 
-        if (nextTime > k) {
-            const remainFoods = foods
-                .slice(i)
-                .sort((a, b) => a.number - b.number);
-            const remainTime = (k - currentTime) % remainFoods.length;
+        if (nextTime > MAX_TIME) {
+            const remainFoods = foods.slice(i).sort(Food.ASC_NUMBER);
+            const remainTime = (MAX_TIME - currentTime) % remainFoods.length;
 
             return remainFoods[remainTime].number;
         }
@@ -51,6 +46,21 @@ function findFoodToEatAgain(foods, k) {
     }
 
     return null;
+}
+
+class Food {
+    constructor(time, number) {
+        this.time = time;
+        this.number = number;
+    }
+
+    static ASC_TIME(food, otherFood) {
+        return food.time - otherFood.time;
+    }
+
+    static ASC_NUMBER(food, otherFood) {
+        return food.number - otherFood.number;
+    }
 }
 
 /****** TEST CASE *******/
