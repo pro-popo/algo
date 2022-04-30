@@ -159,6 +159,7 @@ class Node {
     }
 }
 
+/* eslint no-unused-vars: "off" */
 function otherCase_CreateTree(nodeinfo) {
     const nodes = nodeinfo
         .map((point, number) => new Node(point, number + 1))
