@@ -28,29 +28,32 @@ function solution(food_times, k) {
         }))
         .sort((a, b) => a.time - b.time);
 
-    let time = 0;
+    return findFoodToEatAgain(foods, k) || -1;
+}
+
+function findFoodToEatAgain(foods, k) {
+    let currentTime = 0;
     for (let i = 0; i < foods.length; i++) {
-        const previousTime = i === 0 ? 0 : foods[i - 1].time;
-        const nextTime =
-            (foods[i].time - previousTime) * (foods.length - i) + time;
+        const additionalTime = foods[i].time - (i > 0 && foods[i - 1].time);
+        const remainFoods = foods.length - i;
+        const nextTime = additionalTime * remainFoods + currentTime;
 
         if (nextTime > k) {
             const remainFoods = foods
                 .slice(i)
                 .sort((a, b) => a.number - b.number);
-            const remainTime = k - time;
+            const remainTime = (k - currentTime) % remainFoods.length;
 
-            return remainFoods[remainTime % remainFoods.length].number;
+            return remainFoods[remainTime].number;
         }
 
-        time = nextTime;
+        currentTime = nextTime;
     }
 
-    return -1;
+    return null;
 }
 
 /****** TEST CASE *******/
 
 console.log(solution([3, 1, 2], 5));
 console.log(solution([1, 2, 3, 3], 5));
-1, 2, 3;
