@@ -51,6 +51,9 @@
 
 ### 📅 2022.04
 
+#### Day 30. SAT
+> 🟣 [[Level 4] 무지의 먹방 라이브 - 구현](https://programmers.co.kr/learn/courses/30/lessons/42891) ([#42891](prog/2019-kakao-blind/_42891_무지의먹방라이브.js))  
+
 #### Day 29. FRI
 > 🟣 [[Level 3] 길 찾기 게임 - 트리](https://programmers.co.kr/learn/courses/30/lessons/42892) ([#42892](prog/2019-kakao-blind/_42892_길찾기게임.js))  
 
