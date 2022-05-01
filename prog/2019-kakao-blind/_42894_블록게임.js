@@ -91,13 +91,14 @@ class BlockGame {
     }
 
     findRemovableBlock(point) {
-        const blockIndex = RemovableBlock.getBlocksPoints(point).findIndex(
-            blockPoints =>
-                this.isPossibleBlock(blockPoints, this.getNumber(point)),
+        const directionOfBlock = RemovableBlock.blocks.find(direction =>
+            this.isPossibleBlock(
+                direction.getPoints(point),
+                this.getNumber(point),
+            ),
         );
 
-        if (blockIndex === -1) return null;
-        return new RemovableBlock(blockIndex, point);
+        return directionOfBlock && new RemovableBlock(directionOfBlock, point);
     }
 
     isPossibleBlock(blockPoints, number) {
@@ -119,7 +120,7 @@ class BlockGame {
     isDropableBlackBlock(block) {
         return this.board
             .slice(0, Point.maxRow(block.points))
-            .every(line => this.isEmptyColumns(line, block.fillColumn));
+            .every(line => this.isEmptyColumns(line, block.checkColumns));
     }
 
     isEmptyColumns(line, columns) {
@@ -131,6 +132,16 @@ class BlockGame {
             point => (this.board[point.row][point.column] = 0),
         );
         this.numberOfRemovedBlock++;
+    }
+}
+
+class Direction {
+    constructor(direction) {
+        this.direction = direction;
+    }
+
+    getPoints(point) {
+        return this.direction.map(move => point.movePoint(move));
     }
 }
 
@@ -166,34 +177,34 @@ class RemovableBlock {
             [1, -1],
             [1, 1],
         ],
-    ];
+    ].map(block => new Direction(block));
 
-    static fillColumns = [[1, 2], [-1], [1], [-1, -2], [-1, 1]];
+    static checkColumns = new Map(
+        [[1, 2], [-1], [1], [-1, -2], [-1, 1]].map((columns, index) => [
+            RemovableBlock.blocks[index],
+            columns,
+        ]),
+    );
 
-    static getBlocksPoints(point) {
-        return RemovableBlock.blocks.map(block =>
-            RemovableBlock.getBlockPoints(block, point),
-        );
+    getCheckColumns(point) {
+        return RemovableBlock.checkColumns
+            .get(this.direction)
+            .map(move => move + point.column);
     }
 
-    static getBlockPoints(block, point) {
-        return block.map(move => point.movePoint(move));
+    getPoints(point) {
+        return this.direction.getPoints(point);
     }
 
-    static getFillColumn(blockIndex, point) {
-        return RemovableBlock.fillColumns[blockIndex].map(
-            move => move + point.column,
-        );
-    }
-
-    constructor(blockIndex, point) {
-        this.points = RemovableBlock.getBlocksPoints(point)[blockIndex];
-        this.fillColumn = RemovableBlock.getFillColumn(blockIndex, point);
+    constructor(direction, point) {
+        this.direction = direction;
+        this.points = this.getPoints(point);
+        this.checkColumns = this.getCheckColumns(point);
     }
 }
 
 class Point {
-    constructor(point) {
+    constructor(point = [0, 0]) {
         this.point = point;
     }
 
