@@ -67,7 +67,7 @@
 > 🟣 [[Level 3] 길 찾기 게임 - 트리](https://programmers.co.kr/learn/courses/30/lessons/42892) ([#42892](prog/2019-kakao-blind/_42892_길찾기게임.js))  
 
 #### Day 28. THU
-> 🟣 [[Level 1] 없는 숫자 더하기](https://programmers.co.kr/learn/courses/30/lessons/86051) ([#86051](prog/monthly-code-challenge/season3/_86051_없는숫자더하기.js))  
+> 🟣 [[Level 1] 없는 숫자 더하기 - 구현](https://programmers.co.kr/learn/courses/30/lessons/86051) ([#86051](prog/monthly-code-challenge/season3/_86051_없는숫자더하기.js))  
 
 
 #### Day 27. WED
@@ -210,7 +210,7 @@
 
 #### Day 20. SUN
 
-> 🟣 [[Level 2] 모음사전](https://programmers.co.kr/learn/courses/30/lessons/84512) ([#84512](prog/challenges/_84512_모음사전.js))
+> 🟣 [[Level 2] 모음사전 - 해시](https://programmers.co.kr/learn/courses/30/lessons/84512) ([#84512](prog/challenges/_84512_모음사전.js))
 
 #### Day 19. SAT
 
