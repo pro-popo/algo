@@ -16,26 +16,23 @@
  */
 
 function solution(n, arr1, arr2) {
-    const [map1, map2] = [arr1, arr2].map(createMap);
-    return joinMap(map1, map2);
+    return joinMap(arr1, arr2);
 }
 
-function createMap(arr) {
-    return arr
+function joinMap(arr1, arr2) {
+    return arr1
+        .map((_, i) => arr1[i] | arr2[i])
         .map(convertToBinary)
-        .map(number => number.padStart(arr.length, '0'));
+        .map(binary => binary.padStart(arr1.length, '0'))
+        .map(printMap);
 }
 
 function convertToBinary(number) {
     return number.toString(2);
 }
 
-function joinMap(map1, map2) {
-    return map1.map((binary, i) =>
-        [...binary]
-            .map((_, j) => (+(map1[i][j] + map2[i][j]) === 0 ? ' ' : '#'))
-            .join(''),
-    );
+function printMap(str) {
+    return str.replace(/0/g, ' ').replace(/1/g, '#');
 }
 
 /****** TEST CASE *******/
