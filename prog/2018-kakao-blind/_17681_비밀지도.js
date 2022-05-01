@@ -5,7 +5,7 @@
  * 2. 전체 지도는 두 장의 지도를 겹쳐서 얻을 수 있다.
  *    두 지도 중 어느 하나라도 벽이라면, 전체 지도에서도 벽이다.
  * 3. 두 지도는 각각 정수 배열로 암호화되어 있다.
- * 4. 암호화된 배열은 지도의 각 가로줄에서 벽을 1, 공백을 0으로 부호화했을 떄 얻어지는 이진수에 해당하는 값의 배열이다.
+ * 4. 암호화된 배열은 지도의 각 가로줄에서 벽을 1, 공백을 0으로 부호화했을 때 얻어지는 이진수에 해당하는 값의 배열이다.
  *
  * 비밀지도의 암호를 해독하는 작업을 도와줄 프로그램을 작성하자.
  *
@@ -16,15 +16,18 @@
  */
 
 function solution(n, arr1, arr2) {
-    return joinMap(arr1, arr2);
+    const map = joinMap(arr1, arr2);
+    return decoding(map).map(printMap);
 }
 
 function joinMap(arr1, arr2) {
-    return arr1
-        .map((_, i) => arr1[i] | arr2[i])
+    return arr1.map((_, i) => arr1[i] | arr2[i]);
+}
+
+function decoding(map) {
+    return map
         .map(convertToBinary)
-        .map(binary => binary.padStart(arr1.length, '0'))
-        .map(printMap);
+        .map(binary => binary.padStart(map.length, '0'));
 }
 
 function convertToBinary(number) {
