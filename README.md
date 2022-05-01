@@ -52,6 +52,9 @@
 ### 📅 2022.04
 
 #### Day 30. SAT
+> 🟣 [[Level 4] 블록 게임 - 구현](https://programmers.co.kr/learn/courses/30/lessons/42894) ([#42894](prog/2019-kakao-blind/_42894_블록게임.js))  
+
+#### Day 30. SAT
 > 🟣 [[Level 4] 무지의 먹방 라이브 - 구현](https://programmers.co.kr/learn/courses/30/lessons/42891) ([#42891](prog/2019-kakao-blind/_42891_무지의먹방라이브.js))  
 
 #### Day 29. FRI
