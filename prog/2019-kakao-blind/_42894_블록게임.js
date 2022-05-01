@@ -67,7 +67,6 @@ class BlockGame {
     }
 
     removeAllBlock() {
-        let isExistRemovedBlock = false;
         for (let row = 0; row < this.BOARD_LENGTH; row++) {
             for (let column = 0; column < this.BOARD_LENGTH; column++) {
                 const point = new Point([row, column]);
@@ -75,17 +74,12 @@ class BlockGame {
                 if (this.isBlank(point)) continue;
 
                 const block = this.findRemovableBlock(point);
+                if (!block || !this.isDropableBlackBlock(block)) continue;
 
-                if (!block) continue;
-                if (this.isDropableBlackBlock(block)) {
-                    this.removeBlock(block);
-                    this.numberOfRemovedBlock++;
-                    isExistRemovedBlock = true;
-                }
+                this.removeBlock(block);
+                this.removeAllBlock();
             }
         }
-
-        if (isExistRemovedBlock) this.removeAllBlock();
     }
 
     isBlank(point) {
@@ -107,10 +101,10 @@ class BlockGame {
     }
 
     isPossibleBlock(blockPoints, number) {
-        return blockPoints.every(point => {
-            if (this.isOutOfRange(point)) return false;
-            return number === this.getNumber(point);
-        });
+        return blockPoints.every(
+            point =>
+                !this.isOutOfRange(point) && number === this.getNumber(point),
+        );
     }
 
     isOutOfRange(point) {
@@ -123,10 +117,8 @@ class BlockGame {
     }
 
     isDropableBlackBlock(block) {
-        const maxRow = Point.maxRow(block.points);
-
         return this.board
-            .slice(0, maxRow)
+            .slice(0, Point.maxRow(block.points))
             .every(line => this.isEmptyColumns(line, block.fillColumn));
     }
 
@@ -138,6 +130,7 @@ class BlockGame {
         block.points.forEach(
             point => (this.board[point.row][point.column] = 0),
         );
+        this.numberOfRemovedBlock++;
     }
 }
 
