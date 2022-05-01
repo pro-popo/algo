@@ -29,24 +29,25 @@
 
 function solution(n, arr1, arr2) {
     const map = joinMap(arr1, arr2);
-    return decoding(map).map(printMap);
+    return decodeMap(map);
 }
 
 function joinMap(arr1, arr2) {
     return arr1.map((_, i) => arr1[i] | arr2[i]);
 }
 
-function decoding(map) {
+function decodeMap(map) {
     return map
         .map(convertToBinary)
-        .map(binary => binary.padStart(map.length, '0'));
+        .map(binary => binary.padStart(map.length, '0'))
+        .map(convertToString);
 }
 
 function convertToBinary(number) {
     return number.toString(2);
 }
 
-function printMap(str) {
+function convertToString(str) {
     return str.replace(/0/g, ' ').replace(/1/g, '#');
 }
 
