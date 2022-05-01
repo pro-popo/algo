@@ -19,7 +19,92 @@ function solution(board) {
 
 class BlockGame {
     numberOfRemovedBlock = 0;
-    removableBlocks = [
+
+    constructor(board) {
+        this.board = board;
+    }
+
+    get BOARD_LENGTH() {
+        return this.board.length;
+    }
+
+    removeAllBlock() {
+        let isExistRemovedBlock = false;
+        for (let row = 0; row < this.BOARD_LENGTH; row++) {
+            for (let column = 0; column < this.BOARD_LENGTH; column++) {
+                const point = new Point([row, column]);
+
+                if (this.isBlank(point)) continue;
+
+                const block = this.findRemovableBlock(point);
+
+                if (!block) continue;
+                if (this.isDropableBlackBlock(block)) {
+                    this.removeBlock(block);
+                    this.numberOfRemovedBlock++;
+                    isExistRemovedBlock = true;
+                }
+            }
+        }
+
+        if (isExistRemovedBlock) this.removeAllBlock();
+    }
+
+    isBlank(point) {
+        return this.getNumber(point) === 0;
+    }
+
+    getNumber(point) {
+        return this.board[point.row][point.column];
+    }
+
+    findRemovableBlock(point) {
+        const blockIndex = RemovableBlock.getBlocksPoints(point).findIndex(
+            blockPoints =>
+                this.isPossibleBlock(blockPoints, this.getNumber(point)),
+        );
+
+        if (blockIndex === -1) return null;
+        return new RemovableBlock(blockIndex, point);
+    }
+
+    isPossibleBlock(blockPoints, number) {
+        return blockPoints.every(point => {
+            if (this.isOutOfRange(point)) return false;
+            return number === this.getNumber(point);
+        });
+    }
+
+    isOutOfRange(point) {
+        return (
+            point.row < 0 ||
+            point.column < 0 ||
+            point.row === this.BOARD_LENGTH ||
+            point.column === this.BOARD_LENGTH
+        );
+    }
+
+    isDropableBlackBlock(block) {
+        const maxRow = Point.maxRow(block.points);
+
+        return this.board
+            .slice(0, maxRow)
+            .every(line => this.isEmptyColumns(line, block.fillColumn));
+    }
+
+    isEmptyColumns(line, columns) {
+        return columns.every(column => line[column] === 0);
+    }
+
+    removeBlock(block) {
+        block.points.forEach(
+            point => (this.board[point.row][point.column] = 0),
+        );
+    }
+}
+
+class RemovableBlock {
+    static blocks = [
         [
             [0, 0],
             [1, 0],
@@ -51,90 +136,50 @@ class BlockGame {
             [1, 1],
         ],
     ];
-    fillColumns = [[1, 2], [-1], [1], [-1, -2], [-1, 1]];
 
-    constructor(board) {
-        this.board = board;
-    }
+    static fillColumns = [[1, 2], [-1], [1], [-1, -2], [-1, 1]];
 
-    get BOARD_LENGTH() {
-        return this.board.length;
-    }
-
-    removeAllBlock() {
-        let isExistRemovedBlock = false;
-        for (let row = 0; row < this.BOARD_LENGTH; row++) {
-            for (let column = 0; column < this.BOARD_LENGTH; column++) {
-                const point = [row, column];
-
-                if (this.isBlank(point)) continue;
-
-                const blockIndex = this.removableBlocks.findIndex(
-                    removableBlock =>
-                        this.isRemovableBlock(removableBlock, point),
-                );
-
-                if (blockIndex === -1) continue;
-
-                if (this.isDropableBlackBlock(blockIndex, point)) {
-                    this.removeBlock(blockIndex, point);
-                    this.numberOfRemovedBlock++;
-                    isExistRemovedBlock = true;
-                }
-            }
-        }
-
-        if (isExistRemovedBlock) this.removeAllBlock();
-    }
-
-    getNumber(point) {
-        return this.board[point[0]][point[1]];
-    }
-
-    isBlank(point) {
-        return this.getNumber(point) === 0;
-    }
-
-    isRemovableBlock(removableBlock, point) {
-        return removableBlock.every(move => {
-            const next = [point[0] + move[0], point[1] + move[1]];
-            if (this.isOutOfRange(next)) return false;
-
-            return this.getNumber(point) === this.getNumber(next);
-        });
-    }
-
-    isOutOfRange(point) {
-        return (
-            point[0] < 0 ||
-            point[1] < 0 ||
-            point[0] === this.BOARD_LENGTH ||
-            point[1] === this.BOARD_LENGTH
+    static getBlocksPoints(point) {
+        return RemovableBlock.blocks.map(block =>
+            RemovableBlock.getBlockPoints(block, point),
         );
     }
 
-    isDropableBlackBlock(blockIndex, point) {
-        const maxRow = Math.max(
-            ...this.removableBlocks[blockIndex].map(move => point[0] + move[0]),
-        );
-        const columns = this.fillColumns[blockIndex].map(
-            move => point[1] + move,
-        );
-
-        return this.board
-            .slice(0, maxRow)
-            .every(line => this.isEmptyColumns(line, columns));
+    static getBlockPoints(block, point) {
+        return block.map(move => point.movePoint(move));
     }
 
-    isEmptyColumns(line, columns) {
-        return columns.every(column => line[column] === 0);
+    static getFillColumn(blockIndex, point) {
+        return RemovableBlock.fillColumns[blockIndex].map(
+            move => move + point.column,
+        );
     }
 
-    removeBlock(blockIndex, point) {
-        this.removableBlocks[blockIndex].forEach(move => {
-            const next = [point[0] + move[0], point[1] + move[1]];
-            this.board[next[0]][next[1]] = 0;
-        });
+    constructor(blockIndex, point) {
+        this.points = RemovableBlock.getBlocksPoints(point)[blockIndex];
+        this.fillColumn = RemovableBlock.getFillColumn(blockIndex, point);
+    }
+}
+
+class Point {
+    constructor(point) {
+        this.point = point;
+    }
+
+    get row() {
+        return this.point[0];
+    }
+
+    get column() {
+        return this.point[1];
+    }
+
+    movePoint(move) {
+        return new Point([this.row + move[0], this.column + move[1]]);
+    }
+
+    static maxRow(points) {
+        return Math.max(...points.map(point => point.row));
     }
 }
 
