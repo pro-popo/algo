@@ -17,26 +17,25 @@
 
 function solution(n, arr1, arr2) {
     const [map1, map2] = [arr1, arr2].map(createMap);
-
-    const answer = Array.from(Array(n), () => Array(n).fill(' '));
-    for (let i = 0; i < n; i++) {
-        for (let j = 0; j < n; j++) {
-            if (map1[i][j] == 0 && map2[i][j] == 0) continue;
-            answer[i][j] = '#';
-        }
-        answer[i] = answer[i].join('');
-    }
-    return answer;
+    return joinMap(map1, map2);
 }
 
 function createMap(arr) {
     return arr
         .map(convertToBinary)
-        .map(number => '0'.repeat(arr.length - number.length) + number);
+        .map(number => number.padStart(arr.length, '0'));
 }
 
 function convertToBinary(number) {
     return number.toString(2);
+}
+
+function joinMap(map1, map2) {
+    return map1.map((binary, i) =>
+        [...binary]
+            .map((_, j) => (+(map1[i][j] + map2[i][j]) === 0 ? ' ' : '#'))
+            .join(''),
+    );
 }
 
 /****** TEST CASE *******/
