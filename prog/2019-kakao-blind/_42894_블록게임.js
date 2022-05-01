@@ -55,7 +55,10 @@ class BlockGame {
 
     constructor(board) {
         this.board = board;
-        this.BOARD_LENGTH = board.length;
+    }
+
+    get BOARD_LENGTH() {
+        return this.board.length;
     }
 
     removeAllBlock() {
@@ -64,7 +67,7 @@ class BlockGame {
             for (let column = 0; column < this.BOARD_LENGTH; column++) {
                 const point = [row, column];
 
-                if (this.getNumber(point) === 0) continue;
+                if (this.isBlank(point)) continue;
 
                 const blockIndex = this.removableBlocks.findIndex(
                     removableBlock =>
@@ -74,10 +77,9 @@ class BlockGame {
                 if (blockIndex === -1) continue;
 
                 if (this.isDropableBlackBlock(blockIndex, point)) {
-                    console.log('remove: ', blockIndex, this.getNumber(point));
                     this.removeBlock(blockIndex, point);
-                    isExistRemovedBlock = true;
                     this.numberOfRemovedBlock++;
+                    isExistRemovedBlock = true;
                 }
             }
         }
@@ -85,22 +87,20 @@ class BlockGame {
         if (isExistRemovedBlock) this.removeAllBlock();
     }
 
-    getNumber([row, column]) {
-        return this.board[row][column];
+    getNumber(point) {
+        return this.board[point[0]][point[1]];
+    }
+
+    isBlank(point) {
+        return this.getNumber(point) === 0;
     }
 
     isRemovableBlock(removableBlock, point) {
-        const number = this.getNumber(point);
-
         return removableBlock.every(move => {
             const next = [point[0] + move[0], point[1] + move[1]];
-            if (
-                this.isOutOfRange(next) ||
-                (number !== 0 && number !== this.getNumber(next))
-            )
-                return false;
+            if (this.isOutOfRange(next)) return false;
 
-            return true;
+            return this.getNumber(point) === this.getNumber(next);
         });
     }
 
