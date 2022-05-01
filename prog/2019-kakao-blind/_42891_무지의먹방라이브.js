@@ -72,8 +72,8 @@ function findFoodToEatAgain(foods, MAX_TIME) {
     let currentTime = 0;
     for (let i = 0; i < foods.length; i++) {
         const additionalTime = foods[i].time - (i > 0 && foods[i - 1].time);
-        const remainFoods = foods.length - i;
-        const nextTime = additionalTime * remainFoods + currentTime;
+        const numberOfRemainFood = foods.length - i;
+        const nextTime = additionalTime * numberOfRemainFood + currentTime;
 
         if (nextTime > MAX_TIME) {
             const remainFoods = foods.slice(i).sort(Food.ASC_NUMBER);
