@@ -13,21 +13,33 @@
  */
 
 function solution(cacheSize, cities) {
-    const cache = new Cache(cacheSize);
-    let time = 0;
+    const program = new Program(cacheSize);
+
     cities
         .map(city => city.toUpperCase())
-        .forEach(city => {
-            if (!cache.has(city)) time += 5;
-            else time++;
+        .forEach(city => program.insert(city));
 
-            cache.add(city);
-        });
-
-    return time;
+    return program.runtime;
 }
 
-class Cache {
+class Program {
+    static MISS = 5;
+    static HIT = 1;
+
+    runtime = 0;
+    constructor(cacheSize) {
+        this.cache = new LRUCache(cacheSize);
+    }
+
+    insert(value) {
+        if (!this.cache.has(value)) this.runtime += Program.MISS;
+        else this.runtime += Program.HIT;
+
+        this.cache.add(value);
+    }
+}
+
+class LRUCache {
     memory = new Set();
     constructor(cacheSize) {
         this.cacheSize = cacheSize;
