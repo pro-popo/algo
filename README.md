@@ -52,7 +52,8 @@
 ### 📅 2022.05
 
 #### Day 3. TUE
-> 🟣 [[Level 1] 다트게임 - 구현](https://programmers.co.kr/learn/courses/30/lessons/17682) ([#17682](prog/2018-kakao-blind/_17682_다트게임.js))  
+> 🟣 [[Level 1] 다트게임 - 구현](https://programmers.co.kr/learn/courses/30/lessons/17682) ([#17682](prog/2018-kakao-blind/_17682_다트게임.js))           
+> 🟣 [[Level 2] 캐시 - 해시](https://programmers.co.kr/learn/courses/30/lessons/17680) ([#17680](prog/2018-kakao-blind/_17680_캐시.js))  
 
 #### Day 2. MON
 > 🟣 [[Level 1] 비밀지도 - 구현](https://programmers.co.kr/learn/courses/30/lessons/17681) ([#17681](prog/2018-kakao-blind/_17681_비밀지도.js))  
