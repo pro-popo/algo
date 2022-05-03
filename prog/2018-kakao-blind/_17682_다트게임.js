@@ -21,19 +21,18 @@
  */
 
 function solution(dartResult) {
+    const areas = { S: 1, D: 2, T: 3 };
+    const options = { '*': [2, [0, -1]], '#': [-1, [0]] };
+
     const numbers = dartResult.match(/[0-9]+/g).map(Number);
     dartResult.match(/[^0-9]+/g).forEach((dart, i) => {
-        [...dart].forEach(type => {
-            if (type === 'D') numbers[i] = Math.pow(numbers[i], 2);
-            if (type === 'T') numbers[i] = Math.pow(numbers[i], 3);
+        const [area, option] = dart.split('');
 
-            if (type === '*') {
-                numbers[i] *= 2;
-                if (i > 0) numbers[i - 1] *= 2;
-            }
-
-            if (type === '#') numbers[i] = numbers[i] * -1;
-        });
+        numbers[i] = Math.pow(numbers[i], areas[area]);
+        if (option) {
+            const [value, targets] = options[option];
+            targets.forEach(target => (numbers[i + target] *= value));
+        }
     });
 
     return numbers.reduce((sum, number) => sum + number);
