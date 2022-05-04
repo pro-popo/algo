@@ -15,7 +15,7 @@
 function solution(m, n, board) {
     const program = new Program(board);
 
-    program.startGame();
+    program.startRemoveBlocks();
     return program.removedBlocks;
 }
 
@@ -34,13 +34,13 @@ class Program {
         return this.board[0].length;
     }
 
-    startGame() {
+    startRemoveBlocks() {
         const removableBlocks = this.findRemovableBlocks();
 
         if (removableBlocks.length) {
             this.removeBlocks(removableBlocks);
             this.dropBlocks();
-            this.startGame();
+            this.startRemoveBlocks();
         }
     }
 
@@ -49,7 +49,7 @@ class Program {
         for (let r = 0; r < this.R - 1; r++) {
             for (let c = 0; c < this.C - 1; c++) {
                 const standardShape = this.board[r][c];
-                if (!standardShape) continue;
+                if (standardShape === Program.EMPTY) continue;
 
                 const points = Direction.getSquarePoints([r, c]);
                 if (this.isAllSameShape(points, standardShape)) {
@@ -120,14 +120,15 @@ class Direction {
     }
 
     static join(...direction) {
-        return direction.reduce(
-            (point, move) => [point[0] + move[0], point[1] + move[1]],
-            Direction.currunt,
-        );
+        return direction.reduce(Direction.movePoint, Direction.currunt);
     }
 
-    static getSquarePoints([r, c]) {
-        return Direction.square.map(move => [r + move[0], c + move[1]]);
+    static getSquarePoints(point) {
+        return Direction.square.map(move => Direction.movePoint(point, move));
+    }
+
+    static movePoint(point, move) {
+        return [point[0] + move[0], point[1] + move[1]];
     }
 }
 
