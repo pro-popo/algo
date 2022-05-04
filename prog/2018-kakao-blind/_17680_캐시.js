@@ -57,7 +57,7 @@ class Program {
         if (!this.cache.has(value)) this.runtime += Program.MISS;
         else this.runtime += Program.HIT;
 
-        this.cache.add(value);
+        this.cache.insert(value);
     }
 }
 
@@ -75,7 +75,7 @@ class LRUCache {
         return this.memory.size === this.cacheSize;
     }
 
-    add(value) {
+    insert(value) {
         if (!this.has(value) && this.isFull())
             this.memory.delete(this.memory.values().next().value);
 
