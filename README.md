@@ -51,6 +51,9 @@
 
 ### 📅 2022.05
 
+#### Day 4. WED
+> 🟣 [[Level 2] 프렌즈4블록 - 구현](https://programmers.co.kr/learn/courses/30/lessons/17679) ([#17679](prog/2018-kakao-blind/_17679_프렌즈4블록.js))  
+
 #### Day 3. TUE
 > 🟣 [[Level 1] 다트게임 - 구현](https://programmers.co.kr/learn/courses/30/lessons/17682) ([#17682](prog/2018-kakao-blind/_17682_다트게임.js))           
 > 🟣 [[Level 2] 캐시 - 해시](https://programmers.co.kr/learn/courses/30/lessons/17680) ([#17680](prog/2018-kakao-blind/_17680_캐시.js))  
