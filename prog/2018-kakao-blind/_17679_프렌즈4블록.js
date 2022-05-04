@@ -13,7 +13,7 @@
  */
 
 function solution(m, n, board) {
-    const program = new Program(m, n, board);
+    const program = new Program(board);
 
     program.startGame();
     return program.removedBlocks;
@@ -21,41 +21,44 @@ function solution(m, n, board) {
 
 class Program {
     static EMPTY = '';
-    direction = [
-        [0, 0],
-        [0, 1],
-        [1, 0],
-        [1, 1],
-    ];
 
-    constructor(m, n, board) {
-        this.R = m;
-        this.C = n;
+    constructor(board) {
         this.board = board.map(str => str.split(''));
     }
 
-    startGame() {
-        const removeBlockPoints = [];
-        for (let r = 0; r < this.R - 1; r++) {
-            for (let c = 0; c < this.C - 1; c++) {
-                const points = this.getSquarePoints([r, c]);
-                const standardShape = this.board[r][c];
-                if (!standardShape) continue;
-                if (this.isAllSameShape(points, standardShape)) {
-                    removeBlockPoints.push(...points);
-                }
-            }
-        }
+    get R() {
+        return this.board.length;
+    }
 
-        if (removeBlockPoints.length) {
-            this.removeBlocks(removeBlockPoints);
+    get C() {
+        return this.board[0].length;
+    }
+
+    startGame() {
+        const removableBlocks = this.findRemovableBlocks();
+
+        if (removableBlocks.length) {
+            this.removeBlocks(removableBlocks);
             this.dropBlocks();
             this.startGame();
         }
     }
 
-    getSquarePoints([r, c]) {
-        return this.direction.map(move => [r + move[0], c + move[1]]);
+    findRemovableBlocks() {
+        const removableBlocks = [];
+        for (let r = 0; r < this.R - 1; r++) {
+            for (let c = 0; c < this.C - 1; c++) {
+                const standardShape = this.board[r][c];
+                if (!standardShape) continue;
+
+                const points = Direction.getSquarePoints([r, c]);
+                if (this.isAllSameShape(points, standardShape)) {
+                    removableBlocks.push(...points);
+                }
+            }
+        }
+
+        return removableBlocks;
     }
 
     isAllSameShape(points, standardShape) {
@@ -69,19 +72,19 @@ class Program {
     }
 
     dropBlocks() {
-        for (let r = this.board.length - 1; r >= 0; r--) {
-            for (let c = 0; c < this.board.length; c++) {
-                if (this.board[r][c] !== Program.EMPTY) continue;
+        const newBoard = Array.from(Array(this.R), () =>
+            Array(this.C).fill(Program.EMPTY),
+        );
 
-                for (let nextR = r - 1; nextR >= 0; nextR--) {
-                    if (this.board[nextR][c]) {
-                        this.board[r][c] = this.board[nextR][c];
-                        this.board[nextR][c] = Program.EMPTY;
-                        break;
-                    }
-                }
+        for (let c = 0; c < this.C; c++) {
+            let currentR = this.R - 1;
+            for (let r = this.R - 1; r >= 0; r--) {
+                if (this.board[r][c] === Program.EMPTY) continue;
+                newBoard[currentR--][c] = this.board[r][c];
             }
         }
+
+        this.board = newBoard;
     }
 
     get removedBlocks() {
@@ -91,6 +94,40 @@ class Program {
                 row.filter(block => block === Program.EMPTY).length,
             0,
         );
+    }
+}
+
+class Direction {
+    static get currunt() {
+        return [0, 0];
+    }
+
+    static get right() {
+        return [0, 1];
+    }
+
+    static get bottom() {
+        return [1, 0];
+    }
+
+    static get square() {
+        return [
+            Direction.currunt,
+            Direction.right,
+            Direction.bottom,
+            Direction.join(Direction.right, Direction.bottom),
+        ];
+    }
+
+    static join(...direction) {
+        return direction.reduce(
+            (point, move) => [point[0] + move[0], point[1] + move[1]],
+            Direction.currunt,
+        );
+    }
+
+    static getSquarePoints([r, c]) {
+        return Direction.square.map(move => [r + move[0], c + move[1]]);
     }
 }
 
