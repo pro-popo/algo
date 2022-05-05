@@ -93,7 +93,7 @@ function calculateSet(set, otherSet) {
     const hashSet = new Set([...set, ...otherSet]);
     const [intersection, union] = [[], []];
 
-    [...hashSet].forEach(searchWord => {
+    for (const searchWord of hashSet) {
         const words = set.filter(word => word === searchWord);
         const otherWords = otherSet.filter(word => word === searchWord);
 
@@ -104,7 +104,7 @@ function calculateSet(set, otherSet) {
 
         intersection.push(...minSizeWords);
         union.push(...maxSizeWords);
-    });
+    }
 
     return { intersection, union };
 }
