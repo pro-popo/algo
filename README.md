@@ -51,6 +51,9 @@
 
 ### 📅 2022.05
 
+#### Day 5. THU
+> 🟣 [[Level 2] 뉴스 클러스터링 - 해시](https://programmers.co.kr/learn/courses/30/lessons/17677) ([#17677](prog/2018-kakao-blind/_17677_뉴스클러스터링.js))  
+
 #### Day 4. WED
 > 🟣 [[Level 2] 프렌즈4블록 - 구현](https://programmers.co.kr/learn/courses/30/lessons/17679) ([#17679](prog/2018-kakao-blind/_17679_프렌즈4블록.js))  
 
