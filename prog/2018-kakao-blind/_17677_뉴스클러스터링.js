@@ -79,26 +79,27 @@ function createSet(str) {
 }
 
 function jaccardSimilarity(set, otherSet) {
-    const { intersection, union } = calculateSet(set, otherSet);
+    if (set.length + otherSet.length === 0) return 1;
 
-    return union.length ? intersection.length / union.length : 1;
+    const { intersection, union } = calculateSet(set, otherSet);
+    return intersection.length / union.length;
 }
 
 function calculateSet(set, otherSet) {
     const hashSet = new Set([...set, ...otherSet]);
-    const intersection = [];
-    const union = [];
-    [...hashSet].forEach(findWord => {
-        const words = set.filter(word => word === findWord);
-        const otherWords = otherSet.filter(word => word === findWord);
+    const [intersection, union] = [[], []];
 
-        const [min, max] =
+    [...hashSet].forEach(searchWord => {
+        const words = set.filter(word => word === searchWord);
+        const otherWords = otherSet.filter(word => word === searchWord);
+
+        const [minSizeWords, maxSizeWords] =
             words.length < otherWords.length
                 ? [words, otherWords]
                 : [otherWords, words];
 
-        intersection.push(...min);
-        union.push(...max);
+        intersection.push(...minSizeWords);
+        union.push(...maxSizeWords);
     });
 
     return { intersection, union };
