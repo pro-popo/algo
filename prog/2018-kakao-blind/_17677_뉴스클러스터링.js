@@ -79,32 +79,29 @@ function createSet(str) {
 }
 
 function jaccardSimilarity(set, otherSet) {
-    const intersection = caculateIntersection(set, otherSet).length;
-    const union = caculateUnion(set, otherSet).length;
+    const { intersection, union } = calculateSet(set, otherSet);
 
-    if (!intersection && !union) return 1;
-    return intersection / union;
+    return union.length ? intersection.length / union.length : 1;
 }
 
-function caculateIntersection(set, otherSet) {
-    [set, otherSet] = [[...set], [...otherSet]];
-    set.forEach((word, index) => {
-        const findIndex = otherSet.indexOf(word);
-        if (findIndex === -1) set[index] = '';
-        else otherSet[findIndex] = '';
+function calculateSet(set, otherSet) {
+    const hashSet = new Set([...set, ...otherSet]);
+    const intersection = [];
+    const union = [];
+    [...hashSet].forEach(findWord => {
+        const words = set.filter(word => word === findWord);
+        const otherWords = otherSet.filter(word => word === findWord);
+
+        const [min, max] =
+            words.length < otherWords.length
+                ? [words, otherWords]
+                : [otherWords, words];
+
+        intersection.push(...min);
+        union.push(...max);
     });
 
-    return set.filter(word => word);
-}
-
-function caculateUnion(set, otherSet) {
-    [set, otherSet] = [[...set], [...otherSet]];
-    set.forEach(word => {
-        const findIndex = otherSet.indexOf(word);
-        if (findIndex !== -1) otherSet[findIndex] = '';
-    });
-
-    return [...set.filter(word => word), ...otherSet.filter(word => word)];
+    return { intersection, union };
 }
 
 /****** TEST CASE *******/
