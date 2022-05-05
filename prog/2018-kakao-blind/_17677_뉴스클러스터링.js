@@ -65,7 +65,7 @@
  */
 
 function solution(str1, str2) {
-    const [set, otherSet] = [str1, str2].map(str => createSet(str));
+    const [set, otherSet] = [str1, str2].map(createSet);
 
     return Math.floor(jaccardSimilarity(set, otherSet) * 65536);
 }
@@ -79,10 +79,14 @@ function createSet(str) {
 }
 
 function jaccardSimilarity(set, otherSet) {
-    if (set.length + otherSet.length === 0) return 1;
+    if ([set, otherSet].every(isEmptySet)) return 1;
 
     const { intersection, union } = calculateSet(set, otherSet);
     return intersection.length / union.length;
+}
+
+function isEmptySet(set) {
+    return set.length === 0;
 }
 
 function calculateSet(set, otherSet) {
