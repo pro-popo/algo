@@ -5,31 +5,30 @@
  * 임의 시간부터 1초간 처리하는 요청의 최대 개수를 의미한다.
  *
  *
- * @param {*} lines  로그 문자열 (1~2_000) "응답완료시간 처리시간"
- *                   응답완료시간: 2016-09-15 hh:mm:ss.sss,
- *                   처리시간: s로 끝남, 0.001 ≦ T ≦ 3.000
+ * @param {*} lines  로그 문자열 => "응답완료시간 처리시간" (1~2_000)
+ *                   - 응답완료시간: 2016-09-15 hh:mm:ss.sss,
+ *                   - 처리시간: s로 끝남, 0.001 ≦ T ≦ 3.000
  *                   이때, 처리기간은 시작시간과 끝시간을 포함한다.
- *                   또한, 응답완료시간을 기준으로 오름차순 정렬
+ *                   또한, 응답완료시간을 기준으로 오름차순 정렬한다.
  *
  * @returns 초당 최대 처리량
  */
 
 function solution(lines) {
-    const times = lines.map(convertTime);
+    const times = lines
+        .map(convertTime)
+        .sort((time, otherTime) => time.start - otherTime.start);
 
-    let answer = 1;
-    let [front, back] = [0, 0];
-    while (back < times.length) {
-        if (times[front].end + 1 > times[back].start) {
-            answer = Math.max(answer, back - front + 1);
-            back++;
-            continue;
-        }
-
-        front++;
-    }
-
-    return answer;
+    return Math.max(
+        ...times.map(
+            time =>
+                times.filter(
+                    otherTime =>
+                        time.end <= otherTime.end &&
+                        time.end + 1 > otherTime.start,
+                ).length,
+        ),
+    );
 }
 
 function convertTime(line) {
