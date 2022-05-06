@@ -51,6 +51,9 @@
 
 ### 📅 2022.05
 
+#### Day 6. FRI
+> 🟣 [[Level 3] 추석 트래픽 - 구현](https://programmers.co.kr/learn/courses/30/lessons/17676) ([#17676](prog/2018-kakao-blind/_17676_추석트래픽.js))  
+
 #### Day 5. THU
 > 🟣 [[Level 2] 뉴스 클러스터링 - 해시](https://programmers.co.kr/learn/courses/30/lessons/17677) ([#17677](prog/2018-kakao-blind/_17677_뉴스클러스터링.js))  
 
