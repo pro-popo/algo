@@ -15,18 +15,11 @@
  */
 
 function solution(lines) {
-    const times = lines
-        .map(convertTime)
-        .sort((time, otherTime) => time.start - otherTime.start);
+    const times = lines.map(convertTime);
 
     return Math.max(
         ...times.map(
-            time =>
-                times.filter(
-                    otherTime =>
-                        time.end <= otherTime.end &&
-                        time.end + 1 > otherTime.start,
-                ).length,
+            standardTime => findTimesInSection(times, standardTime).length,
         ),
     );
 }
@@ -41,6 +34,15 @@ function convertTime(line) {
 function convertSecond(time) {
     const [hour, minute, second] = time.split(':').map(Number);
     return hour * 3600 + minute * 60 + second;
+}
+
+function findTimesInSection(times, standardTime) {
+    return times.filter(isIncludeSection);
+
+    function isIncludeSection(time) {
+        const section = [standardTime.end, standardTime.end + 1];
+        return section[0] <= time.end && section[1] > time.start;
+    }
 }
 
 class Time {
