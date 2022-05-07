@@ -51,6 +51,9 @@
 
 ### 📅 2022.05
 
+#### Day 7. SAT
+> 🟣 [[Level 3] 셔틀버스 - 구현](https://programmers.co.kr/learn/courses/30/lessons/17678) ([#17678](prog/2018-kakao-blind/_17678_셔틀버스.js))  
+
 #### Day 6. FRI
 > 🟣 [[Level 3] 추석 트래픽 - 구현](https://programmers.co.kr/learn/courses/30/lessons/17676) ([#17676](prog/2018-kakao-blind/_17676_추석트래픽.js))  
 
