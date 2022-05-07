@@ -32,23 +32,24 @@
  */
 
 function solution(n, t, m, timetable) {
-    let remainPeople = timetable
-        .map(convertMinute)
-        .sort((time, otherTime) => time - otherTime);
+    let remainPeople = timetable.map(convertMinute).sort(ASC_TIME);
 
     let currentTime = convertMinute('09:00');
-    let ridePeople = [];
+    let peopleOnBus = [];
     do {
+        [peopleOnBus, remainPeople] = getOnBus();
+    } while (--n > 0 && (currentTime += t));
+
+    if (peopleOnBus.length < m) return convertTime(currentTime);
+    return convertTime(peopleOnBus.pop() - 1);
+
+    function getOnBus() {
         let index = remainPeople.findIndex(time => currentTime < time);
         if (index < 0) index = remainPeople.length;
         if (index > m) index = m;
 
-        ridePeople = remainPeople.slice(0, index);
-        remainPeople = remainPeople.slice(index);
-    } while (--n > 0 && (currentTime += t));
-
-    if (ridePeople.length < m) return convertTime(currentTime);
-    return convertTime(ridePeople.pop() - 1);
+        return [remainPeople.slice(0, index), remainPeople.slice(index)];
+    }
 }
 
 function convertMinute(time) {
@@ -61,6 +62,10 @@ function convertTime(time) {
     const minute = time - hour * 60 + '';
 
     return `${hour.padStart(2, '0')}:${minute.padStart(2, '0')}`;
+}
+
+function ASC_TIME(time, otherTime) {
+    return time - otherTime;
 }
 
 /****** TEST CASE *******/
