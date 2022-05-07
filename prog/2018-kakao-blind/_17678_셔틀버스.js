@@ -16,25 +16,20 @@
  * @param {*} timetable 크루가 대기열에 도착하는 시각들 (1~2_000) => HH:MM
  * @returns 셔틀을 타고 사무실로 갈 수 있는 제일 늦은 도착 시각
  */
-
 function solution(n, t, m, timetable) {
     let remainPeople = timetable
         .map(convertMinute)
-        .sort((time, otherTime) => otherTime - time);
+        .sort((time, otherTime) => time - otherTime);
 
     let currentTime = convertMinute('09:00');
     let ridePeople = [];
     do {
-        ridePeople = [];
-        let count = 0;
-        while (count++ < m && remainPeople.length) {
-            const time = remainPeople.pop();
-            if (time > currentTime) {
-                remainPeople.push(time);
-                break;
-            }
-            ridePeople.push(time);
-        }
+        let index = remainPeople.findIndex(time => currentTime < time);
+        if (index < 0) index = remainPeople.length;
+        if (index > m) index = m;
+
+        ridePeople = remainPeople.slice(0, index);
+        remainPeople = remainPeople.slice(index);
     } while (--n > 0 && (currentTime += t));
 
     if (ridePeople.length < m) return convertTime(currentTime);
@@ -52,6 +47,8 @@ function convertTime(time) {
 
     return `${hour.padStart(2, '0')}:${minute.padStart(2, '0')}`;
 }
+
+/****** TEST CASE *******/
 
 console.log(solution(1, 1, 5, ['08:00', '08:01', '08:02', '08:03']));
 console.log(solution(2, 10, 2, ['09:10', '09:09', '08:00']));
