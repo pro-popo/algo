@@ -18,29 +18,27 @@
  */
 
 function solution(n, t, m, timetable) {
-    let remainPerson = timetable
+    let remainPeople = timetable
         .map(convertMinute)
-        .sort((time, otherTime) => time - otherTime)
-        .reverse();
+        .sort((time, otherTime) => otherTime - time);
 
     let currentTime = convertMinute('09:00');
-    let ridePerson = [];
+    let ridePeople = [];
     do {
-        ridePerson = [];
+        ridePeople = [];
         let count = 0;
-        while (count++ < m && remainPerson.length) {
-            const time = remainPerson.pop();
+        while (count++ < m && remainPeople.length) {
+            const time = remainPeople.pop();
             if (time > currentTime) {
-                remainPerson.push(time);
+                remainPeople.push(time);
                 break;
             }
-            ridePerson.push(time);
+            ridePeople.push(time);
         }
     } while (--n > 0 && (currentTime += t));
 
-    if (!ridePerson.length || ridePerson.length < m)
-        return convertTime(currentTime);
-    return convertTime(ridePerson.pop() - 1);
+    if (ridePeople.length < m) return convertTime(currentTime);
+    return convertTime(ridePeople.pop() - 1);
 }
 
 function convertMinute(time) {
