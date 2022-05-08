@@ -17,22 +17,30 @@
  * @param {*} p 튜브의 순서 (1~m)
  * @returns 튜브가 말해야 하는 숫자 t개
  *          단, 10~15는 각각 대문자 A~F로 출력한다.
+ *
  */
 
 function solution(n, t, m, p) {
-    let number = 0;
-    let map = '';
-    while (map.length < t * m) {
-        map += number.toString(n);
-        number++;
-    }
+    const numbers = createNumbers(n, t * m);
 
     let answer = '';
     for (let i = 0; i < t; i++) {
-        answer += map[i * m + p - 1].toUpperCase();
+        answer += numbers[i * m + p - 1].toUpperCase();
     }
 
     return answer;
+}
+
+function createNumbers(n, maxLength) {
+    let numbers = '';
+    for (let i = 0; numbers.length < maxLength; i++) {
+        numbers += convertToNotation(i, n);
+    }
+    return numbers;
+}
+
+function convertToNotation(number, notation) {
+    return number.toString(notation);
 }
 
 /****** TEST CASE *******/
