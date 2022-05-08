@@ -51,6 +51,9 @@
 
 ### 📅 2022.05
 
+#### Day 8. SUN
+> 🟣 [[Level 2] n진수 게임 - 구현](https://programmers.co.kr/learn/courses/30/lessons/17687) ([#17687](prog/2018-kakao-blind/_17687_n진수게임.js))  
+
 #### Day 7. SAT
 > 🟣 [[Level 3] 셔틀버스 - 구현](https://programmers.co.kr/learn/courses/30/lessons/17678) ([#17678](prog/2018-kakao-blind/_17678_셔틀버스.js))  
 
