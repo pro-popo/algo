@@ -22,19 +22,19 @@
 
 function solution(n, t, m, p) {
     const numbers = createNumbers(n, t * m);
-    return numbers.split('').filter(isTubeTurn).join('').toUpperCase();
+    return numbers.filter(isTubeTurn).join('');
 
     function isTubeTurn(_, index) {
         return (index % m) + 1 === p;
     }
 }
 
-function createNumbers(n, maxLength) {
+function createNumbers(notation, maxLength) {
     let numbers = '';
     for (let i = 0; numbers.length < maxLength; i++) {
-        numbers += convertToNotation(i, n);
+        numbers += convertToNotation(i, notation);
     }
-    return numbers.slice(0, maxLength);
+    return numbers.slice(0, maxLength).toUpperCase().split('');
 }
 
 function convertToNotation(number, notation) {
