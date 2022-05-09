@@ -23,23 +23,39 @@
  */
 
 function solution(files) {
-    const filePattern = /(?<HEAD>[^0-9]+)(?<NUMBER>[0-9]+)(?<TAIL>.*)/;
-
     return files
-        .map(file => file.match(filePattern).groups)
-        .sort(compare)
-        .map(({ HEAD, NUMBER, TAIL }) => `${HEAD}${NUMBER}${TAIL}`);
+        .map(name => new File(name))
+        .sort(File.compare)
+        .map(file => file.name);
 }
 
-function compare(file, otherfile) {
-    const HEAD_COMPARE = file.HEAD.toUpperCase().localeCompare(
-        otherfile.HEAD.toUpperCase(),
-    );
-    const NUMBER_COMPARE = +file.NUMBER - +otherfile.NUMBER;
+class File {
+    constructor(name) {
+        this.name = name;
+        this.configuration = this.getConfiguration();
+    }
 
-    if (!HEAD_COMPARE && !NUMBER_COMPARE) return 0;
-    if (!HEAD_COMPARE) return NUMBER_COMPARE;
-    return HEAD_COMPARE;
+    get HEAD() {
+        return this.configuration.HEAD.toUpperCase();
+    }
+
+    get NUMBER() {
+        return +this.configuration.NUMBER;
+    }
+
+    getConfiguration() {
+        const filePattern = /(?<HEAD>[^0-9]+)(?<NUMBER>[0-9]+)(?<TAIL>.*)/;
+        return this.name.match(filePattern).groups;
+    }
+
+    static compare(file, otherfile) {
+        const HEAD_COMPARE = file.HEAD.localeCompare(otherfile.HEAD);
+        const NUMBER_COMPARE = file.NUMBER - otherfile.NUMBER;
+
+        if (!HEAD_COMPARE && !NUMBER_COMPARE) return 0;
+        if (!HEAD_COMPARE) return NUMBER_COMPARE;
+        return HEAD_COMPARE;
+    }
 }
 
 /****** TEST CASE *******/
