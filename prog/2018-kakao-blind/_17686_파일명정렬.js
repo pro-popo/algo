@@ -50,17 +50,17 @@ class File {
         this.configuration = this.getConfiguration();
     }
 
+    getConfiguration() {
+        const filePattern = /(?<HEAD>[^0-9]+)(?<NUMBER>[0-9]+)(?<TAIL>.*)/;
+        return this.name.match(filePattern).groups;
+    }
+
     get HEAD() {
         return this.configuration.HEAD.toUpperCase();
     }
 
     get NUMBER() {
         return +this.configuration.NUMBER;
-    }
-
-    getConfiguration() {
-        const filePattern = /(?<HEAD>[^0-9]+)(?<NUMBER>[0-9]+)(?<TAIL>.*)/;
-        return this.name.match(filePattern).groups;
     }
 
     static compare(file, otherfile) {
