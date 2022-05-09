@@ -30,10 +30,13 @@
 -   어떤 점이 어려웠는지, 고민했던 부분 등 문제에 대한 생각 정리
 -   다른 풀이 참고
 
+<br />
 
 ## 💬 Language
 
 ![javascript](https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+
+<br />
 
 ## 🚥 Commit Message Convention
 
@@ -53,6 +56,8 @@
 
     [update] 파일명
     
+<br />
+
 ## ✔ Todo Calender
 
 <details>
