@@ -23,23 +23,23 @@
  */
 
 function solution(files) {
-    return files
-        .map(
-            file =>
-                file.match(/(?<HEAD>[^0-9]+)(?<NUMBER>[0-9]+)(?<TAIL>.*)/)
-                    .groups,
-        )
-        .sort((file, otherfile) => {
-            const HEAD_COMPARE = file.HEAD.toUpperCase().localeCompare(
-                otherfile.HEAD.toUpperCase(),
-            );
-            const NUMBER_COMPARE = +file.NUMBER - +otherfile.NUMBER;
+    const filePattern = /(?<HEAD>[^0-9]+)(?<NUMBER>[0-9]+)(?<TAIL>.*)/;
 
-            if (!HEAD_COMPARE && !NUMBER_COMPARE) return 0;
-            if (!HEAD_COMPARE) return NUMBER_COMPARE;
-            return HEAD_COMPARE;
-        })
+    return files
+        .map(file => file.match(filePattern).groups)
+        .sort(compare)
         .map(({ HEAD, NUMBER, TAIL }) => `${HEAD}${NUMBER}${TAIL}`);
+}
+
+function compare(file, otherfile) {
+    const HEAD_COMPARE = file.HEAD.toUpperCase().localeCompare(
+        otherfile.HEAD.toUpperCase(),
+    );
+    const NUMBER_COMPARE = +file.NUMBER - +otherfile.NUMBER;
+
+    if (!HEAD_COMPARE && !NUMBER_COMPARE) return 0;
+    if (!HEAD_COMPARE) return NUMBER_COMPARE;
+    return HEAD_COMPARE;
 }
 
 /****** TEST CASE *******/
