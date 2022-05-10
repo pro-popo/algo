@@ -17,29 +17,31 @@
  */
 
 function solution(msg) {
-    const compression = new LZW_Compression(msg);
-    return compression.start();
+    const LZW = new LZW_Compression(msg);
+    return LZW.compressedReault;
 }
 
 class LZW_Compression {
     dictionary = new Dictionary();
+    result = [];
 
     constructor(msg) {
         this.msg = msg;
+        this.startCompress();
     }
 
-    start() {
-        const result = [];
+    startCompress() {
         for (let i = 0; i < this.msg.length; ) {
             const word = this.findLongStringInDictionary(this.msg.slice(i));
-            result.push(this.dictionary.get(word));
-
-            const insertWord = word + this.msg[i + word.length];
-            this.dictionary.insert(insertWord);
+            this.compressWord(word);
+            this.insertWordInDictionary(word + this.msg[i + word.length]);
 
             i += word.length;
         }
-        return result;
+    }
+
+    get compressedReault() {
+        return this.result;
     }
 
     findLongStringInDictionary(msg) {
@@ -50,6 +52,14 @@ class LZW_Compression {
         }
 
         return word;
+    }
+
+    insertWordInDictionary(word) {
+        this.dictionary.insert(word);
+    }
+
+    compressWord(word) {
+        this.result.push(this.dictionary.get(word));
     }
 }
 
