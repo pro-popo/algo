@@ -30,33 +30,26 @@ class LZW_Compression {
 
     start() {
         const result = [];
-        let pointer = 0;
-        while (pointer < this.msg.length) {
-            const word = this.findLongStringInDictionary(pointer);
+        for (let i = 0; i < this.msg.length; ) {
+            const word = this.findLongStringInDictionary(this.msg.slice(i));
             result.push(this.dictionary.get(word));
 
-            const insertWord = this.msg.slice(
-                pointer,
-                pointer + word.length + 1,
-            );
+            const insertWord = word + this.msg[i + word.length];
             this.dictionary.insert(insertWord);
 
-            pointer += word.length;
+            i += word.length;
         }
         return result;
     }
 
-    findLongStringInDictionary(start) {
-        let end = start;
-        while (++end <= this.msg.length) {
-            const word = this.msg.slice(start, end);
-            if (!this.dictionary.has(word)) {
-                end--;
-                break;
-            }
+    findLongStringInDictionary(msg) {
+        let word = '';
+        for (let i = 0; i < msg.length; i++) {
+            if (!this.dictionary.has(word + msg[i])) break;
+            word += msg[i];
         }
 
-        return this.msg.slice(start, end);
+        return word;
     }
 }
 
