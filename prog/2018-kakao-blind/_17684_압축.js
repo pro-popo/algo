@@ -32,6 +32,19 @@
  *   모든 문자를 압축할 때까지 위 과정을 반복한다.
  *
  * - 문제에서 제시한 조건을 그대로 구현하면 되는 문제였다!
+ *
+ * - 다른 풀이 방식 중,
+ *   Array.reduce를 사용하는 방식이 있다.
+ *   msg를 reduce로 순회하여,
+ *   word = msg.reduce((word, cur)=> {
+ *      newWord = word + cur;
+ *      if (newWord가 사전에 있는 경우) return newWord;
+ *      사전에 newWord 추가
+ *      if (word가 사전에 있는 경우) 압축된 결과에 word의 index 추가
+ *      return cur;
+ *   })
+ *   마지막 word도 압축된 결과에 추가한다.
+ *   위처럼, 한 번의 순회로 모든 문자를 압축할 수 있어 효율적이다! 👍
  */
 
 function solution(msg) {
