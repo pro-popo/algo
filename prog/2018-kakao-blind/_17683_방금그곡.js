@@ -22,24 +22,27 @@
  */
 
 function solution(m, musicinfos) {
-    m = convertSharpMelody(m);
-    const musicinfo = musicinfos
+    m = changeSharpMelodies(m);
+    musicinfos = musicinfos
         .map(info => {
             const [startTime, endTime, title, partOfMusic] = info.split(',');
-            const playTime = calculatePlayTime(startTime, endTime);
-            return [playTime, title, convertSharpMelody(partOfMusic)];
+            return [
+                calculatePlayTime(startTime, endTime),
+                title,
+                changeSharpMelodies(partOfMusic),
+            ];
         })
         .map(([playTime, title, partOfMusic]) => {
             let music = findMusicOfPlayTime(playTime, partOfMusic);
             return [playTime, title, music];
         })
-        .sort(([playTime], [otherPlayTime]) => otherPlayTime - playTime)
-        .find(([, , music]) => music.match(new RegExp(`${m}`)));
+        .sort(([playTime], [otherPlayTime]) => otherPlayTime - playTime);
 
+    const musicinfo = musicinfos.find(([, , music]) => music.match(m));
     return musicinfo ? musicinfo[1] : '(None)';
 }
 
-function convertSharpMelody(music) {
+function changeSharpMelodies(music) {
     return music
         .replace(/A#/g, 'a')
         .replace(/C#/g, 'c')
