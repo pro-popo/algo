@@ -69,7 +69,7 @@
 | SUN | MON | TUE | WED | THU | FRI | SAT | 
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|
 |  ✅  |  ✅  |  ✅  |  ✅  |  ✅  |  ✅  |  ✅  |
-|  ✅  |  ✅  |  ✅  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |
+|  ✅  |  ✅  |  ✅  |  ✅  |  ⬜  |  ⬜  |  ⬜  |
 |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |
 |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |
 |  ⬜  |  ⬜  |  〰  |  〰  |  〰  |  〰  |  〰  |
@@ -119,8 +119,11 @@
     <b>📅 2022.05</b>
 </summary>       
 
+##### Day 11. WED
+> 🟣 [[Level 2] 방금그곡 - 구현](https://programmers.co.kr/learn/courses/30/lessons/17683) ([#17683](prog/2018-kakao-blind/_17683_방금그곡.js)) 
+
 ##### Day 10. TUE
-> 🟣 [[Level 2] 압축 - 구현](https://programmers.co.kr/learn/courses/30/lessons/17684) ([#17684](prog/2018-kakao-blind/_17684_압축.js)) 
+> 🟣 [[Level 2] 압축 - 해시](https://programmers.co.kr/learn/courses/30/lessons/17684) ([#17684](prog/2018-kakao-blind/_17684_압축.js)) 
 
 ##### Day 9. MON
 > 🟣 [[Level 2] 파일명 정렬 - 정렬](https://programmers.co.kr/learn/courses/30/lessons/17686) ([#17686](prog/2018-kakao-blind/_17686_파일명정렬.js))  
