@@ -26,15 +26,16 @@ function solution(m, musicinfos) {
         .map(info => {
             const [startTime, endTime, title, partOfMusic] = info.split(',');
             const playTime = calculatePlayTime(startTime, endTime);
-
-            let music = '';
-            while (music.length < playTime) music += partOfMusic;
-            return [title, music];
+            return [playTime, title, partOfMusic];
         })
-        .sort(([, music], [, otherMusic]) => otherMusic.length - music.length)
-        .find(([, music]) => music.match(new RegExp(`${m}[^#]+`)));
+        .map(([playTime, title, partOfMusic]) => {
+            let music = findMusicOfPlayTime(playTime, partOfMusic);
+            return [playTime, title, music];
+        })
+        .sort(([playTime], [otherPlayTime]) => otherPlayTime - playTime)
+        .find(([, , music]) => music.match(new RegExp(`${m}[^#]+`)));
 
-    return musicinfo ? musicinfo[0] : '(None)';
+    return musicinfo ? musicinfo[1] : '(None)';
 }
 
 function calculatePlayTime(startTime, endTime) {
@@ -46,6 +47,22 @@ function convertToMinute(time) {
     return hour * 60 + minute;
 }
 
+function findMusicOfPlayTime(playTime, partOfMusic) {
+    let music = convertToArrayFromMusic(partOfMusic);
+
+    while (music.length < playTime) music.push(...music);
+    return music.slice(0, playTime).join('');
+}
+
+function convertToArrayFromMusic(music) {
+    let array = [];
+    [...music].forEach(charactor => {
+        if (charactor === '#') array.push(array.pop() + '#');
+        else array.push(charactor);
+    });
+    return array;
+}
+
 /****** TEST CASE *******/
 
 console.log(
@@ -54,3 +71,12 @@ console.log(
         '13:00,13:05,WORLD,ABCDEF',
     ]),
 );
+
+console.log(
+    solution('CC#BCC#BCC#BCC#B', [
+        '03:00,03:30,FOO,CC#B',
+        '04:00,04:08,BAR,CC#BCC#BCC#B',
+    ]),
+);
+
+console.log(solution('A#AB#', ['13:00,13:03,HAPPY,B#A#A']));
