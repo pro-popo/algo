@@ -78,12 +78,7 @@ function solution(m, musicinfos) {
 }
 
 function changeSharpMelodies(music) {
-    return music
-        .replace(/A#/g, 'a')
-        .replace(/C#/g, 'c')
-        .replace(/D#/g, 'd')
-        .replace(/F#/g, 'f')
-        .replace(/G#/g, 'g');
+    return music.replace(/[A-G]#/g, melody => melody[0].toLowerCase());
 }
 
 function calculatePlayTime(startTime, endTime) {
@@ -96,9 +91,7 @@ function convertToMinute(time) {
 }
 
 function findMusicOfPlayTime(playTime, partOfMusic) {
-    let music = partOfMusic;
-    while (music.length < playTime) music += partOfMusic;
-    return music.slice(0, playTime);
+    return partOfMusic.padEnd(playTime, partOfMusic).slice(0, playTime);
 }
 
 /****** TEST CASE *******/
