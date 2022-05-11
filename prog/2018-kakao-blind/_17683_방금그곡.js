@@ -56,24 +56,26 @@
  */
 
 function solution(m, musicinfos) {
-    m = changeSharpMelodies(m);
+    const rememberedMelody = changeSharpMelodies(m);
     musicinfos = musicinfos
         .map(info => {
-            const [startTime, endTime, title, partOfMusic] = info.split(',');
+            const [startTime, endTime, title, music] = info.split(',');
             return [
                 calculatePlayTime(startTime, endTime),
                 title,
-                changeSharpMelodies(partOfMusic),
+                changeSharpMelodies(music),
             ];
         })
-        .map(([playTime, title, partOfMusic]) => [
+        .map(([playTime, title, music]) => [
             playTime,
             title,
-            findMusicOfPlayTime(playTime, partOfMusic),
-        ])
-        .sort(([playTime], [otherPlayTime]) => otherPlayTime - playTime);
+            findMusicOfPlayTime(playTime, music),
+        ]);
 
-    const musicinfo = musicinfos.find(([, , music]) => music.match(m));
+    const musicinfo = musicinfos
+        .sort(([playTime], [otherPlayTime]) => otherPlayTime - playTime)
+        .find(([, , music]) => music.match(rememberedMelody));
+
     return musicinfo ? musicinfo[1] : '(None)';
 }
 
@@ -90,8 +92,8 @@ function convertToMinute(time) {
     return hour * 60 + minute;
 }
 
-function findMusicOfPlayTime(playTime, partOfMusic) {
-    return partOfMusic.padEnd(playTime, partOfMusic).slice(0, playTime);
+function findMusicOfPlayTime(playTime, music) {
+    return music.padEnd(playTime, music).slice(0, playTime);
 }
 
 /****** TEST CASE *******/
