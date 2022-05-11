@@ -32,10 +32,11 @@ function solution(m, musicinfos) {
                 changeSharpMelodies(partOfMusic),
             ];
         })
-        .map(([playTime, title, partOfMusic]) => {
-            let music = findMusicOfPlayTime(playTime, partOfMusic);
-            return [playTime, title, music];
-        })
+        .map(([playTime, title, partOfMusic]) => [
+            playTime,
+            title,
+            findMusicOfPlayTime(playTime, partOfMusic),
+        ])
         .sort(([playTime], [otherPlayTime]) => otherPlayTime - playTime);
 
     const musicinfo = musicinfos.find(([, , music]) => music.match(m));
