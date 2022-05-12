@@ -60,11 +60,6 @@
 
 ## ✔ Todo Calender
 
-<details>
-<summary>   
-    <b>😘 Read More</b>
-</summary> 
-
 #### 📅 2022.05             
 | SUN | MON | TUE | WED | THU | FRI | SAT | 
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|
@@ -74,6 +69,11 @@
 |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |
 |  ⬜  |  ⬜  |  〰  |  〰  |  〰  |  〰  |  〰  |
 |  〰  |  〰  |  〰  |  〰  |  〰  |  〰  |  〰  |
+
+<details>
+<summary>   
+    <b>🙋‍♀️ Read More</b> 
+</summary> 
 
 #### 📅 2022.04               
 | SUN | MON | TUE | WED | THU | FRI | SAT |
