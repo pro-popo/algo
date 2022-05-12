@@ -64,7 +64,7 @@
 | SUN | MON | TUE | WED | THU | FRI | SAT | 
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|
 |  ✅  |  ✅  |  ✅  |  ✅  |  ✅  |  ✅  |  ✅  |
-|  ✅  |  ✅  |  ✅  |  ✅  |  ⬜  |  ⬜  |  ⬜  |
+|  ✅  |  ✅  |  ✅  |  ✅  |  ✅  |  ⬜  |  ⬜  |
 |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |
 |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |
 |  ⬜  |  ⬜  |  〰  |  〰  |  〰  |  〰  |  〰  |
@@ -118,6 +118,10 @@
 <summary>   
     <b>📅 2022.05</b>
 </summary>       
+
+##### Day 12. THU
+> 🟣 [[Level 1] 나머지가 1이 되는 수 찾기 - 구현](https://programmers.co.kr/learn/courses/30/lessons/87389) ([#87389](prog/monthly-code-challenge/season3/_87389_나머지가1이되는수찾기.js))                  
+> 🟣 [[Level 2] n^2 배열 자르기 - 구현](https://programmers.co.kr/learn/courses/30/lessons/87390) ([#87390](prog/monthly-code-challenge/season3/_87390_n^2배열자르기.js))  
 
 ##### Day 11. WED
 > 🟣 [[Level 2] 방금그곡 - 구현](https://programmers.co.kr/learn/courses/30/lessons/17683) ([#17683](prog/2018-kakao-blind/_17683_방금그곡.js)) 
