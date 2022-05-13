@@ -15,15 +15,19 @@
  */
 
 function solution(n, words) {
-    const usedWord = new Set([words[0]]);
-    for (let i = 1; i < words.length; i++) {
-        const word = words[i];
-        const preWord = words[i - 1];
-        if (usedWord.has(word) || word[0] !== preWord[preWord.length - 1])
-            return [(i % n) + 1, Math.ceil((i + 1) / n)];
+    const usedWord = new Set();
+    let answer = null;
+    words.reduce((suggestion, word, i) => {
+        if (answer) return;
+
+        if (usedWord.has(word) || word[0] !== suggestion)
+            answer = [(i % n) + 1, Math.ceil((i + 1) / n)];
+
         usedWord.add(word);
-    }
-    return [0, 0];
+        return word[word.length - 1];
+    }, words[0][0]);
+
+    return answer || [0, 0];
 }
 
 /****** TEST CASE *******/
