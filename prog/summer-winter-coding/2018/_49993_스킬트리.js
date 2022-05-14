@@ -17,8 +17,7 @@ function solution(priorSkill, skillTrees) {
             '',
         );
 
-        let pointer = 0;
-        return [...skills].every(skill => skill === priorSkill[pointer++]);
+        return priorSkill.startsWith(skills);
     }
 }
 
