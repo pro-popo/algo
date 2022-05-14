@@ -29,10 +29,8 @@ function solution(priorSkill, skillTrees) {
     return skillTrees.filter(isPossibleSkill).length;
 
     function isPossibleSkill(skillTree) {
-        const skills = skillTree.replace(
-            new RegExp(`[^${priorSkill}]`, 'g'),
-            '',
-        );
+        const notPriorSkill = new RegExp(`[^${priorSkill}]`, 'g');
+        const skills = skillTree.replace(notPriorSkill, '');
 
         return priorSkill.startsWith(skills);
     }
