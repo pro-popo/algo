@@ -120,13 +120,13 @@
 </summary>       
 
 ##### Day 15. SUN
-> 🟣 [[Level 2] 방문 길이 - 구현](https://programmers.co.kr/learn/courses/30/lessons/49994) ([#49994](prog/summer-winter-coding\2018\_49994_방문길이.js)) 
+> 🟣 [[Level 2] 방문 길이 - 구현](https://programmers.co.kr/learn/courses/30/lessons/49994) ([#49994](prog/summer-winter-coding/2018/_49994_방문길이.js)) 
 
 ##### Day 14. SAT
-> 🟣 [[Level 2] 스킬트리 - 구현](https://programmers.co.kr/learn/courses/30/lessons/49993) ([#49993](prog/summer-winter-coding\2018\_49993_스킬트리.js)) 
+> 🟣 [[Level 2] 스킬트리 - 구현](https://programmers.co.kr/learn/courses/30/lessons/49993) ([#49993](prog/summer-winter-coding/2018/_49993_스킬트리.js)) 
 
 ##### Day 13. FRI
-> 🟣 [[Level 2] 영어 끝말잇기 - 구현](https://programmers.co.kr/learn/courses/30/lessons/12981) ([#12981](prog/summer-winter-coding\2018\_12981_영어끝말잇기.js)) 
+> 🟣 [[Level 2] 영어 끝말잇기 - 구현](https://programmers.co.kr/learn/courses/30/lessons/12981) ([#12981](prog/summer-winter-coding/2018/_12981_영어끝말잇기.js)) 
 
 ##### Day 12. THU
 > 🟣 [[Level 1] 나머지가 1이 되는 수 찾기 - 구현](https://programmers.co.kr/learn/courses/30/lessons/87389) ([#87389](prog/monthly-code-challenge/season3/_87389_나머지가1이되는수찾기.js))                  
