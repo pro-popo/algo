@@ -17,36 +17,77 @@
  * @returns 게임 캐릭터가 처음 걸어본 길의 길이
  */
 
-const [MIN_LENGTH, MAX_LENGTH] = [-5, 5];
-const direction = new Map([
-    ['U', [-1, 0]],
-    ['D', [1, 0]],
-    ['R', [0, 1]],
-    ['L', [0, -1]],
-]);
-
 function solution(dirs) {
-    let current = [0, 0];
-    const visited = new Set();
-    [...dirs].forEach(command => {
-        const move = direction.get(command);
-        const next = [current[0] + move[0], current[1] + move[1]];
-        if (isOutOfRange(next)) return;
+    const game = new Game();
+    [...dirs].forEach(command => game.exec(command));
 
-        if (!visited.has(next + current)) visited.add(current + next);
-        current = next;
-    });
-
-    return visited.size;
+    return game.visitedRoads.size;
 }
 
-function isOutOfRange(point) {
-    return (
-        point[0] < MIN_LENGTH ||
-        point[1] < MIN_LENGTH ||
-        point[0] > MAX_LENGTH ||
-        point[1] > MAX_LENGTH
-    );
+class Game {
+    static MIN_LENGTH = -5;
+    static MAX_LENGTH = 5;
+    static direction = new Map([
+        ['U', [-1, 0]],
+        ['D', [1, 0]],
+        ['R', [0, 1]],
+        ['L', [0, -1]],
+    ]);
+
+    character = new Point([0, 0]);
+    visitedRoads = new Set();
+
+    exec(command) {
+        const next = this.character.move(Game.direction.get(command));
+        if (this.isOutOfRange(next)) return this.character;
+        return this.moveCharacter(next);
+    }
+
+    isOutOfRange(point) {
+        return (
+            point.x < Game.MIN_LENGTH ||
+            point.y < Game.MIN_LENGTH ||
+            point.x > Game.MAX_LENGTH ||
+            point.y > Game.MAX_LENGTH
+        );
+    }
+
+    moveCharacter(next) {
+        this.visiteRoad(next);
+        return (this.character = next);
+    }
+
+    visiteRoad(next) {
+        const road = [this.character, next];
+        if (this.isVisitedRoad([...road].reverse())) return;
+        this.visitedRoads.add(road.toString());
+    }
+
+    isVisitedRoad(road) {
+        return this.visitedRoads.has(road.toString());
+    }
+}
+
+class Point {
+    constructor(point) {
+        this.point = point;
+    }
+
+    get x() {
+        return this.point[0];
+    }
+
+    get y() {
+        return this.point[1];
+    }
+
+    move([x, y]) {
+        return new Point([this.x + x, this.y + y]);
+    }
+
+    toString() {
+        return this.point.toString();
+    }
 }
 
 /****** TEST CASE *******/
