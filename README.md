@@ -119,7 +119,7 @@
     <b>📅 2022.05</b>
 </summary>       
 
-##### Day 14. SAT
+##### Day 15. SUN
 > 🟣 [[Level 2] 방문 길이 - 구현](https://programmers.co.kr/learn/courses/30/lessons/49994) ([#49994](prog/summer-winter-coding\2018\_49994_방문길이.js)) 
 
 ##### Day 14. SAT
