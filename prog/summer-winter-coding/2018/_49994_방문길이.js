@@ -17,42 +17,36 @@
  * @returns 게임 캐릭터가 처음 걸어본 길의 길이
  */
 
-function solution(dirs) {
-    const direction = new Map([
-        ['U', [-1, 0]],
-        ['D', [1, 0]],
-        ['R', [0, 1]],
-        ['L', [0, -1]],
-    ]);
-    const [MIN_LENGTH, MAX_LENGTH] = [-5, 5];
+const [MIN_LENGTH, MAX_LENGTH] = [-5, 5];
+const direction = new Map([
+    ['U', [-1, 0]],
+    ['D', [1, 0]],
+    ['R', [0, 1]],
+    ['L', [0, -1]],
+]);
 
+function solution(dirs) {
     let current = [0, 0];
     const visited = new Set();
     [...dirs].forEach(command => {
         const move = direction.get(command);
         const next = [current[0] + move[0], current[1] + move[1]];
         if (isOutOfRange(next)) return;
-        visited.add(
-            [current, next]
-                .sort(
-                    (point, otherPoint) =>
-                        point[0] - otherPoint[0] || point[1] - otherPoint[1],
-                )
-                .toString(),
-        );
+
+        if (!visited.has(next + current)) visited.add(current + next);
         current = next;
     });
 
     return visited.size;
+}
 
-    function isOutOfRange(point) {
-        return (
-            point[0] <= MIN_LENGTH ||
-            point[1] <= MIN_LENGTH ||
-            point[0] >= MAX_LENGTH ||
-            point[1] >= MAX_LENGTH
-        );
-    }
+function isOutOfRange(point) {
+    return (
+        point[0] < MIN_LENGTH ||
+        point[1] < MIN_LENGTH ||
+        point[0] > MAX_LENGTH ||
+        point[1] > MAX_LENGTH
+    );
 }
 
 /****** TEST CASE *******/
