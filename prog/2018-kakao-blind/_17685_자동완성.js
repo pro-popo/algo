@@ -11,39 +11,25 @@
  */
 
 function solution(words) {
-    const direction = new Map();
-    for (let i = 'a'.charCodeAt(); i <= 'z'.charCodeAt(); i++) {
-        direction.set(String.fromCharCode(i), new Map());
-    }
+    words.sort((word, otherWord) => word.localeCompare(otherWord));
 
-    words.forEach(word => {
-        let parent = direction.get(word[0]);
+    return words.reduce(
+        (sum, word, index) =>
+            sum +
+            Math.max(
+                countInput(word, words[index - 1]),
+                countInput(word, words[index + 1]),
+            ),
+        0,
+    );
 
-        for (let i = 1; i < word.length; i++) {
-            const child = parent.get(word[i]) || new Map().set('count', 0);
-            parent.set(word[i], child.set('count', child.get('count') + 1));
+    function countInput(word, otherWord) {
+        if (!word || !otherWord) return 0;
 
-            parent = child;
-        }
-    });
-
-    return words.reduce((sum, word) => sum + countInput(word), 0);
-
-    function countInput(word) {
-        let parent = direction.get(word[0]);
-        if (parent.size === 1 && parent.get(word[1]).get('count') === 1)
-            return 1;
-
-        let input = 1;
-        for (let i = 1; i < word.length; i++) {
-            input++;
-            const child = parent.get(word[i]);
-            if (child.get('count') === 1) break;
-
-            parent = child;
-        }
-
-        return input;
+        const prefix = [...word].findIndex(
+            (alphabet, index) => alphabet !== otherWord[index],
+        );
+        return prefix === -1 ? word.length : prefix + 1;
     }
 }
 
@@ -54,5 +40,7 @@ console.log(solution(['abc', 'def', 'ghi', 'jklm']));
 console.log(solution(['word', 'war', 'warrior', 'world']));
 
 // FATAL ERROR: Reached heap limit Allocation failed - JavaScript heap out of memory
-const bigData = Array.from(Array(100_000), () => Array(1_000_000).fill('a'));
-console.log(solution(bigData));
+// const bigData = Array.from(Array(100_000), (_, i) =>
+//     Array(1_000_000 - i).fill('a'),
+// );
+// console.log(solution(bigData));
