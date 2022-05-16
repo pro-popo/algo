@@ -17,19 +17,19 @@ function solution(words) {
         (sum, word, index) =>
             sum +
             Math.max(
-                countInput(word, words[index - 1]),
-                countInput(word, words[index + 1]),
+                findSamePrefix(word, words[index - 1]).length,
+                findSamePrefix(word, words[index + 1]).length,
             ),
         0,
     );
 
-    function countInput(word, otherWord) {
-        if (!word || !otherWord) return 0;
+    function findSamePrefix(word, otherWord) {
+        if (!word || !otherWord) return '';
 
         const prefix = [...word].findIndex(
             (alphabet, index) => alphabet !== otherWord[index],
         );
-        return prefix === -1 ? word.length : prefix + 1;
+        return prefix === -1 ? word : word.slice(0, prefix + 1);
     }
 }
 
