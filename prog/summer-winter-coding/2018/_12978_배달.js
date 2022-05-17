@@ -44,28 +44,39 @@
  */
 
 function solution(N, road, K) {
-    const EMPTY = Number.MAX_VALUE;
-    const roads = Array.from(Array(N + 1), () => Array(N + 1).fill(EMPTY));
-    road.forEach(([home, otherHome, time]) => {
-        roads[home][otherHome] = Math.min(time, roads[home][otherHome]);
-        roads[otherHome][home] = Math.min(time, roads[otherHome][home]);
-    });
+    const graph = createGraph(N + 1, road);
+    const times = dijkstra(graph, 1);
 
-    const start = 1;
-    const queue = [start];
-    const times = Array(N + 1).fill(EMPTY);
-    times[start] = 0;
+    return times.filter(time => time <= K).length;
+}
+
+function createGraph(numberOfNode, edges) {
+    const graph = Array.from(Array(numberOfNode), () =>
+        Array(numberOfNode).fill(Number.MAX_VALUE),
+    );
+
+    edges.forEach(([node, otherNode, cost]) => {
+        graph[node][otherNode] = Math.min(cost, graph[node][otherNode]);
+        graph[otherNode][node] = Math.min(cost, graph[otherNode][node]);
+    });
+    return graph;
+}
+
+function dijkstra(graph, startNode) {
+    const queue = [startNode];
+    const dist = Array(graph.length).fill(Number.MAX_VALUE);
+    dist[startNode] = 0;
 
     while (queue.length) {
-        const home = queue.shift();
-        roads[home].forEach((time, nextHome) => {
-            if (times[home] + time >= times[nextHome]) return;
-            times[nextHome] = times[home] + time;
-            queue.push(nextHome);
+        const node = queue.shift();
+        graph[node].forEach((cost, next) => {
+            if (dist[node] + cost >= dist[next]) return;
+            dist[next] = dist[node] + cost;
+            queue.push(next);
         });
     }
 
-    return times.filter(time => time <= K).length;
+    return dist;
 }
 
 /****** TEST CASE *******/
