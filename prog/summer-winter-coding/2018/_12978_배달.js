@@ -27,21 +27,16 @@ function solution(N, road, K) {
 
     const start = 1;
     const queue = [start];
-    const visited = new Set();
     const times = Array(N + 1).fill(EMPTY);
     times[start] = 0;
 
     while (queue.length) {
         const home = queue.shift();
         roads[home].forEach((time, nextHome) => {
-            if (time === EMPTY || visited.has(nextHome)) return;
             if (times[home] + time >= times[nextHome]) return;
             times[nextHome] = times[home] + time;
             queue.push(nextHome);
         });
-
-        visited.add(home);
-        queue.sort((home, otherHome) => times[home] - times[otherHome]);
     }
 
     return times.filter(time => time <= K).length;
