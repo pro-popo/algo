@@ -14,7 +14,11 @@
  */
 
 function solution(n) {
-    return [...n.toString(2)].filter(number => number == 1).length;
+    return convertToBinary(n).replace(/0/g, '').length;
+}
+
+function convertToBinary(decimal) {
+    return decimal.toString(2);
 }
 
 /****** TEST CASE *******/
