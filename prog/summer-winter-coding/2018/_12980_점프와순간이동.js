@@ -9,18 +9,21 @@
  * 거리가 N만큼 떨어져 있는 장소로 가고자 한다.
  * 이때 건전지 사용량의 최솟값을 구하고자 한다.
  *
- *
  * @param {*} n 1~10억
- * @returns
+ * @returns 건전지 사용량의 최솟값
  */
 
 function solution(n) {
     let battery = 1;
     while (n > 1) {
-        if (n % 2 !== 0) battery++;
+        if (isOdd(n)) battery++;
         n = ~~(n / 2);
     }
     return battery;
+}
+
+function isOdd(number) {
+    return number % 2 !== 0;
 }
 
 /****** TEST CASE *******/
