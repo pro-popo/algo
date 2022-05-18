@@ -14,16 +14,7 @@
  */
 
 function solution(n) {
-    let battery = 1;
-    while (n > 1) {
-        if (isOdd(n)) battery++;
-        n = ~~(n / 2);
-    }
-    return battery;
-}
-
-function isOdd(number) {
-    return number % 2 !== 0;
+    return [...n.toString(2)].filter(number => number == 1).length;
 }
 
 /****** TEST CASE *******/
