@@ -18,8 +18,8 @@
  */
 
 function solution(A, B) {
-    A.sort((a, b) => b - a);
-    B.sort((a, b) => a - b);
+    A.sort(DESC_NUMBER);
+    B.sort(ASC_NUMBER);
 
     A.forEach(score => {
         const otherScore = B.pop();
@@ -29,6 +29,9 @@ function solution(A, B) {
 
     return A.length - B.length;
 }
+
+const ASC_NUMBER = (a, b) => a - b;
+const DESC_NUMBER = (a, b) => b - a;
 
 /****** TEST CASE *******/
 
