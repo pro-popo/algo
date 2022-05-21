@@ -18,16 +18,8 @@
  */
 
 function solution(d, budget) {
-    d.sort((a, b) => a - b);
-    let answer = 0;
-    for (const price of d) {
-        if(budget - price < 0) break;
-
-        budget -= price;
-        answer++;
-    }
-
-    return answer;
+    const buyIndex = d.sort((a, b) => a - b).findIndex(price => (budget-=price) < 0);
+    return buyIndex === -1 ? d.length : buyIndex;
 }
 
 /****** TEST CASE *******/
