@@ -12,10 +12,11 @@
  */
 
 function solution(nums) {
-    const selectedNumbers = selectNums(nums);
-    return selectedNumbers
-        .map(numbers => numbers.reduce((sum, number)=> sum + number, 0))
-        .filter(isPrime).length;
+    return selectNums(nums).map(sum).filter(isPrime).length;
+}
+
+function sum(numbers) {
+    return numbers.reduce((sum, number)=> sum + number, 0);
 }
 
 function isPrime(number){
