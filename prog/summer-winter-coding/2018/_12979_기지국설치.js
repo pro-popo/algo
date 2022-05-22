@@ -37,17 +37,24 @@
 
 function solution(n, stations, w) {
     let answer = 0;
-    stations.push(n + w + 1);
-    stations.forEach((station, i) => {
+    stations.concat(n + w + 1).forEach((station, i) => {
         const first = stations[i - 1] || -w;
         const second = station;
 
-        const section = second - w - (first + w) - 1;
+        const section = calculateEmptySection(first, second);
         if (section <= 0) return;
-        answer += Math.ceil(section / (w * 2 + 1));
+        answer += countInstallStation(section);
     });
 
     return answer;
+
+    function calculateEmptySection(first, second) {
+        return second - w - (first + w) - 1;
+    }
+
+    function countInstallStation(section) {
+        return Math.ceil(section / (w * 2 + 1));
+    }
 }
 
 /****** TEST CASE *******/
@@ -55,4 +62,3 @@ function solution(n, stations, w) {
 console.log(solution(11, [4, 11], 1));
 console.log(solution(16, [9], 2));
 console.log(solution(12, [], 2));
-// 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16
