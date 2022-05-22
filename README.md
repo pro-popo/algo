@@ -119,6 +119,16 @@
     <b>📅 2022.05</b>
 </summary>  
 
+##### Day 21. SAT
+> 🟣 [[Level 1] 소수 만들기 - 조합](https://programmers.co.kr/learn/courses/30/lessons/12977) ([#12977](prog/summer-winter-coding/2018/_12977_소수만들기.js))            
+> 🟣 [[Level 1] 예산 - 구현](https://programmers.co.kr/learn/courses/30/lessons/12982) ([#12982](prog/summer-winter-coding/2018/_12982_예산.js)) 
+
+##### Day 20. FRI
+> 🟣 [[Level 3] 기지국 설치 - 구현](https://programmers.co.kr/learn/courses/30/lessons/12979) ([#12979](prog/summer-winter-coding/2018/_12979_기지국설치.js)) 
+
+##### Day 19. THU
+> 🟣 [[Level 3] 숫자 게임 - 구현](https://programmers.co.kr/learn/courses/30/lessons/12987) ([#12987](prog/summer-winter-coding/2018/_12987_숫자게임.js)) 
+
 ##### Day 18. WED
 > 🟣 [[Level 2] 점프와 순간 이동 - 구현](https://programmers.co.kr/learn/courses/30/lessons/12980) ([#12980](prog/summer-winter-coding/2018/_12980_점프와순간이동.js)) 
 
