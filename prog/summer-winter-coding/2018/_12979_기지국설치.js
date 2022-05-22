@@ -17,25 +17,18 @@
  */
 
 function solution(n, stations, w) {
-    let stationIndex = 0;
-    let install = 0;
-    let pointer = w + 1;
-    while (pointer <= n) {
-        if (
-            stationIndex < stations.length &&
-            stations[stationIndex] <= pointer
-        ) {
-            pointer = stations[stationIndex] + w * 2 + 1;
-            stationIndex++;
-            continue;
-        }
-        install++;
-        if (pointer + w >= n) break;
+    let answer = 0;
+    stations.push(n + w + 1);
+    stations.forEach((station, i) => {
+        const first = stations[i - 1] || -w;
+        const second = station;
 
-        pointer += w * 2 + 1;
-        if (pointer > n) pointer = n;
-    }
-    return install;
+        const section = second - w - (first + w) - 1;
+        if (section <= 0) return;
+        answer += Math.ceil(section / (w * 2 + 1));
+    });
+
+    return answer;
 }
 
 /****** TEST CASE *******/
