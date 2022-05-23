@@ -37,20 +37,22 @@
  */
 
 function solution(sticker) {
-    const dp1 = Array(sticker.length).fill(0);
-    const dp2 = Array(sticker.length).fill(0);
+    if (sticker.length === 1) return sticker[0];
 
-    dp1[0] = dp1[1] = sticker[0];
-    dp2[1] = sticker[1];
+    const firstSelection = Array(sticker.length - 1).fill(0);
+    firstSelection[0] = firstSelection[1] = sticker[0];
 
-    for (let i = 2; i < sticker.length; i++) {
-        dp1[i] = Math.max(dp1[i - 2] + sticker[i], dp1[i - 1]);
-        dp2[i] = Math.max(dp2[i - 2] + sticker[i], dp2[i - 1]);
+    const firstNotSelection = Array(sticker.length).fill(0);
+    firstNotSelection[1] = sticker[1];
 
-        if (i === sticker.length - 1) dp1[i] = dp1[i - 1];
+    return Math.max(sumSticker(firstSelection), sumSticker(firstNotSelection));
+
+    function sumSticker(dp) {
+        for (let i = 2; i < dp.length; i++) {
+            dp[i] = Math.max(dp[i - 2] + sticker[i], dp[i - 1]);
+        }
+        return dp.pop();
     }
-
-    return Math.max(dp1[sticker.length - 1], dp2[sticker.length - 1]);
 }
 
 /****** TEST CASE *******/
