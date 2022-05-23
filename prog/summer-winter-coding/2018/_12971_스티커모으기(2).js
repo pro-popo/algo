@@ -18,11 +18,10 @@ function solution(sticker) {
     dp2[1] = sticker[1];
 
     for (let i = 2; i < sticker.length; i++) {
-        if (i !== sticker.length - 1)
-            dp1[i] = Math.max(dp1[i - 2] + sticker[i], dp1[i - 1]);
-        else dp1[i] = dp1[i - 1];
-
+        dp1[i] = Math.max(dp1[i - 2] + sticker[i], dp1[i - 1]);
         dp2[i] = Math.max(dp2[i - 2] + sticker[i], dp2[i - 1]);
+
+        if (i === sticker.length - 1) dp1[i] = dp1[i - 1];
     }
 
     return Math.max(dp1[sticker.length - 1], dp2[sticker.length - 1]);
