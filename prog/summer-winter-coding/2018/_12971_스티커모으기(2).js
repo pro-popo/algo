@@ -45,13 +45,18 @@ function solution(sticker) {
     const firstNotSelection = Array(sticker.length).fill(0);
     firstNotSelection[1] = sticker[1];
 
-    return Math.max(sumSticker(firstSelection), sumSticker(firstNotSelection));
+    return Math.max(
+        maximumSumOfStickers(firstSelection),
+        maximumSumOfStickers(firstNotSelection),
+    );
 
-    function sumSticker(dp) {
-        for (let i = 2; i < dp.length; i++) {
-            dp[i] = Math.max(dp[i - 2] + sticker[i], dp[i - 1]);
+    function maximumSumOfStickers(sum) {
+        for (let i = 2; i < sum.length; i++) {
+            const selection = sum[i - 2] + sticker[i];
+            const notSelection = sum[i - 1];
+            sum[i] = Math.max(selection, notSelection);
         }
-        return dp.pop();
+        return sum[sum.length - 1];
     }
 }
 
