@@ -18,7 +18,9 @@
 function solution(row, column, queries) {
     const matrix = createMatrix(row, column);
 
-    return queries.map(query => rotate(matrix, query));
+    return queries
+        .map(query => query.map(value => value - 1))
+        .map(query => rotate(matrix, query));
 }
 
 const clockwise = [
@@ -29,7 +31,7 @@ const clockwise = [
 ];
 
 function rotate(matrix, query) {
-    const [x1, y1, x2, y2] = query.map(value => value - 1);
+    const [x1, y1, x2, y2] = query;
 
     let direction = 0;
     let point = [x1, y1];
@@ -57,9 +59,8 @@ function rotate(matrix, query) {
 }
 
 function createMatrix(row, column) {
-    return Array.from(Array(row), (_, i) =>
-        [...Array(column)].map((_, j) => i * column + j + 1),
-    );
+    let value = 1;
+    return Array.from(Array(row), () => [...Array(column)].map(() => value++));
 }
 
 /****** TEST CASE *******/
