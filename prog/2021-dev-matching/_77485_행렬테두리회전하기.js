@@ -20,7 +20,10 @@ function solution(row, column, queries) {
 
     return queries
         .map(query => query.map(value => value - 1))
-        .map(query => rotate(matrix, query));
+        .map(query => {
+            const movedNumbers = rotate(matrix, query);
+            return Math.min(...movedNumbers);
+        });
 }
 
 function createMatrix(row, column) {
@@ -35,7 +38,7 @@ function rotate(matrix, query) {
     let point = [x1, y1];
     let target = matrix[point[0]][point[1]];
 
-    let minNumber = target;
+    const movedNumbers = [target];
     while (!direction.isTurnAround()) {
         const next = [point[0] + direction.x, point[1] + direction.y];
         if (isOutOfRange(next)) {
@@ -45,10 +48,10 @@ function rotate(matrix, query) {
 
         [matrix[next[0]][next[1]], target] = [target, matrix[next[0]][next[1]]];
         point = next;
-        minNumber = Math.min(target, minNumber);
+        movedNumbers.push(target);
     }
 
-    return minNumber;
+    return movedNumbers;
 
     function isOutOfRange(point) {
         return point[0] < x1 || point[1] < y1 || point[0] > x2 || point[1] > y2;
@@ -65,8 +68,12 @@ class Clockwise {
     index = 0;
 
     next() {
-        if (this.index === this.direction.length) this.index = 0;
+        if (this.isTurnAround()) this.index = 0;
         else this.index++;
+    }
+
+    isTurnAround() {
+        return this.index === this.direction.length;
     }
 
     get point() {
@@ -79,10 +86,6 @@ class Clockwise {
 
     get y() {
         return this.point[1];
-    }
-
-    isTurnAround() {
-        return this.index === this.direction.length;
     }
 }
 
