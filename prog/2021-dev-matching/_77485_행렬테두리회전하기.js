@@ -23,26 +23,23 @@ function solution(row, column, queries) {
         .map(query => rotate(matrix, query));
 }
 
-const clockwise = [
-    [0, 1],
-    [1, 0],
-    [0, -1],
-    [-1, 0],
-];
+function createMatrix(row, column) {
+    let value = 1;
+    return Array.from(Array(row), () => [...Array(column)].map(() => value++));
+}
 
 function rotate(matrix, query) {
     const [x1, y1, x2, y2] = query;
+    const direction = new Clockwise();
 
-    let direction = 0;
     let point = [x1, y1];
     let target = matrix[point[0]][point[1]];
 
     let minNumber = target;
-    while (direction < clockwise.length) {
-        const move = clockwise[direction];
-        const next = [point[0] + move[0], point[1] + move[1]];
+    while (!direction.isTurnAround()) {
+        const next = [point[0] + direction.x, point[1] + direction.y];
         if (isOutOfRange(next)) {
-            direction++;
+            direction.next();
             continue;
         }
 
@@ -58,9 +55,35 @@ function rotate(matrix, query) {
     }
 }
 
-function createMatrix(row, column) {
-    let value = 1;
-    return Array.from(Array(row), () => [...Array(column)].map(() => value++));
+class Clockwise {
+    direction = [
+        [0, 1],
+        [1, 0],
+        [0, -1],
+        [-1, 0],
+    ];
+    index = 0;
+
+    next() {
+        if (this.index === this.direction.length) this.index = 0;
+        else this.index++;
+    }
+
+    get point() {
+        return this.direction[this.index];
+    }
+
+    get x() {
+        return this.point[0];
+    }
+
+    get y() {
+        return this.point[1];
+    }
+
+    isTurnAround() {
+        return this.index === this.direction.length;
+    }
 }
 
 /****** TEST CASE *******/
