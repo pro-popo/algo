@@ -32,8 +32,9 @@ function solution(row, column, queries) {
     return queries
         .map(query => query.map(value => value - 1))
         .map(query => {
-            const movedNumbers = rotate(matrix, query);
-            return Math.min(...movedNumbers);
+            const border = getBorderInfo(matrix, query);
+            rotate(matrix, border);
+            return Math.min(...border.numbers);
         });
 }
 
@@ -42,14 +43,14 @@ function createMatrix(row, column) {
     return Array.from(Array(row), () => [...Array(column)].map(() => value++));
 }
 
-function rotate(matrix, query) {
+function getBorderInfo(matrix, query) {
     const [x1, y1, x2, y2] = query;
     const direction = new Clockwise();
 
-    let point = [x1, y1];
-    let target = matrix[point[0]][point[1]];
+    const points = [point];
+    const numbers = [matrix[x1][y1]];
 
-    const movedNumbers = [target];
+    let point = [x1, y1];
     while (!direction.isTurnAround()) {
         const next = [point[0] + direction.x, point[1] + direction.y];
         if (isOutOfRange(next)) {
@@ -57,16 +58,23 @@ function rotate(matrix, query) {
             continue;
         }
 
-        [matrix[next[0]][next[1]], target] = [target, matrix[next[0]][next[1]]];
+        points.push(next);
+        numbers.push(matrix[next[0]][next[1]]);
+
         point = next;
-        movedNumbers.push(target);
     }
 
-    return movedNumbers;
+    return { points, numbers };
 
     function isOutOfRange(point) {
         return point[0] < x1 || point[1] < y1 || point[0] > x2 || point[1] > y2;
     }
+}
+
+function rotate(matrix, border) {
+    const { numbers, points } = border;
+    border.numbers = [numbers.pop()].concat(numbers);
+    points.forEach(([x, y], i) => (matrix[x][y] = border.numbers[i]));
 }
 
 class Clockwise {
