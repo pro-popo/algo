@@ -66,7 +66,7 @@
 |  ✅  |  ✅  |  ✅  |  ✅  |  ✅  |  ✅  |  ✅  |
 |  ✅  |  ✅  |  ✅  |  ✅  |  ✅  |  ✅  |  ✅  |
 |  ✅  |  ✅  |  ✅  |  ✅  |  ✅  |  ✅  |  ✅  |
-|  ✅  |  ✅  |  ✅  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |
+|  ✅  |  ✅  |  ✅  |  ✅  |  ⬜  |  ⬜  |  ⬜  |
 |  ⬜  |  ⬜  |  〰  |  〰  |  〰  |  〰  |  〰  |
 |  〰  |  〰  |  〰  |  〰  |  〰  |  〰  |  〰  |
 
@@ -118,6 +118,9 @@
 <summary>   
     <b>📅 2022.05</b>
 </summary>  
+
+##### Day 25. WED
+> 🟣 [[Level 2] 가장 큰 정사각형 찾기 - DP](https://programmers.co.kr/learn/courses/30/lessons/12905) ([#12905](prog/level2/_12905_가장큰정사각형찾기.js))
 
 ##### Day 24. TUE
 > 🟣 [[Level 2] 행렬 테두리 회전하기 - 구현](https://programmers.co.kr/learn/courses/30/lessons/77485) ([#77485](prog/2021-dev-matching/_77485_행렬테두리회전하기.js))
