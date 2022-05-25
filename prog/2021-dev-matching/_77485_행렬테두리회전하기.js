@@ -47,11 +47,10 @@ function getBorderInfo(matrix, query) {
     const [x1, y1, x2, y2] = query;
     const direction = new Clockwise();
 
-    const points = [point];
+    const points = [[x1, y1]];
     const numbers = [matrix[x1][y1]];
-
-    let point = [x1, y1];
     while (!direction.isTurnAround()) {
+        const point = points[points.length - 1];
         const next = [point[0] + direction.x, point[1] + direction.y];
         if (isOutOfRange(next)) {
             direction.next();
@@ -60,8 +59,6 @@ function getBorderInfo(matrix, query) {
 
         points.push(next);
         numbers.push(matrix[next[0]][next[1]]);
-
-        point = next;
     }
 
     return { points, numbers };
