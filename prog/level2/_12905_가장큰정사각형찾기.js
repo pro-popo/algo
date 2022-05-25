@@ -44,20 +44,21 @@
 function solution(board) {
     const [ROW, COLUMN] = [board.length, board[0].length];
 
-    let width = board[0][0];
+    let maxWidth = board[0][0];
     for (let r = 1; r < ROW; r++) {
         for (let c = 1; c < COLUMN; c++) {
             if (board[r][c] === 0) continue;
+
             board[r][c] =
                 Math.min(
                     board[r][c - 1],
                     board[r - 1][c],
                     board[r - 1][c - 1],
                 ) + 1;
-            width = Math.max(width, board[r][c]);
+            maxWidth = Math.max(maxWidth, board[r][c]);
         }
     }
-    return width * width;
+    return maxWidth * maxWidth;
 }
 
 /****** TEST CASE *******/
