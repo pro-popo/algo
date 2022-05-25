@@ -9,30 +9,34 @@
 function solution(board) {
     const [ROW, COLUMN] = [board.length, board[0].length];
 
-    let maxWidth = 0;
-    for (let r = 0; r < ROW; r++) {
-        for (let c = 0; c < COLUMN; c++) {
-            if (board[r][c] === 0) continue;
+    let [min, max] = [0, ROW];
+    let answer = 1;
 
-            let width = getWidth([r, c]);
-            if (width <= maxWidth) continue;
-            if (isSquare([r, c], width)) maxWidth = Math.max(maxWidth, width);
+    while (min <= max) {
+        const mid = Math.floor((min + max) / 2);
+        if (isExistSquare(mid)) {
+            answer = mid * mid;
+            min = mid + 1;
+            continue;
         }
+        max = mid - 1;
     }
-    return maxWidth * maxWidth;
+    return answer;
 
-    function getWidth(point) {
-        let [r, c] = point;
-        for (; r < ROW; r++) {
-            if (board[r][c] === 0) break;
+    function isExistSquare(width) {
+        for (let r = 0; r < ROW; r++) {
+            for (let c = 0; c < COLUMN; c++) {
+                if (board[r][c] === 0) continue;
+                if (isSquare([r, c], width)) return true;
+            }
         }
-        return r - point[0];
     }
 
     function isSquare(point, width) {
+        if (point[0] + width > ROW || point[1] + width > COLUMN) return false;
+
         for (let r = point[0]; r < point[0] + width; r++) {
             for (let c = point[1]; c < point[1] + width; c++) {
-                if (r >= ROW || c >= COLUMN) return false;
                 if (board[r][c] === 0) return false;
             }
         }
@@ -50,3 +54,5 @@ console.log(
         [0, 0, 1, 0],
     ]),
 );
+
+console.log(solution([[1]]));
