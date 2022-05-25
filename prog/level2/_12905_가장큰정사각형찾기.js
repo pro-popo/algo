@@ -9,39 +9,20 @@
 function solution(board) {
     const [ROW, COLUMN] = [board.length, board[0].length];
 
-    let [min, max] = [0, ROW];
-    let answer = 1;
-
-    while (min <= max) {
-        const mid = Math.floor((min + max) / 2);
-        if (isExistSquare(mid)) {
-            answer = mid * mid;
-            min = mid + 1;
-            continue;
-        }
-        max = mid - 1;
-    }
-    return answer;
-
-    function isExistSquare(width) {
-        for (let r = 0; r < ROW; r++) {
-            for (let c = 0; c < COLUMN; c++) {
-                if (board[r][c] === 0) continue;
-                if (isSquare([r, c], width)) return true;
-            }
+    let width = board[0][0];
+    for (let r = 1; r < ROW; r++) {
+        for (let c = 1; c < COLUMN; c++) {
+            if (board[r][c] === 0) continue;
+            board[r][c] =
+                Math.min(
+                    board[r][c - 1],
+                    board[r - 1][c],
+                    board[r - 1][c - 1],
+                ) + 1;
+            width = Math.max(width, board[r][c]);
         }
     }
-
-    function isSquare(point, width) {
-        if (point[0] + width > ROW || point[1] + width > COLUMN) return false;
-
-        for (let r = point[0]; r < point[0] + width; r++) {
-            for (let c = point[1]; c < point[1] + width; c++) {
-                if (board[r][c] === 0) return false;
-            }
-        }
-        return true;
-    }
+    return width * width;
 }
 
 /****** TEST CASE *******/
