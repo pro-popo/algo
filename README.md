@@ -66,7 +66,7 @@
 |  ✅  |  ✅  |  ✅  |  ✅  |  ✅  |  ✅  |  ✅  |
 |  ✅  |  ✅  |  ✅  |  ✅  |  ✅  |  ✅  |  ✅  |
 |  ✅  |  ✅  |  ✅  |  ✅  |  ✅  |  ✅  |  ✅  |
-|  ✅  |  ✅  |  ✅  |  ✅  |  ⬜  |  ⬜  |  ⬜  |
+|  ✅  |  ✅  |  ✅  |  ✅  |  ✅  |  ⬜  |  ⬜  |
 |  ⬜  |  ⬜  |  〰  |  〰  |  〰  |  〰  |  〰  |
 |  〰  |  〰  |  〰  |  〰  |  〰  |  〰  |  〰  |
 
@@ -118,6 +118,9 @@
 <summary>   
     <b>📅 2022.05</b>
 </summary>  
+
+##### Day 26. THU
+> 🟣 [[Level 2] 다음 큰 숫자 - 구현](https://programmers.co.kr/learn/courses/30/lessons/12911) ([#12911](prog/level2/_12911_다음큰숫자.js))
 
 ##### Day 25. WED
 > 🟣 [[Level 2] 가장 큰 정사각형 찾기 - DP](https://programmers.co.kr/learn/courses/30/lessons/12905) ([#12905](prog/level2/_12905_가장큰정사각형찾기.js))
