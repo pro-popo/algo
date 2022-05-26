@@ -34,15 +34,15 @@
 
 function solution(n) {
     const numbers = [...Array(n)].map((_, i) => i + 1);
-    const sum = prefixSum(numbers);
+    const prefix = prefixSum(numbers);
 
     let [start, end] = [0, 0];
-    let answer = 1;
-    while (end < numbers.length) {
-        const number = sum[end] - sum[start];
-        if (number === n) answer++;
+    let answer = 0;
+    while (end < prefix.length) {
+        const sum = prefix[end] - prefix[start];
+        if (sum === n) answer++;
 
-        if (number >= n) start++;
+        if (sum >= n) start++;
         else end++;
     }
 
