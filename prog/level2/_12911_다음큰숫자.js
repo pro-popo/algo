@@ -11,19 +11,24 @@
  */
 
 function solution(n) {
-    const numberOfOne = countOne(convertToBinary(n));
-
+    const binary = new Binary(n);
     let target = n + 1;
-    while (countOne(convertToBinary(target)) !== numberOfOne) target++;
+    while (new Binary(target).numberOfOne !== binary.numberOfOne) target++;
     return target;
 }
 
-function convertToBinary(number) {
-    return number.toString(2);
-}
+class Binary {
+    constructor(number) {
+        this.value = this.convertToBinary(number);
+    }
 
-function countOne(binary) {
-    return binary.match(/1/g).length;
+    convertToBinary(number) {
+        return number.toString(2);
+    }
+
+    get numberOfOne() {
+        return this.value.match(/1/g).length;
+    }
 }
 
 /****** TEST CASE *******/
