@@ -11,11 +11,14 @@
  */
 
 function solution(A, B) {
-    A.sort((a, b) => a - b);
-    B.sort((a, b) => b - a);
+    A.sort(ASC_NUMBER);
+    B.sort(DESC_NUMBER);
 
     return A.reduce((sum, _, i) => sum + A[i] * B[i], 0);
 }
+
+const ASC_NUMBER = (a, b) => a - b;
+const DESC_NUMBER = (a, b) => b - a;
 
 /****** TEST CASE *******/
 
