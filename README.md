@@ -119,6 +119,9 @@
     <b>📅 2022.05</b>
 </summary>  
 
+##### Day 29. SUN
+> 🟣 [[Level 2] 피보나치 수 - DP](https://programmers.co.kr/learn/courses/30/lessons/12945) ([#12945](prog/level2/_12945_피보나치수.js))     
+
 ##### Day 28. SAT
 > 🟣 [[Level 2] 최솟값 만들기 - 정렬](https://programmers.co.kr/learn/courses/30/lessons/12941) ([#12941](prog/level2/_12941_최솟값만들기.js))         
 > 🟣 [[Level 2] 최댓값과 최솟값 - 구현](https://programmers.co.kr/learn/courses/30/lessons/12939) ([#12939](prog/level2/_12939_최댓값과최솟값.js))
