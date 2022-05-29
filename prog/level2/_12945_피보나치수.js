@@ -7,15 +7,24 @@
  */
 
 function solution(n) {
-    return fibonacci(n) % 1234567;
-}
+    return fibonacci(n);
 
-function fibonacci(n) {
-    if (n <= 1) return n;
-    return fibonacci(n - 1) + fibonacci(n - 2);
+    function fibonacci(n) {
+        const dp = Array(n + 1).fill(null);
+        dp[0] = 0;
+        dp[1] = 1;
+
+        for (let i = 2; i <= n; i++) {
+            dp[i] = (dp[i - 1] + dp[i - 2]) % 1234567;
+        }
+        return dp[n];
+    }
 }
 
 /****** TEST CASE *******/
 
+console.log(solution(2));
 console.log(solution(3));
 console.log(solution(5));
+console.log(solution(8));
+console.log(solution(1234567));
