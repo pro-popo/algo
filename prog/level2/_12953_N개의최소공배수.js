@@ -13,8 +13,9 @@ function solution(arr) {
 }
 
 function findleastCommonMultiple(a, b) {
-    for (let i = 1; ; i++) {
-        if ((i * a) % b === 0) return i * a;
+    for (let i = 1; i <= a * b; i++) {
+        const multiple = i * a;
+        if (multiple % b === 0) return multiple;
     }
 }
 
