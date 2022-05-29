@@ -8,17 +8,17 @@
 
 function solution(n) {
     return fibonacci(n);
+}
 
-    function fibonacci(n) {
-        const dp = Array(n + 1).fill(null);
-        dp[0] = 0;
-        dp[1] = 1;
+function fibonacci(n) {
+    const dp = Array(n + 1).fill(null);
 
-        for (let i = 2; i <= n; i++) {
-            dp[i] = (dp[i - 1] + dp[i - 2]) % 1234567;
-        }
-        return dp[n];
+    for (let i = 0; i <= n; i++) {
+        if (i < 2) dp[i] = i;
+        else dp[i] = (dp[i - 1] + dp[i - 2]) % 1234567;
     }
+
+    return dp[n];
 }
 
 /****** TEST CASE *******/
