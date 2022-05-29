@@ -47,3 +47,17 @@ function findleastCommonMultiple(a, b) {
 
 console.log(solution([2, 6, 8, 14]));
 console.log(solution([1, 2, 3]));
+
+/*eslint no-unused-vars: "off" */
+/**
+ * 유클리드 호제법(gcd)
+ *
+ * @param {number} a - 정수 a
+ * @param {number} b - 정수 b
+ * @returns {number} - 두 수의 최대공약수
+ */
+
+function gcd(a, b) {
+    if (b === 0) return a;
+    return gcd(b, a % b);
+}
