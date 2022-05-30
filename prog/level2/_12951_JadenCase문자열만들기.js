@@ -12,7 +12,6 @@ function solution(s) {
         .split(' ')
         .map(word => {
             if (!word) return word;
-            if (word.length === 1) return word[0].toUpperCase();
             return word[0].toUpperCase() + word.slice(1).toLowerCase();
         })
         .join(' ');
@@ -22,4 +21,4 @@ function solution(s) {
 
 console.log(solution('3people unFollowed me'));
 console.log(solution('for the last week'));
-console.log(solution('for   the last week'));
+console.log(solution('for   t'));
