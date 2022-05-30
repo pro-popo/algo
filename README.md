@@ -119,9 +119,11 @@
     <b>📅 2022.05</b>
 </summary>  
 
+##### Day 31. TUE
+> 🟣 [[Level 2] JadenCase 문자열 만들기 - 구현](https://programmers.co.kr/learn/courses/30/lessons/12951) ([#12951](prog/level2/_12951_JadenCase문자열만들기.js))   
+
 ##### Day 30. MON
 > 🟣 [[Level 2] N개의 최소공배수 - 구현](https://programmers.co.kr/learn/courses/30/lessons/12953) ([#12953](prog/level2/_12953_N개의최소공배수.js))   
-
 
 ##### Day 29. SUN
 > 🟣 [[Level 2] 피보나치 수 - DP](https://programmers.co.kr/learn/courses/30/lessons/12945) ([#12945](prog/level2/_12945_피보나치수.js))     
