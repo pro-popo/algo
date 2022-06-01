@@ -129,7 +129,7 @@
 </summary>  
 
 ##### Day 1. WED
-> 🟣 [[Level 2] 행렬의 곱셈 - 구현](https://programmers.co.kr/learn/courses/30/lessons/12942) ([#12942](prog/level2/_12942_행렬의곱셈.js))  
+> 🟣 [[Level 2] 행렬의 곱셈 - 구현](https://programmers.co.kr/learn/courses/30/lessons/12949) ([#12949](prog/level2/_12949_행렬의곱셈.js))  
 
 <br />
 </details>
