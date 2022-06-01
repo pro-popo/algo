@@ -9,19 +9,11 @@
  */
 
 function solution(arr1, arr2) {
-    const [R, C] = [arr1.length, arr2[0].length];
-    const matrix = Array.from(Array(R), () => Array(C).fill(0));
-
-    for (let r = 0; r < R; r++) {
-        for (let c = 0; c < C; c++) {
-            matrix[r][c] = arr1[r].reduce(
-                (sum, value, i) => sum + value * arr2[i][c],
-                0,
-            );
-        }
-    }
-
-    return matrix;
+    return arr1.map((_, r) =>
+        arr2[0].map((_, c) =>
+            arr1[r].reduce((sum, _, i) => sum + arr1[r][i] * arr2[i][c], 0),
+        ),
+    );
 }
 
 /****** TEST CASE *******/
