@@ -33,12 +33,16 @@ function solution(n) {
 
     function hanoi(number, from, by, to) {
         if (number === 1) {
-            route.push([from, to]);
+            move(from, to);
             return;
         }
         hanoi(number - 1, from, to, by);
-        route.push([from, to]);
+        move(from, to);
         hanoi(number - 1, by, from, to);
+    }
+
+    function move(from, to) {
+        route.push([from, to]);
     }
 }
 
