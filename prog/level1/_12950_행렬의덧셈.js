@@ -8,16 +8,7 @@
  */
 
 function solution(arr1, arr2) {
-    const [R, C] = [arr1.length, arr1[0].length];
-
-    const matrix = Array.from(Array(R), () => Array(C).fill(0));
-    for (let i = 0; i < R; i++) {
-        for (let j = 0; j < C; j++) {
-            matrix[i][j] = arr1[i][j] + arr2[i][j];
-        }
-    }
-
-    return matrix;
+    return arr1.map((row, i) => row.map((num, j) => num + arr2[i][j]));
 }
 
 /****** TEST CASE *******/
