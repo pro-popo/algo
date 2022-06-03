@@ -4,7 +4,7 @@
  * - 동생은 백준이가 지금까지 말한 수 중에서 중간값을 말한다.
  *   만약 외친 수의 개수가 짝수개라면 중간에 있는 두 수 중에서 작은 수를 말한다.
  *
- * @param {[number[]} input - 백준이가 말한 수들, N: 1~100,000
+ * @param {number[]} input - 백준이가 말한 수들, N: 1~100,000
  */
 
 function solution(numbers) {
@@ -68,8 +68,7 @@ class PriorityQueue {
             const parent = this.values[parentIndex];
 
             if (this.comparator.compare(parent, child) < 0) break;
-            this.values[parentIndex] = child;
-            this.values[childIndex] = parent;
+            this.swap(parentIndex, childIndex);
             childIndex = parentIndex;
         }
     }
@@ -111,10 +110,16 @@ class PriorityQueue {
             }
 
             if (swapIndex === null) break;
-            this.values[parentIndex] = this.values[swapIndex];
-            this.values[swapIndex] = parent;
+            this.swap(parentIndex, swapIndex);
             parentIndex = swapIndex;
         }
+    }
+
+    swap(index, otherIndex) {
+        [this.values[index], this.values[otherIndex]] = [
+            this.values[otherIndex],
+            this.values[index],
+        ];
     }
 }
 
