@@ -67,7 +67,7 @@ class PriorityQueue {
             const parentIndex = Math.floor((childIndex - 1) / 2);
             const parent = this.values[parentIndex];
 
-            if (this.comparator.compare(parent, child) < 0) break;
+            if (this.isHigherPrioity(parent, child)) break;
             this.swap(parentIndex, childIndex);
             childIndex = parentIndex;
         }
@@ -76,43 +76,41 @@ class PriorityQueue {
     sinkDown() {
         const parent = this.values[0];
         let parentIndex = 0;
+        let swapIndex = 0;
 
-        while (true) {
-            let swapIndex = null;
+        while (swapIndex !== null) {
+            swapIndex = null;
 
             let [leftIndex, rightIndex] = [
                 2 * parentIndex + 1,
                 2 * parentIndex + 2,
             ];
 
-            if (
-                leftIndex < this.size &&
-                this.comparator.compare(parent, this.values[leftIndex]) > 0
-            ) {
+            let [left, right] = [
+                this.values[leftIndex],
+                this.values[rightIndex],
+            ];
+
+            if (leftIndex < this.size && this.isHigherPrioity(left, parent)) {
                 swapIndex = leftIndex;
             }
 
             if (rightIndex < this.size) {
                 if (
-                    (swapIndex === null &&
-                        this.comparator.compare(
-                            parent,
-                            this.values[rightIndex],
-                        )) > 0 ||
-                    (swapIndex !== null &&
-                        this.comparator.compare(
-                            this.values[leftIndex],
-                            this.values[rightIndex],
-                        )) > 0
-                ) {
+                    (!swapIndex && this.isHigherPrioity(right, parent)) ||
+                    (swapIndex && this.isHigherPrioity(right, left))
+                )
                     swapIndex = rightIndex;
-                }
             }
 
-            if (swapIndex === null) break;
+            if (!swapIndex) break;
             this.swap(parentIndex, swapIndex);
             parentIndex = swapIndex;
         }
+    }
+
+    isHigherPrioity(target, comparisonTarget) {
+        return this.comparator.compare(target, comparisonTarget) < 0;
     }
 
     swap(index, otherIndex) {
