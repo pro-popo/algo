@@ -128,6 +128,9 @@
     <b>📅 2022.06</b>
 </summary>  
 
+##### Day 3. FRI
+> 🟢 [[Gold Ⅱ] 가운데를 말해요 - Heap](https://www.acmicpc.net/problem/1655) ([#1655](boj/gold/Ⅱ/_1655_가운데를말해요.js))  
+
 ##### Day 2. THU
 > 🟣 [[Level 2] 하노이의 탑 - 재귀](https://programmers.co.kr/learn/courses/30/lessons/12946) ([#12946](prog/level2/_12946_하노이의탑.js))  
 
