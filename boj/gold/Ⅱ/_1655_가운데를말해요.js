@@ -4,27 +4,25 @@
  * - 동생은 백준이가 지금까지 말한 수 중에서 중간값을 말한다.
  *   만약 외친 수의 개수가 짝수개라면 중간에 있는 두 수 중에서 작은 수를 말한다.
  *
- * @param {[number, number[]]} input - 백준이가 말한 수들, N: 1~100,000
+ * @param {[number[]} input - 백준이가 말한 수들, N: 1~100,000
  */
 
-function solution(input) {
-    const [, numbers] = [input.shift(), input.map(Number)];
-
+function solution(numbers) {
     const maxHeap = new PriorityQueue(new Comparator((a, b) => b - a));
     const minHeap = new PriorityQueue(new Comparator((a, b) => a - b));
 
     let answer = '';
     numbers.forEach(number => {
-        if (maxHeap.length === minHeap.length) {
-            maxHeap.enqueue(number);
+        if (maxHeap.size === minHeap.size) {
+            maxHeap.push(number);
         } else {
-            minHeap.enqueue(number);
+            minHeap.push(number);
         }
 
         if (maxHeap.top > minHeap.top) {
-            const [max, min] = [maxHeap.dequeue(), minHeap.dequeue()];
-            maxHeap.enqueue(min);
-            minHeap.enqueue(max);
+            const [max, min] = [maxHeap.pop(), minHeap.pop()];
+            maxHeap.push(min);
+            minHeap.push(max);
         }
 
         answer += maxHeap.top + '\n';
@@ -43,19 +41,19 @@ class PriorityQueue {
         return this.values[0];
     }
 
-    get length() {
+    get size() {
         return this.values.length;
     }
 
-    enqueue(value) {
+    push(value) {
         this.values.push(value);
         this.bubbleUp();
     }
 
-    dequeue() {
+    pop() {
         const top = this.values[0];
         const end = this.values.pop();
-        if (this.values.length > 0) {
+        if (this.size > 0) {
             this.values[0] = end;
             this.sinkDown();
         }
@@ -63,7 +61,7 @@ class PriorityQueue {
     }
 
     bubbleUp() {
-        let childIndex = this.length - 1;
+        let childIndex = this.size - 1;
         const child = this.values[childIndex];
         while (childIndex > 0) {
             const parentIndex = Math.floor((childIndex - 1) / 2);
@@ -89,13 +87,13 @@ class PriorityQueue {
             ];
 
             if (
-                leftIndex < this.length &&
+                leftIndex < this.size &&
                 this.comparator.compare(parent, this.values[leftIndex]) > 0
             ) {
                 swapIndex = leftIndex;
             }
 
-            if (rightIndex < this.length) {
+            if (rightIndex < this.size) {
                 if (
                     (swapIndex === null &&
                         this.comparator.compare(
@@ -122,23 +120,22 @@ class PriorityQueue {
 
 class Comparator {
     constructor(compare = () => {}) {
-        if (compare) this.compare = compare;
-    }
-
-    compare(o1, o2) {
-        return o1 - o2;
+        this.compare = compare;
     }
 }
 
 const input = testCase => {
     const fs = require('fs');
-    return (
+    const data = (
         process.platform === 'linux'
             ? fs.readFileSync('/dev/stdin').toString()
             : testCase
     )
         .trim()
         .split('\n');
+
+    const [, ...numbers] = data;
+    return numbers.map(Number);
 };
 
 /****** TEST CASE *******/
