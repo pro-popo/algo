@@ -5,6 +5,11 @@
  * @param {number[][]} arr1 (1~500)
  * @param {number[][]} arr2 (1~500)
  * @returns 행렬 덧셈의 결과
+ *
+ * ### 리뷰
+ * - 풀이 방식은 다음과 같다.
+ *   행렬을 순회하여,
+ *   각 두 행렬의 동일한 위치에 존재하는 숫자를 더해준다.
  */
 
 function solution(arr1, arr2) {
