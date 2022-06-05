@@ -130,6 +130,7 @@
 
 ##### Day 5. SUN
 > 🟣 [[Level 1] 히샤드 수 - 구현](https://programmers.co.kr/learn/courses/30/lessons/12947) ([#12947](prog/level1/_12947_히샤드수.js))        
+> 🟣 [[Level 1] 문자열 내 마음대로 정렬하기 - 정렬](https://programmers.co.kr/learn/courses/30/lessons/12915) ([#12915](prog/level1/_12915_문자열내마음대로정렬하기.js))        
 
 ##### Day 4. SAT
 > 🟣 [[Level 1] 핸드폰 번호 가리기 - 구현](https://programmers.co.kr/learn/courses/30/lessons/12948) ([#12948](prog/level1/_12948_핸드폰번호가리기.js))        
