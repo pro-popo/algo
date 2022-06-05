@@ -64,7 +64,7 @@
 | SUN | MON | TUE | WED | THU | FRI | SAT | 
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|
 |  〰  |  〰  |  〰  |  ✅  |  ✅  |  ✅  |  ✅  |
-|  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |
+|  ✅  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |
 |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |
 |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |
 |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  〰  |  〰  |
@@ -128,10 +128,12 @@
     <b>📅 2022.06</b>
 </summary>  
 
+##### Day 5. SUN
+> 🟣 [[Level 1] 히샤드 수 - 구현](https://programmers.co.kr/learn/courses/30/lessons/12947) ([#12947](prog/level1/_12947_히샤드수.js))        
+
 ##### Day 4. SAT
 > 🟣 [[Level 1] 핸드폰 번호 가리기 - 구현](https://programmers.co.kr/learn/courses/30/lessons/12948) ([#12948](prog/level1/_12948_핸드폰번호가리기.js))        
 > 🟣 [[Level 1] 행렬의 덧셈 - 구현](https://programmers.co.kr/learn/courses/30/lessons/12950) ([#12950](prog/level1/_12950_행렬의덧셈.js)) 
-
 
 ##### Day 3. FRI
 > 🟢 [[Gold Ⅱ] 가운데를 말해요 - Heap](https://www.acmicpc.net/problem/1655) ([#1655](boj/gold/Ⅱ/_1655_가운데를말해요.js))  
