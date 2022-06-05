@@ -10,9 +10,7 @@
  */
 
 function solution(n) {
-    return [...Array(n)]
-        .map((_, i) => ((i + 1) % 2 > 0 ? '수' : '박'))
-        .join('');
+    return ''.padEnd(n, '수박');
 }
 
 /****** TEST CASE *******/
