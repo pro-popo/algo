@@ -9,11 +9,9 @@
  */
 
 function solution(strings, n) {
-    return strings.sort((s1, s2) => {
-        const compareResult = s1[n].localeCompare(s2[n]);
-        if (compareResult === 0) return s1.localeCompare(s2);
-        return compareResult;
-    });
+    return strings
+        .sort((s1, s2) => s1.localeCompare(s2))
+        .sort((s1, s2) => s1[n].localeCompare(s2[n]));
 }
 
 /****** TEST CASE *******/
