@@ -7,7 +7,12 @@
  */
 
 function solution(x) {
-    return x % [...String(x)].reduce((sum, number) => sum + +number, 0) === 0;
+    return isHarshadNumber(x);
+}
+
+function isHarshadNumber(target) {
+    const sum = [...String(target)].reduce((sum, number) => sum + +number, 0);
+    return target % sum === 0;
 }
 
 /****** TEST CASE *******/
