@@ -90,9 +90,9 @@ class PriorityQueue {
     sinkDown() {
         const parent = this.values[0];
         let parentIndex = 0;
-        let swapIndex = 0;
+        let swapIndex = null;
 
-        while (swapIndex !== null) {
+        do {
             swapIndex = null;
 
             let [leftIndex, rightIndex] = [
@@ -105,22 +105,19 @@ class PriorityQueue {
                 this.values[rightIndex],
             ];
 
-            if (leftIndex < this.size && this.isHigherPrioity(left, parent)) {
-                swapIndex = leftIndex;
-            }
+            swapIndex = this.isHigherPrioity(left, right)
+                ? leftIndex
+                : rightIndex;
 
-            if (rightIndex < this.size) {
-                if (
-                    (!swapIndex && this.isHigherPrioity(right, parent)) ||
-                    (swapIndex && this.isHigherPrioity(right, left))
-                )
-                    swapIndex = rightIndex;
-            }
+            if (
+                swapIndex >= this.size ||
+                this.isHigherPrioity(parent, this.values[swapIndex])
+            )
+                break;
 
-            if (!swapIndex) break;
             this.swap(parentIndex, swapIndex);
             parentIndex = swapIndex;
-        }
+        } while (swapIndex !== null);
     }
 
     isHigherPrioity(target, comparisonTarget) {
