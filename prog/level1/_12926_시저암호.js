@@ -16,22 +16,27 @@
  */
 
 function solution(s, n) {
-    const direction = {};
+    const dictionary = {};
     for (let i = 0; i < 26; i++) {
-        const alphabet = String.fromCharCode('a'.charCodeAt() + i);
-        direction[alphabet] = i;
+        const alphabet = nextAlphabet('a', i);
+        dictionary[alphabet] = i;
+        dictionary[alphabet.toUpperCase()] = i;
     }
 
     return [...s]
         .map(character => {
             if (character === ' ') return character;
-            const distance = (direction[character.toLowerCase()] + n) % 26;
-            const alphabet = String.fromCharCode('a'.charCodeAt() + distance);
-            return character === character.toUpperCase()
-                ? alphabet.toUpperCase()
-                : alphabet;
+            const distance = (dictionary[character] + n) % 26;
+            return nextAlphabet(
+                character === character.toUpperCase() ? 'A' : 'a',
+                distance,
+            );
         })
         .join('');
+}
+
+function nextAlphabet(alphabet, distance) {
+    return String.fromCharCode(alphabet.charCodeAt() + distance);
 }
 
 /****** TEST CASE *******/
