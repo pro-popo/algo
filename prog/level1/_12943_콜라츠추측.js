@@ -9,7 +9,7 @@
  *
  * @param {number} num - 입력된 수 (1~8000000)
  * @returns - 작업을 몇 번 반복해야 하는지
- *            단, 500번을 넘어가는 경우 -1 을 반환ㄴ
+ *            단, 500번을 넘어가는 경우 -1 을 반환
  */
 
 function solution(num) {
@@ -17,11 +17,15 @@ function solution(num) {
     do {
         if (num === 1) return count;
 
-        if (num % 2 === 0) num = Math.floor(num / 2);
+        if (isEven(num)) num /= 2;
         else num = num * 3 + 1;
     } while (++count <= 500);
 
     return -1;
+}
+
+function isEven(number) {
+    return number % 2 === 0;
 }
 
 /****** TEST CASE *******/
