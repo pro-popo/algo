@@ -16,12 +16,9 @@
 function solution(land) {
     const [ROW, COLUMN] = [land.length, land[0].length];
 
+    const queue = land[0].map((_, column) => ({ row: 0, column }));
     const scores = Array.from(Array(ROW), () => Array(COLUMN).fill(0));
-    const queue = [];
-    land[0].forEach((number, column) => {
-        scores[0][column] = number;
-        queue.push({ row: 0, column });
-    });
+    scores[0] = land[0];
 
     while (queue.length) {
         const { row, column } = queue.shift();
@@ -35,6 +32,7 @@ function solution(land) {
             const score = scores[row][column] + nextNumber;
             if (score <= scores[nextRow][nextColumn]) return;
             scores[nextRow][nextColumn] = score;
+
             queue.push({ row: nextRow, column: nextColumn });
         });
     }
