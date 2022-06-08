@@ -128,6 +128,9 @@
     <b>📅 2022.06</b>
 </summary>   
 
+##### Day 8. WED
+> 🟣 [[Level 2] 땅따먹기 - DP](https://programmers.co.kr/learn/courses/30/lessons/9663) ([#9663](prog/level2/_9663_땅따먹기.js))     
+
 ##### Day 7. TUE
 > 🟣 [[Level 1] 콜라츠 추측 - 구현](https://programmers.co.kr/learn/courses/30/lessons/12943) ([#12943](prog/level1/_12943_콜라츠추측.js))     
 > 🟣 [[Level 1] 시저 암호 - 구현](https://programmers.co.kr/learn/courses/30/lessons/12926) ([#12926](prog/level1/_12926_시저암호.js))   
