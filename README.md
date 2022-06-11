@@ -64,7 +64,7 @@
 | SUN | MON | TUE | WED | THU | FRI | SAT | 
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|
 |  〰  |  〰  |  〰  |  ✅  |  ✅  |  ✅  |  ✅  |
-|  ✅  |  ✅  |  ✅  |  ✅  |  ✅  |  ✅  |  ⬜  |
+|  ✅  |  ✅  |  ✅  |  ✅  |  ✅  |  ✅  |  ✅  |
 |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |
 |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |
 |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  〰  |  〰  |
@@ -127,6 +127,9 @@
 <summary>   
     <b>📅 2022.06</b>
 </summary>   
+
+##### Day 11. SAT
+> 🟣 [[Level 2] 짝지어 제거하기 - 스택](https://programmers.co.kr/learn/courses/30/lessons/12973) ([#12973](prog/level2/_12973_짝지어제거하기.js))   
 
 ##### Day 10. FRI
 > 🟣 [[Level 2] 예상 대진표 - 구현](https://programmers.co.kr/learn/courses/30/lessons/12985) ([#12985](prog/level2/_12985_예상대진표.js))   
