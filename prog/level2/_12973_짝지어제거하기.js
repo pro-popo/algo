@@ -9,24 +9,21 @@
  * @param {string} s - 문자열 (~1,000,000)
  * @return - 짝지어 제거하기를 성공적으로 수행할 수 있는지에 대한 여부
  */
-
 function solution(s) {
-    while(s.length) {
-        let isRemove = false;
-        const arr = [...s];
-        for (let i = 1; i < arr.length; i++) {
-            if (arr[i] !== arr[i-1]) continue;
-
-            arr[i] = "";
-            arr[i - 1] = "";
-            isRemove = true;
+    const stack = [];
+    for (let i = 0; i < s.length; i++) {
+        const current = s[i];
+        if (!stack.length) {
+            stack.push(current);
+            continue;
         }
-        
-        if (!isRemove) return 0;
-        s = arr.join("");
+
+        const pre = stack.pop();
+        if(pre === current) continue;
+        stack.push(pre, current);
     }
 
-    return 1;
+    return stack.length ? 0 : 1;
 }
 
 /****** TEST CASE *******/
