@@ -12,18 +12,15 @@
  */
 
 function solution(s){
-    const stack = [];
+    let leftBracket = 0;
     for (let i = 0; i < s.length; i++) {
-        if (s[i] === "(") {
-            stack.push(s[i]);
-            continue;
-        }
-
-        if (!stack.length) return false;
-        stack.pop();
+        if (s[i] === "(") leftBracket++;
+        else leftBracket--;
+        
+        if (leftBracket < 0) return false;
     }
 
-    return stack.length ? false : true;
+    return leftBracket === 0 ? true : false;
 }
 
 /****** TEST CASE *******/
