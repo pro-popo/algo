@@ -65,7 +65,7 @@
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|
 |  〰  |  〰  |  〰  |  ✅  |  ✅  |  ✅  |  ✅  |
 |  ✅  |  ✅  |  ✅  |  ✅  |  ✅  |  ✅  |  ✅  |
-|  ✅  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |
+|  ✅  |  ✅  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |
 |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |
 |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  〰  |  〰  |
 |  〰  |  〰  |  〰  |  〰  |  〰  |  〰  |  〰  |
@@ -128,9 +128,11 @@
     <b>📅 2022.06</b>
 </summary>   
 
+##### Day 13. MON
+> 🟣 [[Level 1] 폰켓몬 - 해시](https://programmers.co.kr/learn/courses/30/lessons/1845) ([#1845](prog/level1/_1845_폰켓몬.js))   
+
 ##### Day 12. SUN
 > 🟣 [[Level 2] 올바른 괄호 - 스택](https://programmers.co.kr/learn/courses/30/lessons/12909) ([#12909](prog/level2/_12909_올바른괄호.js))   
-
 
 ##### Day 11. SAT
 > 🟣 [[Level 2] 짝지어 제거하기 - 스택](https://programmers.co.kr/learn/courses/30/lessons/12973) ([#12973](prog/level2/_12973_짝지어제거하기.js))   
