@@ -26,7 +26,7 @@
 function solution(nums) {
     const types = new Set(nums);
     const half = Math.floor(nums.length / 2);
-    return half < types.size ? half : types.size;
+    return Math.min(half, types.size);
 }
 
 /****** TEST CASE *******/
