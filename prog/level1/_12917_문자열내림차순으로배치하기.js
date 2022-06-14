@@ -18,12 +18,8 @@
 
 function solution(s) {
     const arr = [...s];
-    const lowerCase = arr.filter(
-        alphabet => alphabet.codePointAt() > 'Z'.codePointAt(),
-    );
-    const upperCase = arr.filter(
-        alphabet => alphabet.codePointAt() <= 'Z'.codePointAt(),
-    );
+    const lowerCase = arr.filter(alphabet => alphabet >= 'a');
+    const upperCase = arr.filter(alphabet => alphabet < 'a');
 
     return (
         lowerCase.sort(DESC_STRING).join('') +
