@@ -129,6 +129,10 @@
 </summary>   
 
 ##### Day 14. TUE
+> 🟣 [[Level 1] 문자열 내 p와 y의 개수 - 구현](https://programmers.co.kr/learn/courses/30/lessons/12916) ([#12916](prog/level1/_12916_문자열내p와y의개수.js))       
+> 🟣 [[Level 1] 소수 찾기 - 구현](https://programmers.co.kr/learn/courses/30/lessons/12921) ([#12921](prog/level1/_12921_소수찾기.js))       
+
+##### Day 14. TUE
 > 🟣 [[Level 1] 문자열 내림차순으로 배치하기 - 정렬](https://programmers.co.kr/learn/courses/30/lessons/12917) ([#12917](prog/level1/_12917_문자열내림차순으로배치하기.js))   
 
 ##### Day 13. MON
