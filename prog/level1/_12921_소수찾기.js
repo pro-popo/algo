@@ -7,18 +7,23 @@
  */
 
 function solution(n) {
-    let count = 0;
-    for (let i = 2; i <= n; i++) {
-        if (isPrime(i)) count++;
-    }
-    return count;
+    return countPrimeNumbers(n);
 }
 
-function isPrime(number) {
-    for (let i = 2; i * i <= number; i++) {
-        if (number % i === 0) return false;
+function countPrimeNumbers(n) {
+    const isPrime = Array(n + 1).fill(true);
+    isPrime[0] = isPrime[1] = false;
+
+    for (let i = 2; i <= n; i++) {
+        if (isPrime[i]) {
+            for (let j = 2; ; j++) {
+                if (i * j > n) break;
+                isPrime[i * j] = false;
+            }
+        }
     }
-    return true;
+
+    return isPrime.filter(number => number).length;
 }
 
 /****** TEST CASE *******/
