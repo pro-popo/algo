@@ -14,10 +14,9 @@ function countPrimeNumbers(n) {
     const isPrime = Array(n + 1).fill(true);
     isPrime[0] = isPrime[1] = false;
 
-    for (let i = 2; i <= n; i++) {
+    for (let i = 2; i * i <= n; i++) {
         if (isPrime[i]) {
-            for (let j = 2; ; j++) {
-                if (i * j > n) break;
+            for (let j = 2; i * j <= n; j++) {
                 isPrime[i * j] = false;
             }
         }
