@@ -11,45 +11,18 @@
  */
 
 function solution(n, works) {
-    works.sort((a, b) => a - b);
-    const times = Array(works.length).fill(0);
-    for (let i = 0; i < works.length - 1; i++) {
-        times[i + 1] = times[i] + works[i + 1] - works[i];
-    }
+    works.sort((a, b) => b - a);
 
-    let [min, max] = [0, works[works.length - 1]];
-    let standardTime = max;
-    while (min <= max) {
-        const mid = Math.floor((min + max) / 2);
-        if (isPossibleTime(mid)) {
-            standardTime = mid;
-            max = mid - 1;
-            continue;
+    while (n > 0 && works[0] > 0) {
+        const max = works[0];
+        for (let i = 0; i < works.length; i++) {
+            if (works[i] < max || n === 0) break;
+            works[i]--;
+            n--;
         }
-        min = mid + 1;
-    }
-
-    for (let i = works.length - 1; i >= 0; i--) {
-        if (standardTime >= works[i]) break;
-        n -= works[i] - standardTime;
-        works[i] = standardTime;
-    }
-
-    for (let i = works.length - 1; i > works.length - 1 - n; i--) {
-        if (works[i] === 0) break;
-        works[i]--;
     }
 
     return works.reduce((sum, number) => sum + number ** 2, 0);
-
-    function isPossibleTime(standardTime) {
-        let time = 0;
-        for (let i = works.length - 1; i >= 0; i--) {
-            if (standardTime >= works[i]) break;
-            time += works[i] - standardTime;
-        }
-        return time <= n;
-    }
 }
 
 /****** TEST CASE *******/
