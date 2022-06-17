@@ -11,16 +11,19 @@
  */
 
 function solution(s) {
-    return s
-        .split(' ')
-        .map(word =>
-            [...word]
-                .map((w, idx) =>
-                    idx % 2 === 0 ? w.toUpperCase() : w.toLowerCase(),
-                )
-                .join(''),
+    return s.split(' ').map(toStrangeWord).join(' ');
+}
+
+function toStrangeWord(word) {
+    return [...word]
+        .map((alphabet, idx) =>
+            isEven(idx) ? alphabet.toUpperCase() : alphabet.toLowerCase(),
         )
-        .join(' ');
+        .join('');
+}
+
+function isEven(num) {
+    return num % 2 === 0;
 }
 
 /****** TEST CASE *******/
