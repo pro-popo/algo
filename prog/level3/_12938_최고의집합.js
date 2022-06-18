@@ -18,7 +18,7 @@
  *
  *   먼저, s/n의 값으로 채운 n크기의 배열을 생성한다.
  *   배열의 마지막 원소부터 차례대로 s%n개의 원소를 1씩 증가시킨다.
- *   마지막으로 해당 배열을 반환한다.
+ *   마지막으로 해당 배열을 반환✅한다.
  *
  * - 각 원소의 곱이 최대가 되는 경우를 구하는 방법을 많이 고민했다.
  *   처음에는, [s] 배열의 크기가 n이 될때까지 가장 큰 원소를 절반으로 나누었다.
@@ -30,9 +30,9 @@ function solution(n, s) {
 
     const quotient = Math.floor(s / n);
     let remainder = s % n;
-    return [...Array(n)].map((_, idx) =>
-        idx < n - remainder ? quotient : quotient + 1,
-    );
+    return [...Array(n)]
+        .map(() => (remainder-- > 0 ? quotient + 1 : quotient))
+        .sort((a, b) => a - b);
 }
 
 /****** TEST CASE *******/
