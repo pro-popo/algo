@@ -14,9 +14,11 @@
 function solution(n, s) {
     if (n > s) return [-1];
 
-    const arr = Array(n).fill(Math.floor(s / n));
-    let remain = n - (s % n);
-    return arr.map((number, idx) => (idx >= remain ? number + 1 : number));
+    const quotient = Math.floor(s / n);
+    let remainder = s % n;
+    return [...Array(n)].map((_, idx) =>
+        idx < n - remainder ? quotient : quotient + 1,
+    );
 }
 
 /****** TEST CASE *******/
