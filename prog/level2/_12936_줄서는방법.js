@@ -11,15 +11,16 @@
 function solution(n, k) {
     const factorial = initFactorial(n);
 
-    k--;
+    let count = k - 1;
     const arr = [...Array(n)].map((_, idx) => idx + 1);
     const answer = [];
     while (arr.length) {
-        const i = Math.floor(k / factorial(arr.length - 1));
-        k %= factorial(arr.length - 1);
+        const numberOfCases = factorial(arr.length - 1);
+        const index = Math.floor(count / numberOfCases);
+        count %= numberOfCases;
 
-        answer.push(arr[i]);
-        arr.splice(i, 1);
+        answer.push(arr[index]);
+        arr.splice(index, 1);
     }
 
     return answer;
