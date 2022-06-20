@@ -9,24 +9,33 @@
  */
 
 function solution(n, k) {
-    let answer = [];
-    permutation(new Set(), 1);
-    return answer;
+    let arr = [...Array(n)].map((_, idx) => idx + 1);
+    while (--k > 0) nextPermutation(arr);
+    return arr;
+}
 
-    function permutation(select) {
-        if (k === 0) return;
-        if (select.size === n) {
-            answer = [...select];
-            k--;
-            return;
-        }
+function nextPermutation(arr) {
+    const n = arr.length;
+    let top = n - 1;
+    while (top > 0 && arr[top - 1] >= arr[top]) top--;
 
-        for (let i = 1; i <= n; i++) {
-            if (select.has(i)) continue;
-            select.add(i);
-            permutation(select);
-            select.delete(i);
-        }
+    if (top === 0) return;
+
+    let target = n - 1;
+    while (arr[top - 1] >= arr[target]) target--;
+    swap(top - 1, target);
+
+    let k = n - 1;
+    while (top < k) {
+        swap(top, k);
+        top++;
+        k--;
+    }
+
+    function swap(i, j) {
+        const temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
     }
 }
 
