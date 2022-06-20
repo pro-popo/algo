@@ -9,24 +9,31 @@
  */
 
 function solution(n, k) {
-    const factorial = Array(n);
-    factorial[0] = 1;
-    for (let i = 1; i <= n; i++) {
-        factorial[i] = factorial[i - 1] * i;
-    }
+    const factorial = initFactorial(n);
 
     k--;
-    let arr = [...Array(n)].map((_, idx) => idx + 1);
+    const arr = [...Array(n)].map((_, idx) => idx + 1);
     const answer = [];
     while (arr.length) {
-        const i = Math.floor(k / factorial[arr.length - 1]);
-        k %= factorial[arr.length - 1];
+        const i = Math.floor(k / factorial(arr.length - 1));
+        k %= factorial(arr.length - 1);
 
         answer.push(arr[i]);
         arr.splice(i, 1);
     }
 
     return answer;
+}
+
+function initFactorial(n) {
+    const dp = Array(n);
+    dp[0] = 1;
+
+    for (let i = 1; i <= n; i++) {
+        dp[i] = dp[i - 1] * i;
+    }
+
+    return number => dp[number];
 }
 
 /****** TEST CASE *******/
