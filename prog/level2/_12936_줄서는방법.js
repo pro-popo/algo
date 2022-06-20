@@ -9,34 +9,24 @@
  */
 
 function solution(n, k) {
+    const factorial = Array(n);
+    factorial[0] = 1;
+    for (let i = 1; i <= n; i++) {
+        factorial[i] = factorial[i - 1] * i;
+    }
+
+    k--;
     let arr = [...Array(n)].map((_, idx) => idx + 1);
-    while (--k > 0) nextPermutation(arr);
-    return arr;
-}
+    const answer = [];
+    while (arr.length) {
+        const i = Math.floor(k / factorial[arr.length - 1]);
+        k %= factorial[arr.length - 1];
 
-function nextPermutation(arr) {
-    const n = arr.length;
-    let top = n - 1;
-    while (top > 0 && arr[top - 1] >= arr[top]) top--;
-
-    if (top === 0) return;
-
-    let target = n - 1;
-    while (arr[top - 1] >= arr[target]) target--;
-    swap(top - 1, target);
-
-    let k = n - 1;
-    while (top < k) {
-        swap(top, k);
-        top++;
-        k--;
+        answer.push(arr[i]);
+        arr.splice(i, 1);
     }
 
-    function swap(i, j) {
-        const temp = arr[i];
-        arr[i] = arr[j];
-        arr[j] = temp;
-    }
+    return answer;
 }
 
 /****** TEST CASE *******/
