@@ -7,13 +7,16 @@
  */
 
 function solution(n, m) {
-    const gcd = GCD(n, m);
-    return [gcd, Math.floor((n * m) / gcd)];
+    return [GCD(n, m), LCM(n, m)];
 }
 
 function GCD(num1, num2) {
     if (num2 === 0) return num1;
     return GCD(num2, num1 % num2);
+}
+
+function LCM(num1, num2) {
+    return Math.floor((num1 * num2) / GCD(num1, num2));
 }
 
 /****** TEST CASE *******/
