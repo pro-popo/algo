@@ -128,6 +128,9 @@
     <b>📅 2022.06</b>
 </summary>   
 
+##### Day 20. MON
+> 🟣 [[Level 2] 줄 서는 방법 - 재귀](https://programmers.co.kr/learn/courses/30/lessons/12936) ([#12936](prog/level2/_12936_줄서는방법.js))
+
 ##### Day 19. SUN
 > 🟣 [[Level 2] 2 x n 타일링 - DP](https://programmers.co.kr/learn/courses/30/lessons/12900) ([#12900](prog/level2/_12900_2xn타일링.js))  
 
