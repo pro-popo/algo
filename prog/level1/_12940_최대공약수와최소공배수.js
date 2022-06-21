@@ -38,7 +38,7 @@ function GCD(num1, num2) {
 }
 
 function LCM(num1, num2) {
-    return Math.floor((num1 * num2) / GCD(num1, num2));
+    return (num1 * num2) / GCD(num1, num2);
 }
 
 /****** TEST CASE *******/
