@@ -25,7 +25,7 @@ function solution(N, M, trees) {
     let answer = 0;
     while (min <= max) {
         const mid = Math.floor((min + max) / 2);
-        if (cutTrees(mid) >= M) {
+        if (cutTrees(mid, trees) >= M) {
             min = mid + 1;
             answer = mid;
             continue;
@@ -33,13 +33,13 @@ function solution(N, M, trees) {
         max = mid - 1;
     }
     return answer;
+}
 
-    function cutTrees(cutter) {
-        return trees.reduce(
-            (sum, tree) => sum + (tree - cutter > 0 ? tree - cutter : 0),
-            0,
-        );
-    }
+function cutTrees(cutter, trees) {
+    return trees.reduce(
+        (sum, tree) => sum + (tree - cutter > 0 ? tree - cutter : 0),
+        0,
+    );
 }
 
 function input(test) {
@@ -52,6 +52,8 @@ function input(test) {
     const [[N, M], trees] = data.map(data => data.split(' ').map(Number));
     return [N, M, trees];
 }
+
+/****** TEST CASE *******/
 
 const TEST1 = `4 7
 20 15 10 17`;
