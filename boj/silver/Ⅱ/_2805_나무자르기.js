@@ -21,7 +21,7 @@
  * @return - 적어도 M미터의 나무를 집에 가져가기 위해 절단기에 설정할 수 있는 높이의 최댓값
  */
 function solution(N, M, trees) {
-    let [min, max] = [0, 1_000_000_000];
+    let [min, max] = [0, Math.max(...trees)];
     let answer = 0;
     while (min <= max) {
         const mid = Math.floor((min + max) / 2);
@@ -37,7 +37,7 @@ function solution(N, M, trees) {
 
 function cutTrees(cutter, trees) {
     return trees.reduce(
-        (sum, tree) => sum + (tree - cutter > 0 ? tree - cutter : 0),
+        (sum, tree) => sum + (tree > cutter ? tree - cutter : 0),
         0,
     );
 }
