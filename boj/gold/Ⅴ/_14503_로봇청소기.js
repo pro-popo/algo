@@ -41,14 +41,14 @@ function solution(N, M, robot, map) {
     return countClean;
 
     function goRobot() {
-        for (let i = 0; i < 4; i++) {
-            const [r, c, direction] = robot;
+        let [r, c, direction] = robot;
 
-            robot[2] = Direction.rotate(direction);
+        for (let i = 0; i < 4; i++) {
             const next = Direction.go([r, c], direction);
+            direction = Direction.rotate(direction);
             if (isOutOfRange(next) || map[next[0]][next[1]] > 0) continue;
 
-            [robot[0], robot[1]] = next;
+            robot = [...next, direction];
             return true;
         }
 
@@ -60,8 +60,8 @@ function solution(N, M, robot, map) {
 
         const next = Direction.goBack([r, c], direction);
         if (isOutOfRange(next) || map[next[0]][next[1]] === 1) return false;
-        [robot[0], robot[1]] = next;
 
+        robot = [...next, direction];
         return true;
     }
 
@@ -122,6 +122,7 @@ function input(test) {
             ? fs.readFileSync('/dev/stdin').toString().trim()
             : test
     ).split('\n');
+
     const [N, M] = data.shift().split(' ').map(Number);
     const robot = data.shift().split(' ').map(Number);
     const map = data.map(row => row.split(' ').map(Number));
