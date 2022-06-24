@@ -30,14 +30,17 @@ function solution(N, M, robot, map) {
     const CLEANED = 2;
     let countClean = 0;
 
-    while (true) {
+    do {
         const [r, c] = robot;
         if (map[r][c] === 0) {
             map[r][c] = CLEANED;
             countClean++;
         }
+    } while (goRobot() || goBackRobt());
 
-        let isMoved = false;
+    return countClean;
+
+    function goRobot() {
         for (let i = 0; i < 4; i++) {
             const [r, c, direction] = robot;
 
@@ -46,21 +49,21 @@ function solution(N, M, robot, map) {
             if (isOutOfRange(next) || map[next[0]][next[1]] > 0) continue;
 
             [robot[0], robot[1]] = next;
-            isMoved = true;
-            break;
+            return true;
         }
 
-        if (!isMoved) {
-            const [r, c, direction] = robot;
-
-            const next = Direction.goBack([r, c], direction);
-            if (isOutOfRange(next) || map[next[0]][next[1]] === 1) break;
-            [robot[0], robot[1]] = next;
-        }
+        return false;
     }
 
-    console.table(map);
-    return countClean;
+    function goBackRobt() {
+        const [r, c, direction] = robot;
+
+        const next = Direction.goBack([r, c], direction);
+        if (isOutOfRange(next) || map[next[0]][next[1]] === 1) return false;
+        [robot[0], robot[1]] = next;
+
+        return true;
+    }
 
     function isOutOfRange(point) {
         return point[0] < 0 || point[1] < 0 || point[0] === N || point[1] === M;
