@@ -128,7 +128,10 @@
     <b>📅 2022.06</b>
 </summary>   
 
-##### Day 23. THU
+##### Day 25. FRI
+> 🟢 [[Gold Ⅴ] 로봇 청소기 - 구현](https://www.acmicpc.net/problem/14503) ([#14503](boj/gold/Ⅴ/_14503_로봇청소기.js))
+
+##### Day 24. THU
 > 🟢 [[Silver Ⅱ] 나무 자르기 - 이분탐색](https://www.acmicpc.net/problem/2805) ([#2805](boj/silver/Ⅱ/_2805_나무자르기.js))
 
 ##### Day 22. WED
