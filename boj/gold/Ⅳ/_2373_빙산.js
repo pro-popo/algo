@@ -16,102 +16,107 @@
  */
 
 function solution(N, M, map) {
+    const iceberg = new Iceberg(map);
     let time = 0;
     do {
-        const numberOfIceberg = countIceberg(map);
+        const numberOfIceberg = iceberg.countIceberg();
         if (numberOfIceberg === 2) return time;
         if (numberOfIceberg === 0) break;
-        meltIceberg(map);
+        iceberg.meltIceberg();
     } while (++time);
 
     return 0;
 }
 
-const dt = [
-    [0, 1],
-    [0, -1],
-    [1, 0],
-    [-1, 0],
-];
+class Iceberg {
+    constructor(map) {
+        this.map = map;
+    }
 
-function countIceberg(map) {
-    const [ROW, COLUMN] = [map.length, map[0].length];
+    get ROW() {
+        return this.map.length;
+    }
 
-    let numberOfIceberg = 0;
-    const visited = Array.from(Array(ROW), () => Array(COLUMN).fill(false));
-    for (let i = 0; i < ROW; i++) {
-        for (let j = 0; j < COLUMN; j++) {
-            if (!isIce([i, j]) || visited[i][j]) continue;
-            if (++numberOfIceberg > 1) return numberOfIceberg;
+    get COLUMN() {
+        return this.map[0].length;
+    }
 
-            const queue = [[i, j]];
-            visited[i][j] = true;
+    dt = [
+        [0, 1],
+        [0, -1],
+        [1, 0],
+        [-1, 0],
+    ];
 
-            while (queue.length) {
-                const point = queue.shift();
-                for (let d = 0; d < dt.length; d++) {
-                    const next = [point[0] + dt[d][0], point[1] + dt[d][1]];
-                    if (
-                        isOutOfRange(next) ||
-                        visited[next[0]][next[1]] ||
-                        !isIce(next)
-                    )
-                        continue;
+    countIceberg() {
+        let numberOfIceberg = 0;
+        const visited = Array.from(Array(this.ROW), () =>
+            Array(this.COLUMN).fill(false),
+        );
+        for (let i = 0; i < this.ROW; i++) {
+            for (let j = 0; j < this.COLUMN; j++) {
+                if (!this.isIce([i, j]) || visited[i][j]) continue;
+                if (++numberOfIceberg > 1) return numberOfIceberg;
 
-                    queue.push(next);
-                    visited[next[0]][next[1]] = true;
+                const queue = [[i, j]];
+                visited[i][j] = true;
+
+                while (queue.length) {
+                    const point = queue.shift();
+                    for (let d = 0; d < this.dt.length; d++) {
+                        const next = [
+                            point[0] + this.dt[d][0],
+                            point[1] + this.dt[d][1],
+                        ];
+                        if (
+                            this.isOutOfRange(next) ||
+                            visited[next[0]][next[1]] ||
+                            !this.isIce(next)
+                        )
+                            continue;
+
+                        queue.push(next);
+                        visited[next[0]][next[1]] = true;
+                    }
                 }
             }
         }
+
+        return numberOfIceberg;
     }
 
-    return numberOfIceberg;
+    meltIceberg() {
+        const meltedIceberg = [];
+        for (let i = 0; i < this.ROW; i++) {
+            for (let j = 0; j < this.COLUMN; j++) {
+                if (!this.isIce([i, j])) continue;
 
-    function isIce(point) {
-        return map[point[0]][point[1]] > 0;
-    }
+                let countWater = 0;
+                for (let d = 0; d < this.dt.length; d++) {
+                    const next = [i + this.dt[d][0], j + this.dt[d][1]];
+                    if (this.isOutOfRange(next) || this.isIce(next)) continue;
+                    countWater++;
+                }
 
-    function isOutOfRange(point) {
-        return (
-            point[0] < 0 ||
-            point[1] < 0 ||
-            point[0] === ROW ||
-            point[1] === COLUMN
+                meltedIceberg.push([[i, j], countWater]);
+            }
+        }
+
+        meltedIceberg.forEach(
+            ([[r, c], countWater]) => (this.map[r][c] -= countWater),
         );
     }
-}
 
-function meltIceberg(map) {
-    const [ROW, COLUMN] = [map.length, map[0].length];
-
-    const meltedIceberg = [];
-    for (let i = 0; i < ROW; i++) {
-        for (let j = 0; j < COLUMN; j++) {
-            if (!isIce([i, j])) continue;
-
-            let countWater = 0;
-            for (let d = 0; d < dt.length; d++) {
-                const next = [i + dt[d][0], j + dt[d][1]];
-                if (isOutOfRange(next) || isIce(next)) continue;
-                countWater++;
-            }
-
-            meltedIceberg.push([[i, j], countWater]);
-        }
+    isIce(point) {
+        return this.map[point[0]][point[1]] > 0;
     }
 
-    meltedIceberg.forEach(([[r, c], countWater]) => (map[r][c] -= countWater));
-
-    function isIce(point) {
-        return map[point[0]][point[1]] > 0;
-    }
-
-    function isOutOfRange(point) {
+    isOutOfRange(point) {
         return (
             point[0] < 0 ||
             point[1] < 0 ||
-            point[0] === ROW ||
-            point[1] === COLUMN
+            point[0] === this.ROW ||
+            point[1] === this.COLUMN
         );
     }
 }
