@@ -35,70 +35,67 @@ class Iceberg {
         this.COLUMN = map[0].length;
     }
 
-    dt = [
-        [0, 1],
-        [0, -1],
-        [1, 0],
-        [-1, 0],
-    ];
-
     countIceberg() {
         let numberOfIceberg = 0;
         const visitedIce = Array.from(Array(this.ROW), () =>
             Array(this.COLUMN).fill(false),
         );
+
         for (let i = 0; i < this.ROW; i++) {
             for (let j = 0; j < this.COLUMN; j++) {
                 if (!this.isIce([i, j]) || visitedIce[i][j]) continue;
                 if (++numberOfIceberg > 1) return numberOfIceberg;
-
-                const queue = [[i, j]];
-                visitedIce[i][j] = true;
-
-                while (queue.length) {
-                    const point = queue.shift();
-                    for (const move of this.dt) {
-                        const next = [point[0] + move[0], point[1] + move[1]];
-                        if (
-                            this.isOutOfRange(next) ||
-                            visitedIce[next[0]][next[1]] ||
-                            !this.isIce(next)
-                        )
-                            continue;
-
-                        queue.push(next);
-                        visitedIce[next[0]][next[1]] = true;
-                    }
-                }
+                bfs.call(this, [i, j]);
             }
         }
 
         return numberOfIceberg;
+
+        function bfs(point) {
+            const queue = [point];
+            visitedIce[point[0]][point[1]] = true;
+
+            while (queue.length) {
+                const point = queue.shift();
+                for (const next of Direction.movedPoints(point)) {
+                    if (
+                        this.isOutOfRange(next) ||
+                        visitedIce[next[0]][next[1]] ||
+                        !this.isIce(next)
+                    )
+                        continue;
+
+                    queue.push(next);
+                    visitedIce[next[0]][next[1]] = true;
+                }
+            }
+        }
     }
 
     meltIceberg() {
-        this.findMeltIce().forEach(
-            ([[r, c], countWater]) => (this.map[r][c] -= countWater),
-        );
-    }
+        findMeltIce
+            .call(this)
+            .forEach(([[r, c], countWater]) => (this.map[r][c] -= countWater));
 
-    findMeltIce() {
-        const meltIce = [];
-        for (let i = 0; i < this.ROW; i++) {
-            for (let j = 0; j < this.COLUMN; j++) {
-                if (!this.isIce([i, j])) continue;
+        function findMeltIce() {
+            const meltIce = [];
+            for (let i = 0; i < this.ROW; i++) {
+                for (let j = 0; j < this.COLUMN; j++) {
+                    const point = [i, j];
+                    if (!this.isIce(point)) continue;
 
-                let countWater = 0;
-                for (const move of this.dt) {
-                    const next = [i + move[0], j + move[1]];
-                    if (this.isOutOfRange(next) || this.isIce(next)) continue;
-                    countWater++;
+                    let countWater = 0;
+                    for (const next of Direction.movedPoints(point)) {
+                        if (this.isOutOfRange(next) || this.isIce(next))
+                            continue;
+                        countWater++;
+                    }
+
+                    if (countWater) meltIce.push([[i, j], countWater]);
                 }
-
-                if (countWater) meltIce.push([[i, j], countWater]);
             }
+            return meltIce;
         }
-        return meltIce;
     }
 
     isIce(point) {
@@ -112,6 +109,22 @@ class Iceberg {
             point[0] === this.ROW ||
             point[1] === this.COLUMN
         );
+    }
+}
+
+class Direction {
+    static dt = [
+        [0, 1],
+        [0, -1],
+        [1, 0],
+        [-1, 0],
+    ];
+
+    static movedPoints(point) {
+        return Direction.dt.map(move => [
+            point[0] + move[0],
+            point[1] + move[1],
+        ]);
     }
 }
 
