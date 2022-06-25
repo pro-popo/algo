@@ -25,16 +25,24 @@ function solution(N, M, map) {
 
     let time = 0;
     do {
-        let isExistIceberg = false;
-        const visited = Array.from(Array(N), () => Array(M).fill(false));
+        const [iceberg, countIceberg] = findIceberg();
+        if (countIceberg === 2) return time;
+        if (countIceberg === 0) break;
+        meltIceberg(iceberg);
+    } while (++time);
+
+    return 0;
+
+    function findIceberg() {
+        let countIceberg = 0;
+        const iceberg = Array.from(Array(N), () => Array(M).fill(false));
         for (let i = 0; i < N; i++) {
             for (let j = 0; j < M; j++) {
-                if (map[i][j] <= 0 || visited[i][j]) continue;
-                if (isExistIceberg) return time;
-                isExistIceberg = true;
+                if (map[i][j] <= 0 || iceberg[i][j]) continue;
+                if (++countIceberg > 1) return [iceberg, countIceberg];
 
                 const queue = [[i, j]];
-                visited[i][j] = true;
+                iceberg[i][j] = true;
 
                 while (queue.length) {
                     const point = queue.shift();
@@ -42,22 +50,25 @@ function solution(N, M, map) {
                         const next = [point[0] + dt[d][0], point[1] + dt[d][1]];
                         if (
                             isOutOfRange(next) ||
-                            visited[next[0]][next[1]] ||
+                            iceberg[next[0]][next[1]] ||
                             map[next[0]][next[1]] <= 0
                         )
                             continue;
 
                         queue.push(next);
-                        visited[next[0]][next[1]] = true;
+                        iceberg[next[0]][next[1]] = true;
                     }
                 }
             }
         }
-        if (!isExistIceberg) break;
 
+        return [iceberg, countIceberg];
+    }
+
+    function meltIceberg(iceberg) {
         for (let i = 0; i < N; i++) {
             for (let j = 0; j < M; j++) {
-                if (visited[i][j]) continue;
+                if (iceberg[i][j]) continue;
 
                 for (let d = 0; d < dt.length; d++) {
                     const next = [i + dt[d][0], j + dt[d][1]];
@@ -66,9 +77,7 @@ function solution(N, M, map) {
                 }
             }
         }
-    } while (++time);
-
-    return 0;
+    }
 
     function isOutOfRange(point) {
         return point[0] < 0 || point[1] < 0 || point[0] === N || point[1] === M;
