@@ -129,7 +129,7 @@
 </summary>   
 
 ##### Day 25. SAT
-> 🟢 [[Gold Ⅳ] 빙산 - 구현, DFS/BFS](https://www.acmicpc.net/problem/2373) ([#2373](boj/gold/Ⅳ/_2373_빙산.js))
+> 🟢 [[Gold Ⅳ] 빙산 - 구현, DFS/BFS](https://www.acmicpc.net/problem/2573) ([#2573](boj/gold/Ⅳ/_2573_빙산.js))
 
 ##### Day 24. FRI
 > 🟢 [[Gold Ⅴ] 로봇 청소기 - 구현](https://www.acmicpc.net/problem/14503) ([#14503](boj/gold/Ⅴ/_14503_로봇청소기.js))
