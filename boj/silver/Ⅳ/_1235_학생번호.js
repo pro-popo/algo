@@ -12,16 +12,11 @@
 
 function solution(N, students) {
     const MAX_LENGTH = students[0].length;
-    let point = MAX_LENGTH;
-    while (--point > 0) {
-        const countStudent = new Set(
-            students.map(student => student.slice(point)),
-        ).size;
 
-        if (N === countStudent) break;
+    for (let i = MAX_LENGTH - 1; i >= 0; i--) {
+        const set = new Set(students.map(student => student.slice(i)));
+        if (set.size === N) return MAX_LENGTH - i;
     }
-
-    return MAX_LENGTH - point;
 }
 
 function input(test) {
