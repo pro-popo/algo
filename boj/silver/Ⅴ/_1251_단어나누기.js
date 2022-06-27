@@ -26,17 +26,7 @@ function solution(word) {
 }
 
 function divide(word, front, end) {
-    let [first, second, third] = ['', '', ''];
-    for (let i = 0; i < front; i++) {
-        first += word[i];
-    }
-    for (let i = front; i < end; i++) {
-        second += word[i];
-    }
-    for (let i = end; i < word.length; i++) {
-        third += word[i];
-    }
-    return [first, second, third];
+    return [word.slice(0, front), word.slice(front, end), word.slice(end)];
 }
 
 function reverseString(string) {
@@ -51,6 +41,8 @@ function input(test) {
             : test
     ).split('\n');
 }
+
+/****** TEST CASE *******/
 
 const TEST1 = `mobitel`;
 
