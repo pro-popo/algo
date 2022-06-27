@@ -16,7 +16,7 @@ function solution(word) {
     for (let i = 1; i < word.length - 1; i++) {
         for (let j = i + 1; j < word.length; j++) {
             const convertedWord = divide(word, i, j)
-                .map(word => [...word].reverse().join(''))
+                .map(reverseString)
                 .join('');
             words.push(convertedWord);
         }
@@ -37,6 +37,10 @@ function divide(word, front, end) {
         third += word[i];
     }
     return [first, second, third];
+}
+
+function reverseString(string) {
+    return [...string].reverse().join('');
 }
 
 function input(test) {
