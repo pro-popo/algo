@@ -9,11 +9,20 @@
  * 이렇게 만들 수 있는 단어 중, 사전순으로 가장 앞서는 단어를 출력하자.
  *
  * @param {*} word - 영어 소문자로 된 단어 (3~50)
+ *
+ * ### 리뷰
+ * - 풀이 방식은 다음과 같다.
+ *   먼저 2중 for문을 활용하여, 세 개의 단어로 나누기 위한 두 개의 경계선을 구한다.
+ *   두 개의 경계선을 가지고 단어를 세 개의 단어로 나눈다.
+ *   나눈 단어들의 앞뒤를 뒤집는다.
+ *   그리고 나눈 단어들을 전부 합친다.
+ *   위 과정에서 나온 단어들을 하나의 배열에 저장하여,
+ *   사전순으로 정렬하여 가장 맨 앞에 있는 단어를 반환한다.
  */
 
 function solution(word) {
     const words = [];
-    for (let i = 1; i < word.length - 1; i++) {
+    for (let i = 1; i < word.length; i++) {
         for (let j = i + 1; j < word.length; j++) {
             const convertedWord = divide(word, i, j)
                 .map(reverseString)
