@@ -67,7 +67,7 @@
 |  ✅  |  ✅  |  ✅  |  ✅  |  ✅  |  ✅  |  ✅  |
 |  ✅  |  ✅  |  ✅  |  ✅  |  ✅  |  ✅  |  ✅  |
 |  ✅  |  ✅  |  ✅  |  ✅  |  ✅  |  ✅  |  ✅  |
-|  ✅  |  ✅  |  ⬜  |  ⬜  |  ⬜  |  〰  |  〰  |
+|  ✅  |  ✅  |  ✅  |  ⬜  |  ⬜  |  〰  |  〰  |
 |  〰  |  〰  |  〰  |  〰  |  〰  |  〰  |  〰  |
 
 <details>
@@ -128,9 +128,11 @@
     <b>📅 2022.06</b>
 </summary>   
 
+##### Day 28. TUE
+> 🟢 [[Silver Ⅳ] 듣보잡 - 해시](https://www.acmicpc.net/problem/1764) ([#1764](boj/silver/Ⅳ/_1764_듣보잡.js))
+
 ##### Day 27. MON
 > 🟢 [[Silver Ⅴ] 단어 나누기 - 구현](https://www.acmicpc.net/problem/1251) ([#1251](boj/silver/Ⅴ/_1251_단어나누기.js))
-
 
 ##### Day 26. SUN
 > 🟢 [[Silver Ⅳ] 학생 번호 - 해시](https://www.acmicpc.net/problem/1235) ([#1235](boj/silver/Ⅳ/_1235_학생번호.js))
