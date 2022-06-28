@@ -11,7 +11,7 @@
 
 function solution(N, M, notSeen, notHeard) {
     const notSeenAndnotHeard = findNotSeenAndNetHeard(notSeen, notHeard);
-    return print(notSeenAndnotHeard);
+    return printLengthAndElements(notSeenAndnotHeard);
 }
 
 function findNotSeenAndNetHeard(notSeen, notHeard) {
@@ -21,7 +21,7 @@ function findNotSeenAndNetHeard(notSeen, notHeard) {
         .sort((a, b) => a.localeCompare(b));
 }
 
-function print(arr) {
+function printLengthAndElements(arr) {
     let log = arr.length + '\n';
     arr.forEach(name => (log += name + '\n'));
     return log;
