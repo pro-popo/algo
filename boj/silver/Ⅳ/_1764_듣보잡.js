@@ -10,15 +10,21 @@
  */
 
 function solution(N, M, notSeen, notHeard) {
+    const notSeenAndnotHeard = findNotSeenAndNetHeard(notSeen, notHeard);
+    return print(notSeenAndnotHeard);
+}
+
+function findNotSeenAndNetHeard(notSeen, notHeard) {
     notSeen = new Set(notSeen);
-    const notSeenAndnotHeard = notHeard
+    return notHeard
         .filter(name => notSeen.has(name))
         .sort((a, b) => a.localeCompare(b));
+}
 
-    let print = notSeenAndnotHeard.length + '\n';
-    notSeenAndnotHeard.forEach(name => (print += name + '\n'));
-
-    return print;
+function print(arr) {
+    let log = arr.length + '\n';
+    arr.forEach(name => (log += name + '\n'));
+    return log;
 }
 
 function input(test) {
