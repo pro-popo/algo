@@ -19,20 +19,22 @@
  */
 
 function solution(X) {
-    const arr = [64];
+    const sticks = [64];
     let sum = 64;
 
     while (sum > X) {
-        arr.sort((a, b) => b - a);
-        const min = arr.pop();
+        sticks.sort((a, b) => b - a);
+        const min = sticks.pop();
         const half = min / 2;
+        sticks.push(half, half);
+
         if (sum - half >= X) {
-            arr.push(half);
             sum -= half;
-        } else arr.push(half, half);
+            sticks.pop();
+        }
     }
 
-    return arr.length;
+    return sticks.length;
 }
 
 function input(test) {
