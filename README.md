@@ -128,6 +128,9 @@
     <b>📅 2022.06</b>
 </summary>   
 
+##### Day 29. WED
+> 🟢 [[Silver Ⅴ] 막대기 - 구현](https://www.acmicpc.net/problem/1094) ([#1094](boj/silver/Ⅴ/_1094_막대기.js))
+
 ##### Day 28. TUE
 > 🟢 [[Silver Ⅳ] 듣보잡 - 해시](https://www.acmicpc.net/problem/1764) ([#1764](boj/silver/Ⅳ/_1764_듣보잡.js))
 
