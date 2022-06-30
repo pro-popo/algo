@@ -60,6 +60,21 @@
 
 ## ✔ Todo Calender
 
+#### 📅 2022.07             
+| SUN | MON | TUE | WED | THU | FRI | SAT | 
+|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+|  〰  |  〰  |  〰  |  〰  |  〰  |  ⬜  |  ⬜  |
+|  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |
+|  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |
+|  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |
+|  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |
+|  ⬜  |  〰  |  〰  |  〰  |  〰  |  〰  |  〰  |
+
+<details>
+<summary>   
+    <b>🙋‍♀️ Read More</b> 
+</summary> 
+
 #### 📅 2022.06             
 | SUN | MON | TUE | WED | THU | FRI | SAT | 
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|
@@ -67,13 +82,8 @@
 |  ✅  |  ✅  |  ✅  |  ✅  |  ✅  |  ✅  |  ✅  |
 |  ✅  |  ✅  |  ✅  |  ✅  |  ✅  |  ✅  |  ✅  |
 |  ✅  |  ✅  |  ✅  |  ✅  |  ✅  |  ✅  |  ✅  |
-|  ✅  |  ✅  |  ✅  |  ⬜  |  ⬜  |  〰  |  〰  |
+|  ✅  |  ✅  |  ✅  |  ✅  |  ✅  |  〰  |  〰  |
 |  〰  |  〰  |  〰  |  〰  |  〰  |  〰  |  〰  |
-
-<details>
-<summary>   
-    <b>🙋‍♀️ Read More</b> 
-</summary> 
 
 #### 📅 2022.05             
 | SUN | MON | TUE | WED | THU | FRI | SAT | 
@@ -123,10 +133,24 @@
 ![PROGRAMMERS](https://img.shields.io/badge/PROGRAMMERS-7E4DD2.svg?&style=for-the-badge)
 ![BAEKJOON](https://img.shields.io/badge/BAEKJOON-0ABF53.svg?&style=for-the-badge)
 
+    
+<details open>
+<summary>   
+    <b>📅 2022.07</b>
+</summary>  
+
+##### Day 1. FRI
+
+<br />
+</details>
+
 <details open>
 <summary>   
     <b>📅 2022.06</b>
 </summary>   
+
+##### Day 30. THU
+> 🟢 [[Silver Ⅱ 유기농 배추 - DFS/BFS](https://www.acmicpc.net/problem/1012) ([#1012](boj/silver/Ⅱ/_1012_유기농배추.js))
 
 ##### Day 29. WED
 > 🟢 [[Silver Ⅴ] 막대기 - 구현](https://www.acmicpc.net/problem/1094) ([#1094](boj/silver/Ⅴ/_1094_막대기.js))
