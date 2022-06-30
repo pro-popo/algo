@@ -23,48 +23,53 @@ function solution(T, data) {
             .splice(0, K)
             .map(point => point.split(' ').map(Number));
 
-        const map = Array.from(Array(N), () => Array(M).fill(false));
-        for (const [r, c] of napaCabbages) {
-            map[r][c] = true;
-        }
+        answer += countEarthworm(N, M, napaCabbages) + '\n';
+    }
 
-        let earthworm = 0;
+    return answer;
+}
+
+function countEarthworm(N, M, napaCabbages) {
+    const map = Array.from(Array(N), () => Array(M).fill(false));
+    for (const [r, c] of napaCabbages) {
+        map[r][c] = true;
+    }
+
+    let earthworm = 0;
+    for (let i = 0; i < N; i++) {
+        for (let j = 0; j < M; j++) {
+            if (!map[i][j]) continue;
+            earthworm++;
+            bfs(i, j);
+        }
+    }
+    return earthworm;
+
+    function bfs(i, j) {
+        const queue = [[i, j]];
+        map[i][j] = false;
+
         const dt = [
             [0, 1],
             [0, -1],
             [1, 0],
             [-1, 0],
         ];
-        for (let i = 0; i < N; i++) {
-            for (let j = 0; j < M; j++) {
-                if (!map[i][j]) continue;
-                earthworm++;
+        while (queue.length) {
+            const point = queue.shift();
+            for (const move of dt) {
+                const next = [point[0] + move[0], point[1] + move[1]];
+                if (isOutOfRange(next) || !map[next[0]][next[1]]) continue;
 
-                const queue = [[i, j]];
-                map[i][j] = false;
-                while (queue.length) {
-                    const point = queue.shift();
-                    for (const move of dt) {
-                        const next = [point[0] + move[0], point[1] + move[1]];
-                        if (
-                            next[0] < 0 ||
-                            next[1] < 0 ||
-                            next[0] === N ||
-                            next[1] === M ||
-                            !map[next[0]][next[1]]
-                        )
-                            continue;
-
-                        map[next[0]][next[1]] = false;
-                        queue.push(next);
-                    }
-                }
+                map[next[0]][next[1]] = false;
+                queue.push(next);
             }
         }
-        answer += earthworm + '\n';
     }
 
-    return answer;
+    function isOutOfRange(point) {
+        return point[0] < 0 || point[1] < 0 || point[0] === N || point[1] === M;
+    }
 }
 
 function input(test) {
