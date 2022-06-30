@@ -139,7 +139,7 @@
     <b>📅 2022.07</b>
 </summary>  
 
-##### Day 1. FRI
+#### Day 1. FRI
 
 <br />
 </details>
@@ -150,7 +150,7 @@
 </summary>   
 
 ##### Day 30. THU
-> 🟢 [[Silver Ⅱ 유기농 배추 - DFS/BFS](https://www.acmicpc.net/problem/1012) ([#1012](boj/silver/Ⅱ/_1012_유기농배추.js))
+> 🟢 [[Silver Ⅱ] 유기농 배추 - DFS/BFS](https://www.acmicpc.net/problem/1012) ([#1012](boj/silver/Ⅱ/_1012_유기농배추.js))
 
 ##### Day 29. WED
 > 🟢 [[Silver Ⅴ] 막대기 - 구현](https://www.acmicpc.net/problem/1094) ([#1094](boj/silver/Ⅴ/_1094_막대기.js))
