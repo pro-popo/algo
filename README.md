@@ -139,7 +139,8 @@
     <b>📅 2022.07</b>
 </summary>  
 
-#### Day 1. FRI
+##### Day 1. FRI
+> 🟢 [[Silver Ⅳ] 카드2 - 구현](https://www.acmicpc.net/problem/2164) ([#2164](boj/silver/Ⅳ/_2164_카드2.js))
 
 <br />
 </details>
