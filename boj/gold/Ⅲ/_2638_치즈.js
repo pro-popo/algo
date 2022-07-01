@@ -16,13 +16,8 @@ function solution(N, M, map) {
     let day = 0;
     do {
         const cheeses = findContactCheeses(N, M, map);
-
         if (!cheeses.size) break;
-        for (const [key, contact] of cheeses.entries()) {
-            if (contact < 2) continue;
-            const point = key.split(' ');
-            map[point[0]][point[1]] = 0;
-        }
+        meltCheese(map, cheeses);
     } while (++day);
 
     return day;
@@ -62,6 +57,14 @@ function findContactCheeses(N, M, map) {
 
     function isOutOfRange(point) {
         return point[0] < 0 || point[1] < 0 || point[0] === N || point[1] === M;
+    }
+}
+
+function meltCheese(map, cheeses) {
+    for (const [key, contact] of cheeses.entries()) {
+        if (contact < 2) continue;
+        const point = key.split(' ');
+        map[point[0]][point[1]] = 0;
     }
 }
 
