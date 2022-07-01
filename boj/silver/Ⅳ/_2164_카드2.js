@@ -16,9 +16,12 @@
 
 function solution(N) {
     const numbers = [...Array(N)].map((_, i) => i + 1);
-    while (numbers.length > 1) {
-        numbers.shift();
-        numbers.push(numbers.shift());
+
+    let point = -1;
+    while (true) {
+        point += 2;
+        if (!numbers[point]) break;
+        numbers.push(numbers[point]);
     }
     return numbers.pop();
 }
