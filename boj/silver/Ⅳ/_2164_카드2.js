@@ -18,12 +18,12 @@ function solution(N) {
     const numbers = [...Array(N)].map((_, i) => i + 1);
 
     let point = -1;
-    while (true) {
+    do {
         point += 2;
-        if (!numbers[point]) break;
         numbers.push(numbers[point]);
-    }
-    return numbers.pop();
+    } while (numbers[point]);
+
+    return numbers[point - 1];
 }
 
 function input(test) {
