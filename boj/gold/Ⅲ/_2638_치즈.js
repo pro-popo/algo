@@ -14,32 +14,9 @@
  */
 function solution(N, M, map) {
     let day = 0;
-    const dt = [
-        [0, 1],
-        [0, -1],
-        [1, 0],
-        [-1, 0],
-    ];
-    do {
-        const queue = [[0, 0]];
-        const visited = Array.from(Array(N), () => Array(M).fill(false));
-        visited[0][0] = true;
 
-        const cheeses = new Map();
-        while (queue.length) {
-            const point = queue.shift();
-            for (const move of dt) {
-                const next = [point[0] + move[0], point[1] + move[1]];
-                if (isOutOfRange(next) || visited[next[0]][next[1]]) continue;
-                if (map[next[0]][next[1]] === 1) {
-                    const key = `${next[0]} ${next[1]}`;
-                    cheeses.set(key, (cheeses.get(key) || 0) + 1);
-                    continue;
-                }
-                queue.push(next);
-                visited[next[0]][next[1]] = true;
-            }
-        }
+    do {
+        const cheeses = findContactCheeses(N, M, map);
 
         if (!cheeses.size) break;
         for (const [key, contact] of cheeses.entries()) {
@@ -50,6 +27,36 @@ function solution(N, M, map) {
     } while (++day);
 
     return day;
+}
+
+function findContactCheeses(N, M, map) {
+    const dt = [
+        [0, 1],
+        [0, -1],
+        [1, 0],
+        [-1, 0],
+    ];
+    const queue = [[0, 0]];
+    const visited = Array.from(Array(N), () => Array(M).fill(false));
+    visited[0][0] = true;
+
+    const cheeses = new Map();
+    while (queue.length) {
+        const point = queue.shift();
+        for (const move of dt) {
+            const next = [point[0] + move[0], point[1] + move[1]];
+            if (isOutOfRange(next) || visited[next[0]][next[1]]) continue;
+            if (map[next[0]][next[1]] === 1) {
+                const key = `${next[0]} ${next[1]}`;
+                cheeses.set(key, (cheeses.get(key) || 0) + 1);
+                continue;
+            }
+            queue.push(next);
+            visited[next[0]][next[1]] = true;
+        }
+    }
+
+    return cheeses;
 
     function isOutOfRange(point) {
         return point[0] < 0 || point[1] < 0 || point[0] === N || point[1] === M;
