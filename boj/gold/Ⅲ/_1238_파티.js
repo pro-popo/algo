@@ -33,10 +33,21 @@
 function solution(N, M, X, roads) {
     const [graph, reverseGraph] = createGraph(N, roads);
 
-    const go = dijkstra(X, reverseGraph);
-    const back = dijkstra(X, graph);
+    const goTimes = dijkstra(X, reverseGraph);
+    const backTimes = dijkstra(X, graph);
 
-    return Math.max(...go.map((time, i) => time + back[i]));
+    return Math.max(...goTimes.map((time, i) => time + backTimes[i]));
+}
+
+function createGraph(N, roads) {
+    const graph = Array.from(Array(N + 1), () => []);
+    const reverseGraph = Array.from(Array(N + 1), () => []);
+
+    roads.forEach(([from, to, time]) => {
+        graph[from].push([to, time]);
+        reverseGraph[to].push([from, time]);
+    });
+    return [graph, reverseGraph];
 }
 
 function dijkstra(start, graph) {
@@ -54,17 +65,6 @@ function dijkstra(start, graph) {
     }
 
     return dist;
-}
-
-function createGraph(N, roads) {
-    const graph = Array.from(Array(N + 1), () => []);
-    const reverseGraph = Array.from(Array(N + 1), () => []);
-
-    roads.forEach(([from, to, time]) => {
-        graph[from].push([to, time]);
-        reverseGraph[to].push([from, time]);
-    });
-    return [graph, reverseGraph];
 }
 
 function input(test) {
