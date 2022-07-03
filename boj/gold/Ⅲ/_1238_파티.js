@@ -31,36 +31,40 @@
  */
 
 function solution(N, M, X, roads) {
-    const graph = createGraph(N, roads);
+    const [graph, reverseGraph] = createGraph(N, roads);
 
-    const answer = Array(N + 1).fill(0);
-    for (let i = 1; i <= N; i++) {
-        const queue = [i];
-        const times = Array(N + 1).fill(Number.MAX_VALUE);
-        times[0] = times[i] = 0;
+    const go = dijkstra(X, reverseGraph);
+    const back = dijkstra(X, graph);
 
-        while (queue.length) {
-            const city = queue.shift();
-            for (const [nextCity, nextTime] of graph[city]) {
-                if (times[nextCity] <= times[city] + nextTime) continue;
-                times[nextCity] = times[city] + nextTime;
-                queue.push(nextCity);
-            }
+    return Math.max(...go.map((time, i) => time + back[i]));
+}
+
+function dijkstra(start, graph) {
+    const queue = [start];
+    const dist = Array(graph.length).fill(Number.MAX_VALUE);
+    dist[0] = dist[start] = 0;
+
+    while (queue.length) {
+        const node = queue.shift();
+        for (const [next, cost] of graph[node]) {
+            if (dist[next] <= dist[node] + cost) continue;
+            dist[next] = dist[node] + cost;
+            queue.push(next);
         }
-
-        if (i === X) times.forEach((time, i) => (answer[i] += time));
-        else answer[i] += times[X];
     }
 
-    return Math.max(...answer);
+    return dist;
 }
 
 function createGraph(N, roads) {
     const graph = Array.from(Array(N + 1), () => []);
+    const reverseGraph = Array.from(Array(N + 1), () => []);
+
     roads.forEach(([from, to, time]) => {
         graph[from].push([to, time]);
+        reverseGraph[to].push([from, time]);
     });
-    return graph;
+    return [graph, reverseGraph];
 }
 
 function input(test) {
