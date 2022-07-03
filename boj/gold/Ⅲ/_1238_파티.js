@@ -17,10 +17,7 @@
  */
 
 function solution(N, M, X, roads) {
-    const graph = Array.from(Array(N + 1), () => []);
-    roads.forEach(([from, to, time]) => {
-        graph[from].push([to, time]);
-    });
+    const graph = createGraph(N, roads);
 
     const answer = Array(N + 1).fill(0);
     for (let i = 1; i <= N; i++) {
@@ -42,6 +39,14 @@ function solution(N, M, X, roads) {
     }
 
     return Math.max(...answer);
+}
+
+function createGraph(N, roads) {
+    const graph = Array.from(Array(N + 1), () => []);
+    roads.forEach(([from, to, time]) => {
+        graph[from].push([to, time]);
+    });
+    return graph;
 }
 
 function input(test) {
