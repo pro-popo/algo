@@ -22,12 +22,11 @@ function solution(N, M, X, roads) {
         graph[from].push([to, time]);
     });
 
-    const goTime = Array(N + 1).fill(0);
-    let backTime = [];
+    const answer = Array(N + 1).fill(0);
     for (let i = 1; i <= N; i++) {
         const queue = [i];
         const times = Array(N + 1).fill(Number.MAX_VALUE);
-        times[i] = 0;
+        times[0] = times[i] = 0;
 
         while (queue.length) {
             const city = queue.shift();
@@ -38,12 +37,11 @@ function solution(N, M, X, roads) {
             }
         }
 
-        if (i === X) backTime = times;
-        goTime[i] = times[X];
+        if (i === X) times.forEach((time, i) => (answer[i] += time));
+        else answer[i] += times[X];
     }
 
-    backTime[0] = 0;
-    return Math.max(...goTime.map((time, i) => time + backTime[i]));
+    return Math.max(...answer);
 }
 
 function input(test) {
