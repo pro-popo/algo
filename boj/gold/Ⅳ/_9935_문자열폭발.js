@@ -13,19 +13,20 @@
  *
  * @param {string} string - 문자열 (1~1,000,000)
  * @param {string} bomb - 폭발 문자열 (1~36)
+ *
  */
 
 function solution(string, bomb) {
-    const stack = [];
+    const arr = [];
     for (const character of string) {
-        stack.push(character);
+        arr.push(character);
 
-        const targetIndex = stack.length - bomb.length;
-        const target = stack.slice(targetIndex).join('');
-        if (target === bomb) stack.splice(targetIndex);
+        const targetIndex = arr.length - bomb.length;
+        const target = arr.slice(targetIndex).join('');
+        if (target === bomb) arr.splice(targetIndex);
     }
 
-    return stack.join('') || 'FRULA';
+    return arr.join('') || 'FRULA';
 }
 
 function input(test) {
