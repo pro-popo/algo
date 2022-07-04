@@ -12,29 +12,16 @@
  * 남아있는 문자가 없는 경우, "FRULA"를 출력한다.
  *
  * @param {string} string - 문자열 (1~1,000,000)
- * @param {string} explosion - 폭발 문자열 (1~36)
+ * @param {string} bomb - 폭발 문자열 (1~36)
  */
 
-function solution(string, explosionString) {
+function solution(string, bomb) {
     const stack = [];
-    for (let i = 0; i < string.length; i++) {
-        stack.push(string[i]);
+    for (const character of string) {
+        stack.push(character);
 
-        let isExist = true;
-        for (let j = 0; j < explosionString.length; j++) {
-            if (
-                stack[stack.length - explosionString.length + j] !==
-                explosionString[j]
-            ) {
-                isExist = false;
-                break;
-            }
-        }
-        console.log(stack);
-
-        if (isExist) {
-            for (let j = 0; j < explosionString.length; j++) stack.pop();
-        }
+        const target = stack.slice(stack.length - bomb.length).join('');
+        if (target === bomb) for (let j = 0; j < bomb.length; j++) stack.pop();
     }
 
     return stack.join('') || 'FRULA';
