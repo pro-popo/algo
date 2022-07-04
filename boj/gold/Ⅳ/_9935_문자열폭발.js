@@ -20,8 +20,9 @@ function solution(string, bomb) {
     for (const character of string) {
         stack.push(character);
 
-        const target = stack.slice(stack.length - bomb.length).join('');
-        if (target === bomb) for (let j = 0; j < bomb.length; j++) stack.pop();
+        const targetIndex = stack.length - bomb.length;
+        const target = stack.slice(targetIndex).join('');
+        if (target === bomb) stack.splice(targetIndex);
     }
 
     return stack.join('') || 'FRULA';
