@@ -16,11 +16,28 @@
  */
 
 function solution(string, explosionString) {
-    const regExp = new RegExp(explosionString, 'g');
-    while (string.search(regExp) >= 0) {
-        string = string.replace(regExp, '');
+    const stack = [];
+    for (let i = 0; i < string.length; i++) {
+        stack.push(string[i]);
+
+        let isExist = true;
+        for (let j = 0; j < explosionString.length; j++) {
+            if (
+                stack[stack.length - explosionString.length + j] !==
+                explosionString[j]
+            ) {
+                isExist = false;
+                break;
+            }
+        }
+        console.log(stack);
+
+        if (isExist) {
+            for (let j = 0; j < explosionString.length; j++) stack.pop();
+        }
     }
-    return string || 'FRULA';
+
+    return stack.join('') || 'FRULA';
 }
 
 function input(test) {
