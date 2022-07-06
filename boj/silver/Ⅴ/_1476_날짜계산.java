@@ -16,39 +16,19 @@
  * @param {number} S - 태양
  * @param {number} M - 달
  */
-function solution(E, S, M) {
-    let [e, s, m] = [1, 1, 1];
-    let year = 1;
 
-    while (e !== E || s !== S || m !== M) {
-        if (++e > 15) e = 1;
-        if (++s > 28) s = 1;
-        if (++m > 19) m = 1;
+import java.util.Scanner;
 
-        year++;
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int E = sc.nextInt();
+        int S = sc.nextInt();
+        int M = sc.nextInt();
+        int year = 1;
+
+        while ((year - E) % 15 != 0 || (year - S) % 28 != 0 || (year - M) % 19 != 0) year++;
+
+        System.out.println(year);
     }
-
-    return year;
 }
-
-function input(test) {
-    const fs = require('fs');
-    const data =
-        process.platform === 'linux'
-            ? fs.readFileSync('/dev/stdin').toString().trim()
-            : test;
-
-    return data.split(' ').map(Number);
-}
-
-/****** TEST CASE *******/
-
-const TEST1 = `1 16 16`;
-const TEST2 = `1 1 1`;
-const TEST3 = `1 2 3`;
-const TEST4 = `15 28 19`;
-
-console.log(solution(...input(TEST1)));
-console.log(solution(...input(TEST2)));
-console.log(solution(...input(TEST3)));
-console.log(solution(...input(TEST4)));
