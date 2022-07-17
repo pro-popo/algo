@@ -1,6 +1,7 @@
 # 💪 Algorithm
 
-<img src="https://img.shields.io/badge/😊_Start_Date- 2022--02--22_TUE-blue">
+<img src="https://img.shields.io/badge/😊_Start_Date- 2022--02--22_TUE-blue">   <img src="https://img.shields.io/badge/😎_End_Date- 2022--07--12_TUE-blue">         
+<img src="https://img.shields.io/badge/😴_Holidays- 2022--07--13_SAT-yellow">
 
 ## ✍ Plan
 
@@ -65,10 +66,10 @@
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|
 |  〰  |  〰  |  〰  |  〰  |  〰  |  ✅  |  ✅  |
 |  ✅  |  ✅  |  ✅  |  ✅  |  💥  |  ✅  |  ✅  |
-|  ✅  |  ✅  |  ✅  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |
-|  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |
-|  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |
-|  ⬜  |  〰  |  〰  |  〰  |  〰  |  〰  |  〰  |
+|  ✅  |  ✅  |  ✅  |  🚶‍♂️  |  〰  |  〰  |  〰  |
+|  〰  |  〰  |  〰  |  〰  |  〰  |  〰  |  〰  |
+|  〰  |  〰  |  〰  |  〰  |  〰  |  〰  |  〰  |
+|  〰  |  〰  |  〰  |  〰  |  〰  |  〰  |  〰  |
 
 <details>
 <summary>   
