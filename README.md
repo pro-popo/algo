@@ -134,6 +134,15 @@
 ![PROGRAMMERS](https://img.shields.io/badge/PROGRAMMERS-7E4DD2.svg?&style=for-the-badge)
 ![BAEKJOON](https://img.shields.io/badge/BAEKJOON-0ABF53.svg?&style=for-the-badge)
 
+<details open>
+<summary>   
+    <b>📅 2022.08</b>
+</summary>  
+
+##### Day 20. SAT
+> 🟣 [[Level 1] 성격 유형 검사하기 - 해시](https://school.programmers.co.kr/learn/courses/30/lessons/118666) ([#118666](prog/2022-kakao-internship/_118666_성격유형검사하기.js))
+<br />
+</details>
     
 <details open>
 <summary>   
