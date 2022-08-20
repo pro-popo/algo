@@ -36,11 +36,10 @@ function solution(survey, choices) {
         obj[type] = 0;
         return obj;
     }, {});
-    const questionScore = [3, 2, 1, 0, 1, 2, 3];
 
     survey.forEach((types, i) => {
-        if (choices[i] <= 4) score[types[0]] += questionScore[choices[i] - 1];
-        else score[types[1]] += questionScore[choices[i] - 1];
+        if (choices[i] <= 4) score[types[0]] += 4 - choices[i];
+        else score[types[1]] += choices[i] - 4;
     });
 
     return personalityType
