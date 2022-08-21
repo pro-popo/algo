@@ -11,26 +11,40 @@
  */
 
 function solution(queue1, queue2) {
-    let [sum1, sum2] = [queue1, queue2].map(queue =>
-        queue.reduce((sum, number) => sum + number),
-    );
+    const MAX_LENGTH = queue1.length * 2;
+    [queue1, queue2] = [queue1, queue2].map(data => new Queue(data));
+
     let count = 0;
-    let [p1, p2] = [0, 0];
-    const MAX_INDEX = queue1.length;
-    while (sum1 !== sum2 && ++count) {
-        if (sum1 > sum2) {
-            if (MAX_INDEX * 2 === p1) return -1;
-            sum1 -= queue1[p1];
-            sum2 += queue1[p1];
-            queue2.push(queue1[p1++]);
-        } else if (sum1 < sum2) {
-            if (MAX_INDEX * 2 === p2) return -1;
-            sum2 -= queue2[p2];
-            sum1 += queue2[p2];
-            queue1.push(queue2[p2++]);
+    while (queue1.sum !== queue2.sum && ++count) {
+        if (queue1.sum > queue2.sum) {
+            if (MAX_LENGTH === queue1.pointer) return -1;
+            queue2.insert(queue1.pop());
+        } else if (queue1.sum < queue2.sum) {
+            if (MAX_LENGTH === queue2.pointer) return -1;
+            queue1.insert(queue2.pop());
         }
     }
     return count;
+}
+
+class Queue {
+    pointer = 0;
+    constructor(data) {
+        this.data = data;
+        this.sum = data.reduce((sum, number) => sum + number);
+    }
+
+    pop() {
+        const number = this.data[this.pointer];
+        this.sum -= number;
+        this.pointer++;
+        return number;
+    }
+
+    insert(number) {
+        this.data.push(number);
+        this.sum += number;
+    }
 }
 
 /****** TEST CASE *******/
