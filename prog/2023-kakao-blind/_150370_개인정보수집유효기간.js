@@ -16,14 +16,25 @@ function solution(today, terms, privacies) {
 
     return privacies.reduce((answer, privacy, id) => {
         const [date, type] = privacy.split(' ');
-        const privacyDate = new Date(date);
-        privacyDate.setMonth(privacyDate.getMonth() + +mapTearms.get(type));
+        const period = +mapTearms.get(type);
+        const expirationPeriod = calculateExpirationPeriod(date, period);
 
-        if (new Date(today).getTime() >= privacyDate.getTime())
-            return answer.concat(id + 1);
+        if (isExpiredPrivacy(expirationPeriod, today)) {
+            return [...answer, id + 1];
+        }
         return answer;
     }, []);
 }
+
+const calculateExpirationPeriod = (date, period) => {
+    const expirationPeriod = new Date(date);
+    expirationPeriod.setMonth(expirationPeriod.getMonth() + period);
+    return expirationPeriod;
+};
+
+const isExpiredPrivacy = (privacyDate, today) => {
+    return new Date(today).getTime() >= privacyDate.getTime();
+};
 
 /** TEST CASE */
 console.log(
