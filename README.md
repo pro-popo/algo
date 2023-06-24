@@ -61,6 +61,19 @@
 
 ## ✔ Todo Calender
 
+#### 📅 2023.06             
+| SUN | MON | TUE | WED | THU | FRI | SAT | 
+|  〰  |  〰  |  〰  |  〰  |  〰  |  〰  |  〰  |
+|  〰  |  〰  |  〰  |  〰  |  〰  |  〰  |  〰  |
+|  〰  |  〰  |  〰  |  〰  |  〰  |  〰  |  〰  |
+|  〰  |  〰  |  〰  |  〰  |  〰  |  〰  | ✅  |
+|  〰  |  〰  |  〰  |  〰  |  〰  |  〰  |  〰  |
+
+<details>
+<summary>   
+    <b>🙋‍♀️ Read More</b> 
+</summary> 
+
 #### 📅 2022.07             
 | SUN | MON | TUE | WED | THU | FRI | SAT | 
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|
@@ -70,11 +83,6 @@
 |  〰  |  〰  |  〰  |  〰  |  〰  |  〰  |  〰  |
 |  〰  |  〰  |  〰  |  〰  |  〰  |  〰  |  〰  |
 |  〰  |  〰  |  〰  |  〰  |  〰  |  〰  |  〰  |
-
-<details>
-<summary>   
-    <b>🙋‍♀️ Read More</b> 
-</summary> 
 
 #### 📅 2022.06             
 | SUN | MON | TUE | WED | THU | FRI | SAT | 
@@ -134,8 +142,8 @@
 ![PROGRAMMERS](https://img.shields.io/badge/PROGRAMMERS-7E4DD2.svg?&style=for-the-badge)
 ![BAEKJOON](https://img.shields.io/badge/BAEKJOON-0ABF53.svg?&style=for-the-badge)
 
-<details>
-<summary open>   
+<details open>
+<summary>   
     <b>📅 2023.06</b>
 </summary>  
 
