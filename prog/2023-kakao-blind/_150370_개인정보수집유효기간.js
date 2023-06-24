@@ -9,6 +9,10 @@
  * @param {string[]} terms : 약관의 유효기간 (1~20)
  * @param {string[]} privacies : 수집된 개인정보의 정보 (1~100)
  * @returns 파기해야 할 개인정보의 번호 (오름차순)
+ *
+ * ### 리뷰
+ * - Map 객체와 Date 객체를 활용할 수 있다면 쉽게 풀 수 있는 문제였다.
+ * - 모든 달이 28일까지 있다는 가정 덕분에 단순하게 날짜 계산이 가능했다.
  */
 
 function solution(today, terms, privacies) {
