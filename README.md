@@ -134,7 +134,18 @@
 ![PROGRAMMERS](https://img.shields.io/badge/PROGRAMMERS-7E4DD2.svg?&style=for-the-badge)
 ![BAEKJOON](https://img.shields.io/badge/BAEKJOON-0ABF53.svg?&style=for-the-badge)
 
-<details open>
+<details>
+<summary open>   
+    <b>📅 2023.06</b>
+</summary>  
+
+##### Day 24. SAT
+> 🟣 [[Level 1] 개인정보 수집 유효기간 - 날짜](https://school.programmers.co.kr/learn/courses/30/lessons/150370) ([#150370](prog\2023-kakao-blind\_150370_개인정보수집유효기간.js))
+<br />
+</details>
+
+
+<details>
 <summary>   
     <b>📅 2022.08</b>
 </summary>  
@@ -144,7 +155,7 @@
 <br />
 </details>
     
-<details open>
+<details>
 <summary>   
     <b>📅 2022.07</b>
 </summary>  
@@ -186,7 +197,7 @@
 <br />
 </details>
 
-<details open>
+<details>
 <summary>   
     <b>📅 2022.06</b>
 </summary>   
@@ -291,7 +302,7 @@
 <br />
 </details>
     
-<details open>
+<details>
 <summary>   
     <b>📅 2022.05</b>
 </summary>       
@@ -395,7 +406,7 @@
 <br />
 </details>
     
-<details open>
+<details>
 <summary>   
     <b>📅 2022.04</b>
 </summary>       
@@ -498,7 +509,7 @@
 </details>
 
 
-<details open>
+<details>
 <summary>   
     <b>📅 2022.03</b>
 </summary>   
@@ -606,7 +617,7 @@
 </details>
 
 
-<details open>
+<details>
 <summary>   
     <b>📅 2022.02</b>
 </summary>   
