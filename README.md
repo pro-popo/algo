@@ -2,7 +2,7 @@
 
 <img src="https://img.shields.io/badge/😊_Start_Date- 2022--02--22_TUE-blue">   <img src="https://img.shields.io/badge/😎_End_Date- 2022--07--12_TUE-blue">         
 <img src="https://img.shields.io/badge/😴_Holidays- 2022--07--13_SAT-yellow">     
-<img src="https://img.shields.io/badge/😆_Start_Date- 2023--06--24_SAT-blue">
+<img src="https://img.shields.io/badge/😆_Start_Date- 2024--06--03_MON-blue">
 ## ✍ Plan
 
 #### 💻 1일 1알고 (주 5회 이상)
