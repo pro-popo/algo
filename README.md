@@ -151,6 +151,7 @@
 
 ##### Day 03. MON
 > 🟣 [[Level 1] 폰켓몬 - 해시](https://school.programmers.co.kr/learn/courses/30/lessons/1845) ([#1845](prog-2024\hash\_1845_폰켓몬.js))
+> 🟣 [[Level 1] 완주하지 못한 선수 - 해시](https://school.programmers.co.kr/learn/courses/30/lessons/42576) ([#1845](prog-2024\hash\_42576_완주하지못한선수.js))
 <br />
 </details>
 
