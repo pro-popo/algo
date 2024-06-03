@@ -61,14 +61,15 @@
 
 ## ✔ Todo Calender
 
-#### 📅 2023.06             
+#### 📅 2024.06             
 | SUN | MON | TUE | WED | THU | FRI | SAT | 
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|
 |  〰  |  〰  |  〰  |  〰  |  〰  |  〰  |  〰  |
-|  〰  |  〰  |  〰  |  〰  |  〰  |  〰  |  〰  |
-|  〰  |  〰  |  〰  |  〰  |  〰  |  〰  |  〰  |
-|  〰  |  〰  |  〰  |  〰  |  〰  |  〰  |  ✅  |
+|  〰  |  🏃  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |
 |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |
+|  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |
+|  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |
+|  〰  |  〰  |  〰  |  〰  |  〰  |  〰  |  〰  |
 
 <details>
 <summary>   
@@ -145,11 +146,11 @@
 
 <details open>
 <summary>   
-    <b>📅 2023.06</b>
+    <b>📅 2024.06</b>
 </summary>  
 
-##### Day 24. SAT
-> 🟣 [[Level 1] 개인정보 수집 유효기간 - 날짜](https://school.programmers.co.kr/learn/courses/30/lessons/150370) ([#150370](prog\2023-kakao-blind\_150370_개인정보수집유효기간.js))
+##### Day 03. MON
+> 🟣 [[Level 1] 폰켓몬 - 해시](https://school.programmers.co.kr/learn/courses/30/lessons/1845) ([#1845](prog-2024\hash\_1845_폰켓몬.js))
 <br />
 </details>
 
