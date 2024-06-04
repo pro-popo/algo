@@ -65,7 +65,7 @@
 | SUN | MON | TUE | WED | THU | FRI | SAT | 
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|
 |  〰  |  〰  |  〰  |  〰  |  〰  |  〰  |  〰  |
-|  〰  |  🏃  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |
+|  〰  |  🏃  |  ✅  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |
 |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |
 |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |
 |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |
@@ -149,9 +149,14 @@
     <b>📅 2024.06</b>
 </summary>  
 
+##### Day 04. TUE
+> 🟣 [[Level 2] 전화번호 목록 - 해시](https://school.programmers.co.kr/learn/courses/30/lessons/42577) ([#42577](prog-2024\hash\_42577_전화번호목록.js))   
+> 🟣 [[Level 2] 의상 - 해시](https://school.programmers.co.kr/learn/courses/30/lessons/42578) ([#42578](prog-2024\hash\_42578_의상.js))  
+> 🟣 [[Level 2] 베스트앨범 - 해시](https://school.programmers.co.kr/learn/courses/30/lessons/42579) ([#42579](prog-2024\hash\_42579_베스트앨범.js))
+  
 ##### Day 03. MON
 > 🟣 [[Level 1] 폰켓몬 - 해시](https://school.programmers.co.kr/learn/courses/30/lessons/1845) ([#1845](prog-2024\hash\_1845_폰켓몬.js))   
-> 🟣 [[Level 1] 완주하지 못한 선수 - 해시](https://school.programmers.co.kr/learn/courses/30/lessons/42576) ([#1845](prog-2024\hash\_42576_완주하지못한선수.js))
+> 🟣 [[Level 1] 완주하지 못한 선수 - 해시](https://school.programmers.co.kr/learn/courses/30/lessons/42576) ([#42576](prog-2024\hash\_42576_완주하지못한선수.js))
 <br />
 </details>
 
