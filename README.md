@@ -65,7 +65,7 @@
 | SUN | MON | TUE | WED | THU | FRI | SAT | 
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|
 |  〰  |  〰  |  〰  |  〰  |  〰  |  〰  |  〰  |
-|  〰  |  🏃  |  ✅  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |
+|  〰  |  🏃  |  ✅  |  ✅  |  ⬜  |  ⬜  |  ⬜  |
 |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |
 |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |
 |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |
@@ -149,6 +149,11 @@
     <b>📅 2024.06</b>
 </summary>  
 
+##### Day 05. WED
+> 🟣 [[Level 1] 같은 숫자는 싫어 - 스택/큐](https://school.programmers.co.kr/learn/courses/30/lessons/12906) ([#12906](prog-2024\stack\_12906_같은숫자는싫어.js))   
+> 🟣 [[Level 2] 기능개발 - 스택/큐](https://school.programmers.co.kr/learn/courses/30/lessons/42586) ([#42586](prog-2024\stack\_42586_기능개발.js))   
+> 🟣 [[Level 2] 올바른 괄호 - 스택/큐](https://school.programmers.co.kr/learn/courses/30/lessons/12909) ([#12909](prog-2024\stack\_12909_올바른괄호.js))   
+ 
 ##### Day 04. TUE
 > 🟣 [[Level 2] 전화번호 목록 - 해시](https://school.programmers.co.kr/learn/courses/30/lessons/42577) ([#42577](prog-2024\hash\_42577_전화번호목록.js))   
 > 🟣 [[Level 2] 의상 - 해시](https://school.programmers.co.kr/learn/courses/30/lessons/42578) ([#42578](prog-2024\hash\_42578_의상.js))  
