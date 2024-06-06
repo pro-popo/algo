@@ -149,6 +149,9 @@
     <b>📅 2024.06</b>
 </summary>  
 
+##### Day 06. THU
+> 🟣 [[Level 2] 프로세스 - 스택/큐](https://school.programmers.co.kr/learn/courses/30/lessons/42587) ([#42587](prog-2024\stack\_42587_프로세스.js))   
+
 ##### Day 05. WED
 > 🟣 [[Level 1] 같은 숫자는 싫어 - 스택/큐](https://school.programmers.co.kr/learn/courses/30/lessons/12906) ([#12906](prog-2024\stack\_12906_같은숫자는싫어.js))   
 > 🟣 [[Level 2] 기능개발 - 스택/큐](https://school.programmers.co.kr/learn/courses/30/lessons/42586) ([#42586](prog-2024\stack\_42586_기능개발.js))   
