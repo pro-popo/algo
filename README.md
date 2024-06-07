@@ -65,7 +65,7 @@
 | SUN | MON | TUE | WED | THU | FRI | SAT | 
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|
 |  〰  |  〰  |  〰  |  〰  |  〰  |  〰  |  〰  |
-|  〰  |  🏃  |  ✅  |  ✅  |  ⬜  |  ⬜  |  ⬜  |
+|  〰  |  🏃  |  ✅  |  ✅  |  ✅  |  ✅  |  ⬜  |
 |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |
 |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |
 |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |
@@ -148,6 +148,9 @@
 <summary>   
     <b>📅 2024.06</b>
 </summary>  
+
+##### Day 07. FRI
+> 🟣 [[Level 2] 주식가격 - 스택/큐](https://school.programmers.co.kr/learn/courses/30/lessons/42584) ([#42584](prog-2024\stack\_42584_주식가격.js))  
 
 ##### Day 06. THU
 > 🟣 [[Level 2] 프로세스 - 스택/큐](https://school.programmers.co.kr/learn/courses/30/lessons/42587) ([#42587](prog-2024\stack\_42587_프로세스.js))   
