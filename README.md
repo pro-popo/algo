@@ -150,31 +150,31 @@
 </summary>  
 
 ##### Day 10. MON
-> 🟣 [[Level 1] 최소직사각형 - 완전탐색](https://school.programmers.co.kr/learn/courses/30/lessons/86491) ([#86491](prog-2024\brute-force\_86491_최소직사각형.js))  
-> 🟣 [[Level 1] 모의고사 - 완전탐색](https://school.programmers.co.kr/learn/courses/30/lessons/42840) ([#42840](prog-2024\brute-force\_42840_모의고사.js))  
+> 🟣 [[Level 1] 최소직사각형 - 완전탐색](https://school.programmers.co.kr/learn/courses/30/lessons/86491) ([#86491](prog-2024/brute-force/_86491_최소직사각형.js))  
+> 🟣 [[Level 1] 모의고사 - 완전탐색](https://school.programmers.co.kr/learn/courses/30/lessons/42840) ([#42840](prog-2024/brute-force/_42840_모의고사.js))  
 
 ##### Day 09. SUN
-> 🟣 [[Level 2] 다리를 지나는 트럭 - 스택/큐](https://school.programmers.co.kr/learn/courses/30/lessons/4258) ([#4258](prog-2024\stack\_42583_다리를지나는트럭.js))  
+> 🟣 [[Level 2] 다리를 지나는 트럭 - 스택/큐](https://school.programmers.co.kr/learn/courses/30/lessons/4258) ([#4258](prog-2024/stack/_42583_다리를지나는트럭.js))  
 
 ##### Day 07. FRI
-> 🟣 [[Level 2] 주식가격 - 스택/큐](https://school.programmers.co.kr/learn/courses/30/lessons/42584) ([#42584](prog-2024\stack\_42584_주식가격.js))  
+> 🟣 [[Level 2] 주식가격 - 스택/큐](https://school.programmers.co.kr/learn/courses/30/lessons/42584) ([#42584](prog-2024/stack/_42584_주식가격.js))  
 
 ##### Day 06. THU
-> 🟣 [[Level 2] 프로세스 - 스택/큐](https://school.programmers.co.kr/learn/courses/30/lessons/42587) ([#42587](prog-2024\stack\_42587_프로세스.js))   
+> 🟣 [[Level 2] 프로세스 - 스택/큐](https://school.programmers.co.kr/learn/courses/30/lessons/42587) ([#42587](prog-2024/stack/_42587_프로세스.js))   
 
 ##### Day 05. WED
-> 🟣 [[Level 1] 같은 숫자는 싫어 - 스택/큐](https://school.programmers.co.kr/learn/courses/30/lessons/12906) ([#12906](prog-2024\stack\_12906_같은숫자는싫어.js))   
-> 🟣 [[Level 2] 기능개발 - 스택/큐](https://school.programmers.co.kr/learn/courses/30/lessons/42586) ([#42586](prog-2024\stack\_42586_기능개발.js))   
-> 🟣 [[Level 2] 올바른 괄호 - 스택/큐](https://school.programmers.co.kr/learn/courses/30/lessons/12909) ([#12909](prog-2024\stack\_12909_올바른괄호.js))   
+> 🟣 [[Level 1] 같은 숫자는 싫어 - 스택/큐](https://school.programmers.co.kr/learn/courses/30/lessons/12906) ([#12906](prog-2024/stack/_12906_같은숫자는싫어.js))   
+> 🟣 [[Level 2] 기능개발 - 스택/큐](https://school.programmers.co.kr/learn/courses/30/lessons/42586) ([#42586](prog-2024/stack/_42586_기능개발.js))   
+> 🟣 [[Level 2] 올바른 괄호 - 스택/큐](https://school.programmers.co.kr/learn/courses/30/lessons/12909) ([#12909](prog-2024/stack/_12909_올바른괄호.js))   
  
 ##### Day 04. TUE
-> 🟣 [[Level 2] 전화번호 목록 - 해시](https://school.programmers.co.kr/learn/courses/30/lessons/42577) ([#42577](prog-2024\hash\_42577_전화번호목록.js))   
-> 🟣 [[Level 2] 의상 - 해시](https://school.programmers.co.kr/learn/courses/30/lessons/42578) ([#42578](prog-2024\hash\_42578_의상.js))  
-> 🟣 [[Level 2] 베스트앨범 - 해시](https://school.programmers.co.kr/learn/courses/30/lessons/42579) ([#42579](prog-2024\hash\_42579_베스트앨범.js))
+> 🟣 [[Level 2] 전화번호 목록 - 해시](https://school.programmers.co.kr/learn/courses/30/lessons/42577) ([#42577](prog-2024/hash/_42577_전화번호목록.js))   
+> 🟣 [[Level 2] 의상 - 해시](https://school.programmers.co.kr/learn/courses/30/lessons/42578) ([#42578](prog-2024/hash/_42578_의상.js))  
+> 🟣 [[Level 2] 베스트앨범 - 해시](https://school.programmers.co.kr/learn/courses/30/lessons/42579) ([#42579](prog-2024/hash/_42579_베스트앨범.js))
   
 ##### Day 03. MON
-> 🟣 [[Level 1] 폰켓몬 - 해시](https://school.programmers.co.kr/learn/courses/30/lessons/1845) ([#1845](prog-2024\hash\_1845_폰켓몬.js))   
-> 🟣 [[Level 1] 완주하지 못한 선수 - 해시](https://school.programmers.co.kr/learn/courses/30/lessons/42576) ([#42576](prog-2024\hash\_42576_완주하지못한선수.js))
+> 🟣 [[Level 1] 폰켓몬 - 해시](https://school.programmers.co.kr/learn/courses/30/lessons/1845) ([#1845](prog-2024/hash/_1845_폰켓몬.js))   
+> 🟣 [[Level 1] 완주하지 못한 선수 - 해시](https://school.programmers.co.kr/learn/courses/30/lessons/42576) ([#42576](prog-2024/hash/_42576_완주하지못한선수.js))
 <br />
 </details>
 
