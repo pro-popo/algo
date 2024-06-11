@@ -6,22 +6,17 @@
  */
 
 function solution(numbers) {
-    const answer = new Set();
-
-    const permutation = selected => {
-        if (selected.length === numbers + 1) return;
-
+    const permutation = (primeNumbers, selected) => {
         const number = Number(selected.map(idx => numbers[idx]).join(''));
-        if (isPrime(number)) answer.add(number);
+        if (isPrime(number)) primeNumbers.add(number);
 
         for (let i = 0; i < numbers.length; i++) {
             if (selected.includes(i)) continue;
-            permutation(selected.concat(i));
+            permutation(primeNumbers, selected.concat(i));
         }
+        return primeNumbers;
     };
-    permutation([], 0);
-
-    return answer.size;
+    return permutation(new Set(), []).size;
 }
 
 const isPrime = number => {
