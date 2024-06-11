@@ -66,7 +66,7 @@
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|
 |  〰  |  〰  |  〰  |  〰  |  〰  |  〰  |  〰  |
 |  〰  |  🏃  |  ✅  |  ✅  |  ✅  |  ✅  |  💥  |
-|  ✅  |  ✅  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |
+|  ✅  |  ✅  |  ✅  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |
 |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |
 |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |
 |  ⬜  |  〰  |  〰  |  〰  |  〰  |  〰  |  〰  |
@@ -148,6 +148,9 @@
 <summary>   
     <b>📅 2024.06</b>
 </summary>  
+
+##### Day 11. TUE
+> 🟣 [[Level 2] 소수 찾기 - 완전탐색](https://school.programmers.co.kr/learn/courses/30/lessons/42839) ([#42839](prog-2024/brute-force/_42839_소수찾기.js))  
 
 ##### Day 10. MON
 > 🟣 [[Level 1] 최소직사각형 - 완전탐색](https://school.programmers.co.kr/learn/courses/30/lessons/86491) ([#86491](prog-2024/brute-force/_86491_최소직사각형.js))  
