@@ -3,8 +3,8 @@
  * 갈색 격자의 수와 노란색 격자의 수가 주어질 때,
  * 카펫의 가로, 세로 크기를 구하자
  *
- * @param {*} brown
- * @param {*} yellow
+ * @param {number} brown
+ * @param {number} yellow
  * @returns
  */
 function solution(brown, yellow) {

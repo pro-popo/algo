@@ -66,7 +66,7 @@
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|
 |  〰  |  〰  |  〰  |  〰  |  〰  |  〰  |  〰  |
 |  〰  |  🏃  |  ✅  |  ✅  |  ✅  |  ✅  |  💥  |
-|  ✅  |  ✅  |  ✅  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |
+|  ✅  |  ✅  |  ✅  |  💥  |  ✅  |  ⬜  |  ⬜  |
 |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |
 |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |
 |  ⬜  |  〰  |  〰  |  〰  |  〰  |  〰  |  〰  |
@@ -148,6 +148,9 @@
 <summary>   
     <b>📅 2024.06</b>
 </summary>  
+
+##### Day 13. THU
+> 🟣 [[Level 2] 카펫 - 완전탐색](https://school.programmers.co.kr/learn/courses/30/lessons/42842) ([#42842](prog-2024/brute-force/_42842_카펫.js))  
 
 ##### Day 11. TUE
 > 🟣 [[Level 2] 소수 찾기 - 완전탐색](https://school.programmers.co.kr/learn/courses/30/lessons/42839) ([#42839](prog-2024/brute-force/_42839_소수찾기.js))  
