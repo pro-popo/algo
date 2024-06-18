@@ -67,7 +67,7 @@
 |  〰  |  〰  |  〰  |  〰  |  〰  |  〰  |  〰  |
 |  〰  |  🏃  |  ✅  |  ✅  |  ✅  |  ✅  |  💥  |
 |  ✅  |  ✅  |  ✅  |  💥  |  ✅  |  💥  |  ✅  |
-|  ✅  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |
+|  ✅  |  💥  |  ✅  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |
 |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |  ⬜  |
 |  ⬜  |  〰  |  〰  |  〰  |  〰  |  〰  |  〰  |
 
@@ -148,6 +148,9 @@
 <summary>   
     <b>📅 2024.06</b>
 </summary>  
+
+##### Day 18. TUE
+> 🟣 [[Level 2] 전력망을 둘로 나누기 - 완전탐색](https://school.programmers.co.kr/learn/courses/30/lessons/86971) ([#86971](prog-2024/brute-force/_86971_전력망을둘로나누기.js))  
 
 ##### Day 16. SUN
 > 🟣 [[Level 2] 모음사전 - 완전탐색](https://school.programmers.co.kr/learn/courses/30/lessons/84512) ([#84512](prog-2024/brute-force/_84512_모음사전.js))  
